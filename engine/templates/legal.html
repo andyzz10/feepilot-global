@@ -3,19 +3,342 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{{ title }}</title>
+  <title>{{ title }} | FeePilot Global</title>
+  <meta name="description" content="{{ content }}">
+  <link rel="canonical" href="{{ request.build_absolute_uri }}">
+  <meta name="theme-color" content="#F4F6F1">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%239FE870'/%3E%3Ctext x='50%25' y='54%25' dominant-baseline='middle' text-anchor='middle' font-family='system-ui,sans-serif' font-weight='800' font-size='34' letter-spacing='-2' fill='%230A1A0F'%3EFP%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Sincroniza el Modo Oscuro con la calculadora sin parpadeos -->
+  <script>
+    (function() {
+      var saved = localStorage.getItem('fp_theme');
+      if (saved === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    })();
+  </script>
+
   <style>
-    body { background: #0b0f19; color: #f9fafb; font-family: system-ui, sans-serif; line-height: 1.7; padding: 40px 20px; }
-    .box { max-width: 760px; margin: 0 auto; background: #111827; border: 1px solid #1f2937; padding: 32px; border-radius: 12px; }
-    a { color: #3b82f6; text-decoration: none; }
-    h1 { margin-bottom: 16px; }
+    /* ───────────── Tokens (Idénticos a calculator.html) ───────────── */
+    :root {
+      --ground: #F4F6F1; --surface: #FFFFFF; --tone: #E9EDE4;
+      --ink: #0A1A0F; --ink-2: #47574C; --line: #C3CBBB; --field-line: #7F8D81;
+      --accent: #9FE870; --accent-hover: #B5F18E;
+      --dark: #0A1A0F; --dark-2: #12271A; --dark-line: #2A4733; --dark-ink: #F3F7F0; --dark-muted: #A8B9AC;
+      --font: "Geist", "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      --ease: cubic-bezier(.2, .7, .2, 1);
+      --gutter: clamp(16px, 4vw, 40px);
+      --gap: 24px;
+      --cp: clamp(22px, 2.8vw, 36px);
+      --r: 6px;
+    }
+
+    html[data-theme="dark"] {
+      --ground: #07120B;
+      --surface: #0E1F14;
+      --tone: #152C1E;
+      --ink: #F3F7F0;
+      --ink-2: #A8B9AC;
+      --line: #223B2B;
+      --field-line: #395A45;
+      --dark: #102317;
+      --dark-2: #162F20;
+      --dark-line: #2A4733;
+    }
+
+    /* ───────────── Base ───────────── */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+    body { font-family: var(--font); background: var(--ground); color: var(--ink); font-size: 16px; line-height: 1.6; -webkit-font-smoothing: antialiased; transition: background-color .2s, color .2s; }
+    a { color: inherit; text-decoration: none; }
+    ::selection { background: var(--accent); color: #0A1A0F; }
+    .container { width: 100%; max-width: calc(1240px + 2 * var(--gutter)); margin-inline: auto; padding-inline: var(--gutter); }
+    h1, h2, h3 { text-wrap: balance; font-weight: 600; }
+    p { text-wrap: pretty; }
+
+    /* ───────────── Header ───────────── */
+    header.site-header { position: sticky; top: 0; z-index: 20; background: var(--ground); border-bottom: 1px solid var(--line); transition: background-color .2s, border-color .2s; }
+    .nav { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 64px; }
+    .brand { font-weight: 700; font-size: 1.25rem; letter-spacing: -0.03em; white-space: nowrap; }
+    .brand span { background: var(--accent); color: #0A1A0F; padding: 0 .2em; margin-inline: .04em; border-radius: 4px; display: inline-block; line-height: 1.15; }
+    .crumb { flex: 1; min-width: 0; display: flex; align-items: center; gap: 10px; color: var(--ink-2); font-size: .9375rem; }
+    .crumb-now { color: var(--ink); font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .nav-actions { display: flex; align-items: center; gap: 10px; }
+    .theme-toggle { display: inline-flex; align-items: center; justify-content: center; gap: 6px; height: 36px; padding: 0 12px; background: transparent; border: 1px solid var(--ink); border-radius: 999px; cursor: pointer; font-size: .8125rem; font-weight: 600; color: var(--ink); transition: background-color .15s, transform .15s; }
+    .theme-toggle:hover { background: var(--tone); }
+    .back-pill { display: inline-flex; align-items: center; gap: 6px; height: 36px; padding: 0 16px; background: var(--accent); color: #0A1A0F; border-radius: 999px; font-size: .8125rem; font-weight: 600; transition: background-color .15s, transform .15s; }
+    .back-pill:hover { background: var(--accent-hover); transform: translateY(-1px); }
+
+    /* ───────────── Hero & Legal Tabs ───────────── */
+    .hero { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: var(--gap); align-items: end; padding-top: clamp(36px, 5vw, 64px); padding-bottom: 32px; border-bottom: 1px solid var(--line); }
+    .hero-copy { grid-column: 1 / span 8; }
+    .eyebrow { display: inline-flex; align-items: center; gap: 8px; padding: 5px 12px; margin-bottom: 16px; background: var(--tone); border: 1px solid var(--line); border-radius: 999px; font-size: .75rem; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; color: var(--ink-2); }
+    .eyebrow i { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); border: 1px solid #0A1A0F; display: inline-block; }
+    h1 { font-size: clamp(2rem, 1.2rem + 3vw, 3.25rem); line-height: 1.05; letter-spacing: -0.04em; font-weight: 700; }
+    .subtitle { margin-top: 16px; max-width: 62ch; font-size: 1.0625rem; color: var(--ink-2); }
+    .hero-meta { grid-column: 9 / -1; justify-self: end; text-align: right; }
+    .meta-tag { font-size: .8125rem; color: var(--ink-2); }
+    .meta-val { font-size: 1.25rem; font-weight: 700; letter-spacing: -0.02em; margin-top: 2px; }
+
+    /* Sub-navegación entre páginas legales */
+    .legal-tabs { display: flex; flex-wrap: wrap; gap: 8px; padding: 20px 0 36px; }
+    .tab-pill { display: inline-flex; align-items: center; gap: 8px; padding: 10px 18px; background: var(--surface); border: 1px solid var(--field-line); border-radius: 999px; font-size: .9rem; font-weight: 500; color: var(--ink); transition: all .15s; }
+    .tab-pill:hover { border-color: var(--ink); background: var(--tone); }
+    .tab-pill.active { background: var(--ink); border-color: var(--ink); color: var(--ground); font-weight: 600; }
+
+    /* ───────────── Main Grid ───────────── */
+    .legal-grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: var(--gap); align-items: start; margin-bottom: clamp(64px, 8vw, 112px); }
+    .doc-col { grid-column: 1 / span 8; display: flex; flex-direction: column; gap: 20px; }
+    .side-col { grid-column: 9 / -1; position: sticky; top: 88px; display: flex; flex-direction: column; gap: 20px; }
+
+    .doc-card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: var(--cp); }
+    .doc-num { display: inline-block; font-size: .75rem; font-weight: 700; padding: 3px 9px; border-radius: 4px; background: var(--accent); color: #0A1A0F; margin-bottom: 12px; letter-spacing: .02em; }
+    .doc-card h2 { font-size: 1.35rem; letter-spacing: -0.02em; margin-bottom: 12px; }
+    .doc-card p { color: var(--ink-2); margin-bottom: 12px; font-size: .975rem; }
+    .doc-card p:last-child { margin-bottom: 0; }
+    .doc-list { list-style: none; margin-top: 14px; display: grid; gap: 10px; }
+    .doc-list li { display: flex; align-items: flex-start; gap: 10px; font-size: .9375rem; color: var(--ink); background: var(--tone); padding: 12px 14px; border-radius: var(--r); border: 1px solid var(--line); }
+    .doc-list li b { color: var(--ink); font-weight: 600; }
+
+    /* Tarjeta lateral oscura estilo Result Card */
+    .trust-card { background: var(--dark); border: 1px solid var(--dark-line); color: var(--dark-ink); border-radius: var(--r); padding: var(--cp); }
+    .trust-card h3 { font-size: 1.2rem; letter-spacing: -0.02em; margin-bottom: 8px; color: var(--dark-ink); }
+    .trust-card p { font-size: .9rem; color: var(--dark-muted); margin-bottom: 20px; }
+    .trust-kv { display: grid; gap: 12px; padding: 16px 0; border-top: 1px solid var(--dark-line); border-bottom: 1px solid var(--dark-line); margin-bottom: 20px; }
+    .trust-row { display: flex; justify-content: space-between; align-items: center; font-size: .875rem; }
+    .trust-row span:first-child { color: var(--dark-muted); }
+    .trust-row span:last-child { font-weight: 600; color: var(--accent); }
+    .cta-btn { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; min-height: 48px; padding: 12px 18px; background: var(--accent); color: #0A1A0F; font-weight: 600; border-radius: 999px; transition: background-color .15s, transform .15s; }
+    .cta-btn:hover { background: var(--accent-hover); transform: translateY(-1px); }
+
+    /* ───────────── Footer ───────────── */
+    .site-footer { background: var(--dark); color: var(--dark-muted); padding: 48px 0 clamp(16px, 2.5vw, 40px); overflow: hidden; }
+    .site-footer .container { container-type: inline-size; }
+    .footer-row { display: flex; justify-content: space-between; gap: 16px 24px; flex-wrap: wrap; font-size: .875rem; }
+    .footer-links { display: flex; flex-wrap: wrap; gap: 8px 24px; }
+    .footer-links a { color: var(--dark-ink); transition: color .15s; }
+    .footer-links a:hover { color: var(--accent); }
+    .wordmark { margin-top: clamp(40px, 6vw, 72px); padding-bottom: .04em; white-space: nowrap; user-select: none; font-size: clamp(2.25rem, 10.5vw, 9.5rem); font-size: 11.6cqw; font-weight: 700; letter-spacing: -0.06em; line-height: .92; color: var(--dark-ink); }
+    .wordmark span { color: var(--accent); }
+
+    @media (max-width: 960px) {
+      .hero-copy, .hero-meta, .doc-col, .side-col { grid-column: 1 / -1; }
+      .hero-meta { justify-self: start; text-align: left; }
+      .side-col { position: static; }
+    }
+    @media (max-width: 640px) {
+      .crumb { display: none; }
+    }
   </style>
+
+  <!-- Google Analytics 4 (GA4) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-WLVCBX62CJ"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-WLVCBX62CJ');
+  </script>
+
+  <!-- Microsoft Clarity -->
+  <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "script", "clarity", "z342ths296");
+  </script>
 </head>
 <body>
-  <div class="box">
-    <p><a href="/en/stripe-fee-calculator/">← Back to FeePilot Calculator</a></p>
-    <h1>{{ title }}</h1>
-    <p>{{ body }}</p>
-  </div>
+
+  <header class="site-header">
+    <div class="container nav">
+      <a href="/en/stripe-fee-calculator/" class="brand">Fee<span>Pilot</span> Global</a>
+      <nav class="crumb" aria-label="Breadcrumb">
+        <span aria-hidden="true">/</span>
+        <span>Legal & Transparency</span>
+        <span aria-hidden="true">/</span>
+        <span class="crumb-now">{{ title }}</span>
+      </nav>
+      <div class="nav-actions">
+        <button type="button" class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Dark Mode">
+          <span id="themeIcon">🌙</span>
+          <span id="themeLabel">Dark</span>
+        </button>
+        <a href="/en/stripe-fee-calculator/" class="back-pill">← Calculator</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <div class="hero-copy">
+        <div class="eyebrow"><i></i> Official Documentation · 2026 Edition</div>
+        <h1>{{ title }}</h1>
+        <p class="subtitle">{{ content }}</p>
+      </div>
+      <div class="hero-meta">
+        <p class="meta-tag">Compliance Status</p>
+        <p class="meta-val">Verified · 2026</p>
+        <p class="meta-tag">GDPR / CCPA & AdSense Ready</p>
+      </div>
+    </section>
+
+    <!-- Pestañas de navegación para cambiar entre About, Privacy, Terms y Sitemap -->
+    <nav class="legal-tabs" aria-label="Legal Navigation">
+      <a href="/legal/about/" class="tab-pill {% if 'about' in request.path %}active{% endif %}">About FeePilot</a>
+      <a href="/legal/privacy/" class="tab-pill {% if 'privacy' in request.path %}active{% endif %}">Privacy Policy</a>
+      <a href="/legal/terms/" class="tab-pill {% if 'terms' in request.path %}active{% endif %}">Terms of Service</a>
+      <a href="/sitemap.xml" class="tab-pill">Sitemap (650+ URLs) ↗</a>
+    </nav>
+
+    <section class="legal-grid">
+      <div class="doc-col">
+
+        {% if 'privacy' in request.path %}
+          <!-- CONTENIDO EXTENDIDO DE PRIVACY POLICY -->
+          <article class="doc-card">
+            <span class="doc-num">SECTION 01</span>
+            <h2>100% Client-Side Financial Calculations</h2>
+            <p>At FeePilot Global, your financial privacy is engineered into our architecture. Every fee simulation, reverse invoice calculation, and cross-border comparison is executed locally inside your browser using JavaScript.</p>
+            <ul class="doc-list">
+              <li><span>🔒 <b>Zero Transaction Storage:</b> The dollar amounts and percentages you enter are never transmitted to, stored in, or logged by our database servers.</span></li>
+              <li><span>🛡️ <b>No Account Required:</b> You can access all 650+ calculators and side-by-side comparisons anonymously without registering an email or password.</span></li>
+            </ul>
+          </article>
+
+          <article class="doc-card">
+            <span class="doc-num">SECTION 02</span>
+            <h2>Cookies, Google AdSense & Advertising Partners</h2>
+            <p>Third-party vendors, including Google AdSense, use cookies to serve ads based on a user's prior visits to this website or other websites on the internet.</p>
+            <p>Google's use of advertising cookies enables it and its partners to serve relevant advertisements to users based on their visit to FeePilot Global and other sites on the Internet. Users may opt out of personalized advertising at any time by visiting <a href="https://myadcenter.google.com/" target="_blank" rel="noopener" style="text-decoration: underline; font-weight: 600;">Google Ads Settings</a>.</p>
+          </article>
+
+          <article class="doc-card">
+            <span class="doc-num">SECTION 03</span>
+            <h2>Analytics & User Experience Telemetry</h2>
+            <p>To continuously improve our calculators and regional fee accuracy, we use aggregated, non-personally identifiable telemetry through <strong>Google Analytics 4 (GA4)</strong> and <strong>Microsoft Clarity</strong>. These tools help us understand page load performance, device compatibility, and general interaction patterns without identifying individual users.</p>
+          </article>
+
+        {% elif 'terms' in request.path %}
+          <!-- CONTENIDO EXTENDIDO DE TERMS OF SERVICE -->
+          <article class="doc-card">
+            <span class="doc-num">CLAUSE 01</span>
+            <h2>Informational Purpose & No Financial Advice</h2>
+            <p>FeePilot Global provides automated fee calculators, rate tables, and platform comparisons strictly for informational and educational estimation purposes. Nothing on this platform constitutes certified accounting, tax, legal, or financial advice.</p>
+            <ul class="doc-list">
+              <li><span>📊 <b>Dynamic Merchant Rates:</b> Payment processors (such as Stripe, PayPal, Wise, Payoneer, and Shopify) may adjust their fee structures based on merchant volume, country of incorporation, or card network rules.</span></li>
+              <li><span>✅ <b>Verification Duty:</b> Users should always confirm final settlement fees directly within their official merchant dashboard prior to executing commercial transactions.</span></li>
+            </ul>
+          </article>
+
+          <article class="doc-card">
+            <span class="doc-num">CLAUSE 02</span>
+            <h2>Trademark & Platform Independence</h2>
+            <p>FeePilot Global is an independent financial comparison engine. All third-party product names, logos, and brands (including Stripe, PayPal, Wise, Payoneer, Upwork, Fiverr, Shopify, Square, Deel, and Gumroad) are property of their respective owners and are used strictly for comparative identification.</p>
+          </article>
+
+          <article class="doc-card">
+            <span class="doc-num">CLAUSE 03</span>
+            <h2>Affiliate Disclosure & Monetization</h2>
+            <p>Some outbound links on FeePilot Global are referral or affiliate links. When you click to open an official account through our comparison banner, we may receive a referral commission at zero additional cost to you—and in many cases, unlocking fee discounts or free transfer credits for your account.</p>
+          </article>
+
+        {% else %}
+          <!-- CONTENIDO EXTENDIDO DE ABOUT US -->
+          <article class="doc-card">
+            <span class="doc-num">OUR MISSION</span>
+            <h2>Bringing Radical Transparency to Payment Processing Fees</h2>
+            <p>Digital businesses, SaaS founders, e-commerce sellers, and global freelancers lose billions of dollars every year to hidden payment processing fees, cross-border FX markups, and fixed micro-transaction surcharges.</p>
+            <p>FeePilot Global was built in 2026 to give creators and merchants an instant, side-by-side mathematical engine to calculate exact net payouts and reverse-invoice amounts across 25+ global platforms.</p>
+          </article>
+
+          <article class="doc-card">
+            <span class="doc-num">METHODOLOGY</span>
+            <h2>How Our 650+ Calculators Work</h2>
+            <p>Our programmatic financial engine cross-references official 2026 merchant fee schedules across payment gateways, freelance marketplaces, creator platforms, and international money transfer services.</p>
+            <ul class="doc-list">
+              <li><span>🌍 <b>Multi-Region Precision:</b> Adjusts automatically for US, European Union (SEPA), UK, LatAm, APAC, and international cross-border cards.</span></li>
+              <li><span>⚡ <b>Reverse Fee Formula:</b> Calculates the exact gross amount you must invoice a client (`(Amount + Fixed Fee) ÷ (1 − Fee %)`) so that you receive 100% of your target net payout without absorbing the fee.</span></li>
+            </ul>
+          </article>
+        {% endif %}
+
+      </div>
+
+      <!-- Columna derecha oscura a juego con el panel de resultados de tu calculadora -->
+      <aside class="side-col">
+        <div class="trust-card">
+          <h3>FeePilot Transparency</h3>
+          <p>Engineered for speed, accuracy, and zero data tracking on your financial inputs.</p>
+          <div class="trust-kv">
+            <div class="trust-row">
+              <span>Indexed Calculators</span>
+              <span>650+ URLs</span>
+            </div>
+            <div class="trust-row">
+              <span>Platforms Tracked</span>
+              <span>25+ Gateways</span>
+            </div>
+            <div class="trust-row">
+              <span>Data Processing</span>
+              <span>100% Local Browser</span>
+            </div>
+            <div class="trust-row">
+              <span>Languages</span>
+              <span>EN / ES Bilingual</span>
+            </div>
+          </div>
+          <a href="/en/stripe-fee-calculator/" class="cta-btn">
+            Launch Live Calculator →
+          </a>
+        </div>
+      </aside>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-row">
+        <div>© 2026 FeePilot Global. Built for High-Performance Financial Transparency.</div>
+        <nav class="footer-links">
+          <a href="/legal/about/">About</a>
+          <a href="/legal/privacy/">Privacy Policy</a>
+          <a href="/legal/terms/">Terms of Service</a>
+          <a href="/sitemap.xml">Sitemap (650+ URLs)</a>
+        </nav>
+      </div>
+      <div class="wordmark" aria-hidden="true">Fee<span>Pilot</span> Global</div>
+    </div>
+  </footer>
+
+  <script>
+    function syncThemeBtn() {
+      const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+      const icon = document.getElementById('themeIcon');
+      const label = document.getElementById('themeLabel');
+      if (icon && label) {
+        icon.textContent = isDark ? '☀️' : '🌙';
+        label.textContent = isDark ? 'Light' : 'Dark';
+      }
+    }
+
+    function toggleTheme() {
+      const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+      if (isDark) {
+        document.documentElement.removeAttribute('data-theme');
+        localStorage.setItem('fp_theme', 'light');
+      } else {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        localStorage.setItem('fp_theme', 'dark');
+      }
+      syncThemeBtn();
+    }
+    syncThemeBtn();
+  </script>
 </body>
 </html>
