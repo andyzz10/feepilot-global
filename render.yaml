@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: feepilot-global
+    runtime: python
+    buildCommand: "pip install -r requirements.txt && python seed_platforms.py && python manage.py collectstatic --noinput && python manage.py migrate"
+    startCommand: "gunicorn config.wsgi:application --workers 2 --threads 4"
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.13.0
+      - key: RENDER
+        value: "true"

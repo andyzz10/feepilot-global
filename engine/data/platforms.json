@@ -1,0 +1,1254 @@
+{
+  "platforms": {
+    "stripe": {
+      "name": "Stripe",
+      "category": "Payment Processor",
+      "percent_fee": 2.9,
+      "fixed_fee": 0.3,
+      "intl_extra_percent": 1.5,
+      "affiliate_url": "https://stripe.com",
+      "seo": {
+        "en": {
+          "title": "Stripe Fee Calculator (2026) - Net Payout & Invoice Calculator",
+          "h1": "Stripe Fee Calculator",
+          "desc": "Calculate exact Stripe fees (2.9% + $0.30). See your net payout on any amount and how much to invoice to avoid losing money to processing costs.",
+          "guide": "Stripe operates in the Payment Processor sector with a standard transaction rate of 2.9% plus a fixed fee of $0.30 per transaction. For example, on a $100.00 payment, Stripe deducts $3.20, leaving you with a net payout of $96.80. On a $1,000.00 transaction, your net payout is $970.70 after the $29.30 processing fee. If you accept international payments or currency conversions, an additional 1.5% cross-border fee may apply.",
+          "faqs": [
+            {
+              "q": "How much does Stripe charge per transaction in 2026?",
+              "a": "The standard Stripe processing fee is 2.9% + $0.30 per domestic transaction. International or currency conversion transactions add roughly 1.5%."
+            },
+            {
+              "q": "How much is the Stripe fee on $1,000?",
+              "a": "For a $1,000 USD payment, Stripe charges $29.30 in standard fees, meaning you receive $970.70 net in your account."
+            },
+            {
+              "q": "How do I pass Stripe fees to my client?",
+              "a": "To receive the exact net amount after Stripe deducts its 2.9% + $0.30 fee, use the Reverse Invoice formula: (Desired Amount + $0.30) / (1 - 0.0290)."
+            }
+          ]
+        },
+        "es": {
+          "title": "Calculadora de Comisiones Stripe (2026) - Neto Exacto y Facturación",
+          "h1": "Calculadora de Comisiones de Stripe",
+          "desc": "Calcula al instante las comisiones de Stripe (2.9% + $0.30). Descubre cuánto recibes neto y cuánto debes cobrar para no perder dinero.",
+          "guide": "Stripe es una plataforma líder en la categoría de Payment Processor que aplica una tarifa estándar de 2.9% más un cargo fijo de $0.30 USD por operación. Por ejemplo, en un cobro de $100.00 USD, la comisión de Stripe es de $3.20, dejándote $96.80 libres. En una venta o transferencia de $1,000.00 USD, recibirás $970.70 netos tras descontar $29.30. En pagos internacionales o con cambio de divisa, se suma un 1.5% adicional.",
+          "faqs": [
+            {
+              "q": "¿Cuánto cobra Stripe de comisión en 2026?",
+              "a": "La comisión estándar de Stripe es del 2.9% más $0.30 USD fijos por transacción nacional, con un recargo aproximado del 1.5% en pagos internacionales."
+            },
+            {
+              "q": "¿Cuánto me descuenta Stripe por $1,000 dólares?",
+              "a": "En un cobro de $1,000 USD, Stripe retiene $29.30 de comisión estándar, por lo que recibes $970.70 netos."
+            },
+            {
+              "q": "¿Cómo calcular cuánto cobrar en Stripe para recibir el monto exacto?",
+              "a": "Usa el cálculo inverso de nuestra herramienta: suma el cargo fijo ($0.30) al monto deseado y divídelo entre (1 - 0.0290)."
+            }
+          ]
+        }
+      }
+    },
+    "paypal": {
+      "name": "PayPal",
+      "category": "Payment Processor",
+      "percent_fee": 3.49,
+      "fixed_fee": 0.49,
+      "intl_extra_percent": 1.5,
+      "affiliate_url": "https://paypal.com",
+      "seo": {
+        "en": {
+          "title": "PayPal Fee Calculator (2026) - Net Payout & Invoice Calculator",
+          "h1": "PayPal Fee Calculator",
+          "desc": "Calculate exact PayPal fees (3.49% + $0.49). See your net payout on any amount and how much to invoice to avoid losing money to processing costs.",
+          "guide": "PayPal operates in the Payment Processor sector with a standard transaction rate of 3.49% plus a fixed fee of $0.49 per transaction. For example, on a $100.00 payment, PayPal deducts $3.98, leaving you with a net payout of $96.02. On a $1,000.00 transaction, your net payout is $964.61 after the $35.39 processing fee. If you accept international payments or currency conversions, an additional 1.5% cross-border fee may apply.",
+          "faqs": [
+            {
+              "q": "How much does PayPal charge per transaction in 2026?",
+              "a": "The standard PayPal processing fee is 3.49% + $0.49 per domestic transaction. International or currency conversion transactions add roughly 1.5%."
+            },
+            {
+              "q": "How much is the PayPal fee on $1,000?",
+              "a": "For a $1,000 USD payment, PayPal charges $35.39 in standard fees, meaning you receive $964.61 net in your account."
+            },
+            {
+              "q": "How do I pass PayPal fees to my client?",
+              "a": "To receive the exact net amount after PayPal deducts its 3.49% + $0.49 fee, use the Reverse Invoice formula: (Desired Amount + $0.49) / (1 - 0.0349)."
+            }
+          ]
+        },
+        "es": {
+          "title": "Calculadora de Comisiones PayPal (2026) - Neto Exacto y Facturación",
+          "h1": "Calculadora de Comisiones de PayPal",
+          "desc": "Calcula al instante las comisiones de PayPal (3.49% + $0.49). Descubre cuánto recibes neto y cuánto debes cobrar para no perder dinero.",
+          "guide": "PayPal es una plataforma líder en la categoría de Payment Processor que aplica una tarifa estándar de 3.49% más un cargo fijo de $0.49 USD por operación. Por ejemplo, en un cobro de $100.00 USD, la comisión de PayPal es de $3.98, dejándote $96.02 libres. En una venta o transferencia de $1,000.00 USD, recibirás $964.61 netos tras descontar $35.39. En pagos internacionales o con cambio de divisa, se suma un 1.5% adicional.",
+          "faqs": [
+            {
+              "q": "¿Cuánto cobra PayPal de comisión en 2026?",
+              "a": "La comisión estándar de PayPal es del 3.49% más $0.49 USD fijos por transacción nacional, con un recargo aproximado del 1.5% en pagos internacionales."
+            },
+            {
+              "q": "¿Cuánto me descuenta PayPal por $1,000 dólares?",
+              "a": "En un cobro de $1,000 USD, PayPal retiene $35.39 de comisión estándar, por lo que recibes $964.61 netos."
+            },
+            {
+              "q": "¿Cómo calcular cuánto cobrar en PayPal para recibir el monto exacto?",
+              "a": "Usa el cálculo inverso de nuestra herramienta: suma el cargo fijo ($0.49) al monto deseado y divídelo entre (1 - 0.0349)."
+            }
+          ]
+        }
+      }
+    },
+    "wise": {
+      "name": "Wise",
+      "category": "Global Transfers",
+      "percent_fee": 0.65,
+      "fixed_fee": 0.45,
+      "intl_extra_percent": 0.0,
+      "affiliate_url": "https://wise.com",
+      "seo": {
+        "en": {
+          "title": "Wise Fee Calculator (2026) - Net Payout & Invoice Calculator",
+          "h1": "Wise Fee Calculator",
+          "desc": "Calculate exact Wise fees (0.65% + $0.45). See your net payout on any amount and how much to invoice to avoid losing money to processing costs.",
+          "guide": "Wise operates in the Global Transfers sector with a standard transaction rate of 0.65% plus a fixed fee of $0.45 per transaction. For example, on a $100.00 payment, Wise deducts $1.10, leaving you with a net payout of $98.90. On a $1,000.00 transaction, your net payout is $993.05 after the $6.95 processing fee. If you accept international payments or currency conversions, an additional 0.0% cross-border fee may apply.",
+          "faqs": [
+            {
+              "q": "How much does Wise charge per transaction in 2026?",
+              "a": "The standard Wise processing fee is 0.65% + $0.45 per domestic transaction. International or currency conversion transactions add roughly 0.0%."
+            },
+            {
+              "q": "How much is the Wise fee on $1,000?",
+              "a": "For a $1,000 USD payment, Wise charges $6.95 in standard fees, meaning you receive $993.05 net in your account."
+            },
+            {
+              "q": "How do I pass Wise fees to my client?",
+              "a": "To receive the exact net amount after Wise deducts its 0.65% + $0.45 fee, use the Reverse Invoice formula: (Desired Amount + $0.45) / (1 - 0.0065)."
+            }
+          ]
+        },
+        "es": {
+          "title": "Calculadora de Comisiones Wise (2026) - Neto Exacto y Facturación",
+          "h1": "Calculadora de Comisiones de Wise",
+          "desc": "Calcula al instante las comisiones de Wise (0.65% + $0.45). Descubre cuánto recibes neto y cuánto debes cobrar para no perder dinero.",
+          "guide": "Wise es una plataforma líder en la categoría de Global Transfers que aplica una tarifa estándar de 0.65% más un cargo fijo de $0.45 USD por operación. Por ejemplo, en un cobro de $100.00 USD, la comisión de Wise es de $1.10, dejándote $98.90 libres. En una venta o transferencia de $1,000.00 USD, recibirás $993.05 netos tras descontar $6.95. En pagos internacionales o con cambio de divisa, se suma un 0.0% adicional.",
+          "faqs": [
+            {
+              "q": "¿Cuánto cobra Wise de comisión en 2026?",
+              "a": "La comisión estándar de Wise es del 0.65% más $0.45 USD fijos por transacción nacional, con un recargo aproximado del 0.0% en pagos internacionales."
+            },
+            {
+              "q": "¿Cuánto me descuenta Wise por $1,000 dólares?",
+              "a": "En un cobro de $1,000 USD, Wise retiene $6.95 de comisión estándar, por lo que recibes $993.05 netos."
+            },
+            {
+              "q": "¿Cómo calcular cuánto cobrar en Wise para recibir el monto exacto?",
+              "a": "Usa el cálculo inverso de nuestra herramienta: suma el cargo fijo ($0.45) al monto deseado y divídelo entre (1 - 0.0065)."
+            }
+          ]
+        }
+      }
+    },
+    "payoneer": {
+      "name": "Payoneer",
+      "category": "Global Transfers",
+      "percent_fee": 3.0,
+      "fixed_fee": 0.0,
+      "intl_extra_percent": 1.0,
+      "affiliate_url": "https://payoneer.com",
+      "seo": {
+        "en": {
+          "title": "Payoneer Fee Calculator (2026) - Net Payout & Invoice Calculator",
+          "h1": "Payoneer Fee Calculator",
+          "desc": "Calculate exact Payoneer fees (3.0% + $0.00). See your net payout on any amount and how much to invoice to avoid losing money to processing costs.",
+          "guide": "Payoneer operates in the Global Transfers sector with a standard transaction rate of 3.0% plus a fixed fee of $0.00 per transaction. For example, on a $100.00 payment, Payoneer deducts $3.00, leaving you with a net payout of $97.00. On a $1,000.00 transaction, your net payout is $970.00 after the $30.00 processing fee. If you accept international payments or currency conversions, an additional 1.0% cross-border fee may apply.",
+          "faqs": [
+            {
+              "q": "How much does Payoneer charge per transaction in 2026?",
+              "a": "The standard Payoneer processing fee is 3.0% + $0.00 per domestic transaction. International or currency conversion transactions add roughly 1.0%."
+            },
+            {
+              "q": "How much is the Payoneer fee on $1,000?",
+              "a": "For a $1,000 USD payment, Payoneer charges $30.00 in standard fees, meaning you receive $970.00 net in your account."
+            },
+            {
+              "q": "How do I pass Payoneer fees to my client?",
+              "a": "To receive the exact net amount after Payoneer deducts its 3.0% + $0.00 fee, use the Reverse Invoice formula: (Desired Amount + $0.00) / (1 - 0.0300)."
+            }
+          ]
+        },
+        "es": {
+          "title": "Calculadora de Comisiones Payoneer (2026) - Neto Exacto y Facturación",
+          "h1": "Calculadora de Comisiones de Payoneer",
+          "desc": "Calcula al instante las comisiones de Payoneer (3.0% + $0.00). Descubre cuánto recibes neto y cuánto debes cobrar para no perder dinero.",
+          "guide": "Payoneer es una plataforma líder en la categoría de Global Transfers que aplica una tarifa estándar de 3.0% más un cargo fijo de $0.00 USD por operación. Por ejemplo, en un cobro de $100.00 USD, la comisión de Payoneer es de $3.00, dejándote $97.00 libres. En una venta o transferencia de $1,000.00 USD, recibirás $970.00 netos tras descontar $30.00. En pagos internacionales o con cambio de divisa, se suma un 1.0% adicional.",
+          "faqs": [
+            {
+              "q": "¿Cuánto cobra Payoneer de comisión en 2026?",
+              "a": "La comisión estándar de Payoneer es del 3.0% más $0.00 USD fijos por transacción nacional, con un recargo aproximado del 1.0% en pagos internacionales."
+            },
+            {
+              "q": "¿Cuánto me descuenta Payoneer por $1,000 dólares?",
+              "a": "En un cobro de $1,000 USD, Payoneer retiene $30.00 de comisión estándar, por lo que recibes $970.00 netos."
+            },
+            {
+              "q": "¿Cómo calcular cuánto cobrar en Payoneer para recibir el monto exacto?",
+              "a": "Usa el cálculo inverso de nuestra herramienta: suma el cargo fijo ($0.00) al monto deseado y divídelo entre (1 - 0.0300)."
+            }
+          ]
+        }
+      }
+    },
+    "shopify": {
+      "name": "Shopify Payments",
+      "category": "E-Commerce",
+      "percent_fee": 2.9,
+      "fixed_fee": 0.3,
+      "intl_extra_percent": 2.0,
+      "affiliate_url": "https://shopify.com",
+      "seo": {
+        "en": {
+          "title": "Shopify Payments Fee Calculator (2026) - Net Payout & Invoice Calculator",
+          "h1": "Shopify Payments Fee Calculator",
+          "desc": "Calculate exact Shopify Payments fees (2.9% + $0.30). See your net payout on any amount and how much to invoice to avoid losing money to processing costs.",
+          "guide": "Shopify Payments operates in the E-Commerce sector with a standard transaction rate of 2.9% plus a fixed fee of $0.30 per transaction. For example, on a $100.00 payment, Shopify Payments deducts $3.20, leaving you with a net payout of $96.80. On a $1,000.00 transaction, your net payout is $970.70 after the $29.30 processing fee. If you accept international payments or currency conversions, an additional 2.0% cross-border fee may apply.",
+          "faqs": [
+            {
+              "q": "How much does Shopify Payments charge per transaction in 2026?",
+              "a": "The standard Shopify Payments processing fee is 2.9% + $0.30 per domestic transaction. International or currency conversion transactions add roughly 2.0%."
+            },
+            {
+              "q": "How much is the Shopify Payments fee on $1,000?",
+              "a": "For a $1,000 USD payment, Shopify Payments charges $29.30 in standard fees, meaning you receive $970.70 net in your account."
+            },
+            {
+              "q": "How do I pass Shopify Payments fees to my client?",
+              "a": "To receive the exact net amount after Shopify Payments deducts its 2.9% + $0.30 fee, use the Reverse Invoice formula: (Desired Amount + $0.30) / (1 - 0.0290)."
+            }
+          ]
+        },
+        "es": {
+          "title": "Calculadora de Comisiones Shopify Payments (2026) - Neto Exacto y Facturación",
+          "h1": "Calculadora de Comisiones de Shopify Payments",
+          "desc": "Calcula al instante las comisiones de Shopify Payments (2.9% + $0.30). Descubre cuánto recibes neto y cuánto debes cobrar para no perder dinero.",
+          "guide": "Shopify Payments es una plataforma líder en la categoría de E-Commerce que aplica una tarifa estándar de 2.9% más un cargo fijo de $0.30 USD por operación. Por ejemplo, en un cobro de $100.00 USD, la comisión de Shopify Payments es de $3.20, dejándote $96.80 libres. En una venta o transferencia de $1,000.00 USD, recibirás $970.70 netos tras descontar $29.30. En pagos internacionales o con cambio de divisa, se suma un 2.0% adicional.",
+          "faqs": [
+            {
+              "q": "¿Cuánto cobra Shopify Payments de comisión en 2026?",
+              "a": "La comisión estándar de Shopify Payments es del 2.9% más $0.30 USD fijos por transacción nacional, con un recargo aproximado del 2.0% en pagos internacionales."
+            },
+            {
+              "q": "¿Cuánto me descuenta Shopify Payments por $1,000 dólares?",
+              "a": "En un cobro de $1,000 USD, Shopify Payments retiene $29.30 de comisión estándar, por lo que recibes $970.70 netos."
+            },
+            {
+              "q": "¿Cómo calcular cuánto cobrar en Shopify Payments para recibir el monto exacto?",
+              "a": "Usa el cálculo inverso de nuestra herramienta: suma el cargo fijo ($0.30) al monto deseado y divídelo entre (1 - 0.0290)."
+            }
+          ]
+        }
+      }
+    },
+    "square": {
+      "name": "Square",
+      "category": "Payment Processor",
+      "percent_fee": 2.9,
+      "fixed_fee": 0.3,
+      "intl_extra_percent": 1.0,
+      "affiliate_url": "https://squareup.com",
+      "seo": {
+        "en": {
+          "title": "Square Fee Calculator (2026) - Net Payout & Invoice Calculator",
+          "h1": "Square Fee Calculator",
+          "desc": "Calculate exact Square fees (2.9% + $0.30). See your net payout on any amount and how much to invoice to avoid losing money to processing costs.",
+          "guide": "Square operates in the Payment Processor sector with a standard transaction rate of 2.9% plus a fixed fee of $0.30 per transaction. For example, on a $100.00 payment, Square deducts $3.20, leaving you with a net payout of $96.80. On a $1,000.00 transaction, your net payout is $970.70 after the $29.30 processing fee. If you accept international payments or currency conversions, an additional 1.0% cross-border fee may apply.",
+          "faqs": [
+            {
+              "q": "How much does Square charge per transaction in 2026?",
+              "a": "The standard Square processing fee is 2.9% + $0.30 per domestic transaction. International or currency conversion transactions add roughly 1.0%."
+            },
+            {
+              "q": "How much is the Square fee on $1,000?",
+              "a": "For a $1,000 USD payment, Square charges $29.30 in standard fees, meaning you receive $970.70 net in your account."
+            },
+            {
+              "q": "How do I pass Square fees to my client?",
+              "a": "To receive the exact net amount after Square deducts its 2.9% + $0.30 fee, use the Reverse Invoice formula: (Desired Amount + $0.30) / (1 - 0.0290)."
+            }
+          ]
+        },
+        "es": {
+          "title": "Calculadora de Comisiones Square (2026) - Neto Exacto y Facturación",
+          "h1": "Calculadora de Comisiones de Square",
+          "desc": "Calcula al instante las comisiones de Square (2.9% + $0.30). Descubre cuánto recibes neto y cuánto debes cobrar para no perder dinero.",
+          "guide": "Square es una plataforma líder en la categoría de Payment Processor que aplica una tarifa estándar de 2.9% más un cargo fijo de $0.30 USD por operación. Por ejemplo, en un cobro de $100.00 USD, la comisión de Square es de $3.20, dejándote $96.80 libres. En una venta o transferencia de $1,000.00 USD, recibirás $970.70 netos tras descontar $29.30. En pagos internacionales o con cambio de divisa, se suma un 1.0% adicional.",
+          "faqs": [
+            {
+              "q": "¿Cuánto cobra Square de comisión en 2026?",
+              "a": "La comisión estándar de Square es del 2.9% más $0.30 USD fijos por transacción nacional, con un recargo aproximado del 1.0% en pagos internacionales."
+            },
+            {
+              "q": "¿Cuánto me descuenta Square por $1,000 dólares?",
+              "a": "En un cobro de $1,000 USD, Square retiene $29.30 de comisión estándar, por lo que recibes $970.70 netos."
+            },
+            {
+              "q": "¿Cómo calcular cuánto cobrar en Square para recibir el monto exacto?",
+              "a": "Usa el cálculo inverso de nuestra herramienta: suma el cargo fijo ($0.30) al monto deseado y divídelo entre (1 - 0.0290)."
+            }
+          ]
+        }
+      }
+    },
+    "lemonsqueezy": {
+      "name": "Lemon Squeezy",
+      "category": "SaaS & Merchant of Record",
+      "percent_fee": 5.0,
+      "fixed_fee": 0.5,
+      "intl_extra_percent": 1.5,
+      "affiliate_url": "https://lemonsqueezy.com",
+      "seo": {
+        "en": {
+          "title": "Lemon Squeezy Fee Calculator (2026) - Net Payout & Invoice Calculator",
+          "h1": "Lemon Squeezy Fee Calculator",
+          "desc": "Calculate exact Lemon Squeezy fees (5.0% + $0.50). See your net payout on any amount and how much to invoice to avoid losing money to processing costs.",
+          "guide": "Lemon Squeezy operates in the SaaS & Merchant of Record sector with a standard transaction rate of 5.0% plus a fixed fee of $0.50 per transaction. For example, on a $100.00 payment, Lemon Squeezy deducts $5.50, leaving you with a net payout of $94.50. On a $1,000.00 transaction, your net payout is $949.50 after the $50.50 processing fee. If you accept international payments or currency conversions, an additional 1.5% cross-border fee may apply.",
+          "faqs": [
+            {
+              "q": "How much does Lemon Squeezy charge per transaction in 2026?",
+              "a": "The standard Lemon Squeezy processing fee is 5.0% + $0.50 per domestic transaction. International or currency conversion transactions add roughly 1.5%."
+            },
+            {
+              "q": "How much is the Lemon Squeezy fee on $1,000?",
+              "a": "For a $1,000 USD payment, Lemon Squeezy charges $50.50 in standard fees, meaning you receive $949.50 net in your account."
+            },
+            {
+              "q": "How do I pass Lemon Squeezy fees to my client?",
+              "a": "To receive the exact net amount after Lemon Squeezy deducts its 5.0% + $0.50 fee, use the Reverse Invoice formula: (Desired Amount + $0.50) / (1 - 0.0500)."
+            }
+          ]
+        },
+        "es": {
+          "title": "Calculadora de Comisiones Lemon Squeezy (2026) - Neto Exacto y Facturación",
+          "h1": "Calculadora de Comisiones de Lemon Squeezy",
+          "desc": "Calcula al instante las comisiones de Lemon Squeezy (5.0% + $0.50). Descubre cuánto recibes neto y cuánto debes cobrar para no perder dinero.",
+          "guide": "Lemon Squeezy es una plataforma líder en la categoría de SaaS & Merchant of Record que aplica una tarifa estándar de 5.0% más un cargo fijo de $0.50 USD por operación. Por ejemplo, en un cobro de $100.00 USD, la comisión de Lemon Squeezy es de $5.50, dejándote $94.50 libres. En una venta o transferencia de $1,000.00 USD, recibirás $949.50 netos tras descontar $50.50. En pagos internacionales o con cambio de divisa, se suma un 1.5% adicional.",
+          "faqs": [
+            {
+              "q": "¿Cuánto cobra Lemon Squeezy de comisión en 2026?",
+              "a": "La comisión estándar de Lemon Squeezy es del 5.0% más $0.50 USD fijos por transacción nacional, con un recargo aproximado del 1.5% en pagos internacionales."
+            },
+            {
+              "q": "¿Cuánto me descuenta Lemon Squeezy por $1,000 dólares?",
+              "a": "En un cobro de $1,000 USD, Lemon Squeezy retiene $50.50 de comisión estándar, por lo que recibes $949.50 netos."
+            },
+            {
+              "q": "¿Cómo calcular cuánto cobrar en Lemon Squeezy para recibir el monto exacto?",
+              "a": "Usa el cálculo inverso de nuestra herramienta: suma el cargo fijo ($0.50) al monto deseado y divídelo entre (1 - 0.0500)."
+            }
+          ]
+        }
+      }
+    },
+    "paddle": {
+      "name": "Paddle",
+      "category": "SaaS & Merchant of Record",
+      "percent_fee": 5.0,
+      "fixed_fee": 0.5,
+      "intl_extra_percent": 0.0,
+      "affiliate_url": "https://paddle.com",
+      "seo": {
+        "en": {
+          "title": "Paddle Fee Calculator (2026) - Net Payout & Invoice Calculator",
+          "h1": "Paddle Fee Calculator",
+          "desc": "Calculate exact Paddle fees (5.0% + $0.50). See your net payout on any amount and how much to invoice to avoid losing money to processing costs.",
+          "guide": "Paddle operates in the SaaS & Merchant of Record sector with a standard transaction rate of 5.0% plus a fixed fee of $0.50 per transaction. For example, on a $100.00 payment, Paddle deducts $5.50, leaving you with a net payout of $94.50. On a $1,000.00 transaction, your net payout is $949.50 after the $50.50 processing fee. If you accept international payments or currency conversions, an additional 0.0% cross-border fee may apply.",
+          "faqs": [
+            {
+              "q": "How much does Paddle charge per transaction in 2026?",
+              "a": "The standard Paddle processing fee is 5.0% + $0.50 per domestic transaction. International or currency conversion transactions add roughly 0.0%."
+            },
+            {
+              "q": "How much is the Paddle fee on $1,000?",
+              "a": "For a $1,000 USD payment, Paddle charges $50.50 in standard fees, meaning you receive $949.50 net in your account."
+            },
+            {
+              "q": "How do I pass Paddle fees to my client?",
+              "a": "To receive the exact net amount after Paddle deducts its 5.0% + $0.50 fee, use the Reverse Invoice formula: (Desired Amount + $0.50) / (1 - 0.0500)."
+            }
+          ]
+        },
+        "es": {
+          "title": "Calculadora de Comisiones Paddle (2026) - Neto Exacto y Facturación",
+          "h1": "Calculadora de Comisiones de Paddle",
+          "desc": "Calcula al instante las comisiones de Paddle (5.0% + $0.50). Descubre cuánto recibes neto y cuánto debes cobrar para no perder dinero.",
+          "guide": "Paddle es una plataforma líder en la categoría de SaaS & Merchant of Record que aplica una tarifa estándar de 5.0% más un cargo fijo de $0.50 USD por operación. Por ejemplo, en un cobro de $100.00 USD, la comisión de Paddle es de $5.50, dejándote $94.50 libres. En una venta o transferencia de $1,000.00 USD, recibirás $949.50 netos tras descontar $50.50. En pagos internacionales o con cambio de divisa, se suma un 0.0% adicional.",
+          "faqs": [
+            {
+              "q": "¿Cuánto cobra Paddle de comisión en 2026?",
+              "a": "La comisión estándar de Paddle es del 5.0% más $0.50 USD fijos por transacción nacional, con un recargo aproximado del 0.0% en pagos internacionales."
+            },
+            {
+              "q": "¿Cuánto me descuenta Paddle por $1,000 dólares?",
+              "a": "En un cobro de $1,000 USD, Paddle retiene $50.50 de comisión estándar, por lo que recibes $949.50 netos."
+            },
+            {
+              "q": "¿Cómo calcular cuánto cobrar en Paddle para recibir el monto exacto?",
+              "a": "Usa el cálculo inverso de nuestra herramienta: suma el cargo fijo ($0.50) al monto deseado y divídelo entre (1 - 0.0500)."
+            }
+          ]
+        }
+      }
+    },
+    "gumroad": {
+      "name": "Gumroad",
+      "category": "Creator Economy",
+      "percent_fee": 10.0,
+      "fixed_fee": 0.5,
+      "intl_extra_percent": 0.0,
+      "affiliate_url": "https://gumroad.com",
+      "seo": {
+        "en": {
+          "title": "Gumroad Fee Calculator (2026) - Net Payout & Invoice Calculator",
+          "h1": "Gumroad Fee Calculator",
+          "desc": "Calculate exact Gumroad fees (10.0% + $0.50). See your net payout on any amount and how much to invoice to avoid losing money to processing costs.",
+          "guide": "Gumroad operates in the Creator Economy sector with a standard transaction rate of 10.0% plus a fixed fee of $0.50 per transaction. For example, on a $100.00 payment, Gumroad deducts $10.50, leaving you with a net payout of $89.50. On a $1,000.00 transaction, your net payout is $899.50 after the $100.50 processing fee. If you accept international payments or currency conversions, an additional 0.0% cross-border fee may apply.",
+          "faqs": [
+            {
+              "q": "How much does Gumroad charge per transaction in 2026?",
+              "a": "The standard Gumroad processing fee is 10.0% + $0.50 per domestic transaction. International or currency conversion transactions add roughly 0.0%."
+            },
+            {
+              "q": "How much is the Gumroad fee on $1,000?",
+              "a": "For a $1,000 USD payment, Gumroad charges $100.50 in standard fees, meaning you receive $899.50 net in your account."
+            },
+            {
+              "q": "How do I pass Gumroad fees to my client?",
+              "a": "To receive the exact net amount after Gumroad deducts its 10.0% + $0.50 fee, use the Reverse Invoice formula: (Desired Amount + $0.50) / (1 - 0.1000)."
+            }
+          ]
+        },
+        "es": {
+          "title": "Calculadora de Comisiones Gumroad (2026) - Neto Exacto y Facturación",
+          "h1": "Calculadora de Comisiones de Gumroad",
+          "desc": "Calcula al instante las comisiones de Gumroad (10.0% + $0.50). Descubre cuánto recibes neto y cuánto debes cobrar para no perder dinero.",
+          "guide": "Gumroad es una plataforma líder en la categoría de Creator Economy que aplica una tarifa estándar de 10.0% más un cargo fijo de $0.50 USD por operación. Por ejemplo, en un cobro de $100.00 USD, la comisión de Gumroad es de $10.50, dejándote $89.50 libres. En una venta o transferencia de $1,000.00 USD, recibirás $899.50 netos tras descontar $100.50. En pagos internacionales o con cambio de divisa, se suma un 0.0% adicional.",
+          "faqs": [
+            {
+              "q": "¿Cuánto cobra Gumroad de comisión en 2026?",
+              "a": "La comisión estándar de Gumroad es del 10.0% más $0.50 USD fijos por transacción nacional, con un recargo aproximado del 0.0% en pagos internacionales."
+            },
+            {
+              "q": "¿Cuánto me descuenta Gumroad por $1,000 dólares?",
+              "a": "En un cobro de $1,000 USD, Gumroad retiene $100.50 de comisión estándar, por lo que recibes $899.50 netos."
+            },
+            {
+              "q": "¿Cómo calcular cuánto cobrar en Gumroad para recibir el monto exacto?",
+              "a": "Usa el cálculo inverso de nuestra herramienta: suma el cargo fijo ($0.50) al monto deseado y divídelo entre (1 - 0.1000)."
+            }
+          ]
+        }
+      }
+    },
+    "patreon": {
+      "name": "Patreon",
+      "category": "Creator Economy",
+      "percent_fee": 8.0,
+      "fixed_fee": 0.3,
+      "intl_extra_percent": 1.0,
+      "affiliate_url": "https://patreon.com",
+      "seo": {
+        "en": {
+          "title": "Patreon Fee Calculator (2026) - Net Payout & Invoice Calculator",
+          "h1": "Patreon Fee Calculator",
+          "desc": "Calculate exact Patreon fees (8.0% + $0.30). See your net payout on any amount and how much to invoice to avoid losing money to processing costs.",
+          "guide": "Patreon operates in the Creator Economy sector with a standard transaction rate of 8.0% plus a fixed fee of $0.30 per transaction. For example, on a $100.00 payment, Patreon deducts $8.30, leaving you with a net payout of $91.70. On a $1,000.00 transaction, your net payout is $919.70 after the $80.30 processing fee. If you accept international payments or currency conversions, an additional 1.0% cross-border fee may apply.",
+          "faqs": [
+            {
+              "q": "How much does Patreon charge per transaction in 2026?",
+              "a": "The standard Patreon processing fee is 8.0% + $0.30 per domestic transaction. International or currency conversion transactions add roughly 1.0%."
+            },
+            {
+              "q": "How much is the Patreon fee on $1,000?",
+              "a": "For a $1,000 USD payment, Patreon charges $80.30 in standard fees, meaning you receive $919.70 net in your account."
+            },
+            {
+              "q": "How do I pass Patreon fees to my client?",
+              "a": "To receive the exact net amount after Patreon deducts its 8.0% + $0.30 fee, use the Reverse Invoice formula: (Desired Amount + $0.30) / (1 - 0.0800)."
+            }
+          ]
+        },
+        "es": {
+          "title": "Calculadora de Comisiones Patreon (2026) - Neto Exacto y Facturación",
+          "h1": "Calculadora de Comisiones de Patreon",
+          "desc": "Calcula al instante las comisiones de Patreon (8.0% + $0.30). Descubre cuánto recibes neto y cuánto debes cobrar para no perder dinero.",
+          "guide": "Patreon es una plataforma líder en la categoría de Creator Economy que aplica una tarifa estándar de 8.0% más un cargo fijo de $0.30 USD por operación. Por ejemplo, en un cobro de $100.00 USD, la comisión de Patreon es de $8.30, dejándote $91.70 libres. En una venta o transferencia de $1,000.00 USD, recibirás $919.70 netos tras descontar $80.30. En pagos internacionales o con cambio de divisa, se suma un 1.0% adicional.",
+          "faqs": [
+            {
+              "q": "¿Cuánto cobra Patreon de comisión en 2026?",
+              "a": "La comisión estándar de Patreon es del 8.0% más $0.30 USD fijos por transacción nacional, con un recargo aproximado del 1.0% en pagos internacionales."
+            },
+            {
+              "q": "¿Cuánto me descuenta Patreon por $1,000 dólares?",
+              "a": "En un cobro de $1,000 USD, Patreon retiene $80.30 de comisión estándar, por lo que recibes $919.70 netos."
+            },
+            {
+              "q": "¿Cómo calcular cuánto cobrar en Patreon para recibir el monto exacto?",
+              "a": "Usa el cálculo inverso de nuestra herramienta: suma el cargo fijo ($0.30) al monto deseado y divídelo entre (1 - 0.0800)."
+            }
+          ]
+        }
+      }
+    },
+    "upwork": {
+      "name": "Upwork",
+      "category": "Freelance Marketplace",
+      "percent_fee": 10.0,
+      "fixed_fee": 0.0,
+      "intl_extra_percent": 0.0,
+      "affiliate_url": "https://upwork.com",
+      "seo": {
+        "en": {
+          "title": "Upwork Fee Calculator (2026) - Net Payout & Invoice Calculator",
+          "h1": "Upwork Fee Calculator",
+          "desc": "Calculate exact Upwork fees (10.0% + $0.00). See your net payout on any amount and how much to invoice to avoid losing money to processing costs.",
+          "guide": "Upwork operates in the Freelance Marketplace sector with a standard transaction rate of 10.0% plus a fixed fee of $0.00 per transaction. For example, on a $100.00 payment, Upwork deducts $10.00, leaving you with a net payout of $90.00. On a $1,000.00 transaction, your net payout is $900.00 after the $100.00 processing fee. If you accept international payments or currency conversions, an additional 0.0% cross-border fee may apply.",
+          "faqs": [
+            {
+              "q": "How much does Upwork charge per transaction in 2026?",
+              "a": "The standard Upwork processing fee is 10.0% + $0.00 per domestic transaction. International or currency conversion transactions add roughly 0.0%."
+            },
+            {
+              "q": "How much is the Upwork fee on $1,000?",
+              "a": "For a $1,000 USD payment, Upwork charges $100.00 in standard fees, meaning you receive $900.00 net in your account."
+            },
+            {
+              "q": "How do I pass Upwork fees to my client?",
+              "a": "To receive the exact net amount after Upwork deducts its 10.0% + $0.00 fee, use the Reverse Invoice formula: (Desired Amount + $0.00) / (1 - 0.1000)."
+            }
+          ]
+        },
+        "es": {
+          "title": "Calculadora de Comisiones Upwork (2026) - Neto Exacto y Facturación",
+          "h1": "Calculadora de Comisiones de Upwork",
+          "desc": "Calcula al instante las comisiones de Upwork (10.0% + $0.00). Descubre cuánto recibes neto y cuánto debes cobrar para no perder dinero.",
+          "guide": "Upwork es una plataforma líder en la categoría de Freelance Marketplace que aplica una tarifa estándar de 10.0% más un cargo fijo de $0.00 USD por operación. Por ejemplo, en un cobro de $100.00 USD, la comisión de Upwork es de $10.00, dejándote $90.00 libres. En una venta o transferencia de $1,000.00 USD, recibirás $900.00 netos tras descontar $100.00. En pagos internacionales o con cambio de divisa, se suma un 0.0% adicional.",
+          "faqs": [
+            {
+              "q": "¿Cuánto cobra Upwork de comisión en 2026?",
+              "a": "La comisión estándar de Upwork es del 10.0% más $0.00 USD fijos por transacción nacional, con un recargo aproximado del 0.0% en pagos internacionales."
+            },
+            {
+              "q": "¿Cuánto me descuenta Upwork por $1,000 dólares?",
+              "a": "En un cobro de $1,000 USD, Upwork retiene $100.00 de comisión estándar, por lo que recibes $900.00 netos."
+            },
+            {
+              "q": "¿Cómo calcular cuánto cobrar en Upwork para recibir el monto exacto?",
+              "a": "Usa el cálculo inverso de nuestra herramienta: suma el cargo fijo ($0.00) al monto deseado y divídelo entre (1 - 0.1000)."
+            }
+          ]
+        }
+      }
+    },
+    "fiverr": {
+      "name": "Fiverr",
+      "category": "Freelance Marketplace",
+      "percent_fee": 20.0,
+      "fixed_fee": 0.0,
+      "intl_extra_percent": 0.0,
+      "affiliate_url": "https://fiverr.com",
+      "seo": {
+        "en": {
+          "title": "Fiverr Fee Calculator (2026) - Net Payout & Invoice Calculator",
+          "h1": "Fiverr Fee Calculator",
+          "desc": "Calculate exact Fiverr fees (20.0% + $0.00). See your net payout on any amount and how much to invoice to avoid losing money to processing costs.",
+          "guide": "Fiverr operates in the Freelance Marketplace sector with a standard transaction rate of 20.0% plus a fixed fee of $0.00 per transaction. For example, on a $100.00 payment, Fiverr deducts $20.00, leaving you with a net payout of $80.00. On a $1,000.00 transaction, your net payout is $800.00 after the $200.00 processing fee. If you accept international payments or currency conversions, an additional 0.0% cross-border fee may apply.",
+          "faqs": [
+            {
+              "q": "How much does Fiverr charge per transaction in 2026?",
+              "a": "The standard Fiverr processing fee is 20.0% + $0.00 per domestic transaction. International or currency conversion transactions add roughly 0.0%."
+            },
+            {
+              "q": "How much is the Fiverr fee on $1,000?",
+              "a": "For a $1,000 USD payment, Fiverr charges $200.00 in standard fees, meaning you receive $800.00 net in your account."
+            },
+            {
+              "q": "How do I pass Fiverr fees to my client?",
+              "a": "To receive the exact net amount after Fiverr deducts its 20.0% + $0.00 fee, use the Reverse Invoice formula: (Desired Amount + $0.00) / (1 - 0.2000)."
+            }
+          ]
+        },
+        "es": {
+          "title": "Calculadora de Comisiones Fiverr (2026) - Neto Exacto y Facturación",
+          "h1": "Calculadora de Comisiones de Fiverr",
+          "desc": "Calcula al instante las comisiones de Fiverr (20.0% + $0.00). Descubre cuánto recibes neto y cuánto debes cobrar para no perder dinero.",
+          "guide": "Fiverr es una plataforma líder en la categoría de Freelance Marketplace que aplica una tarifa estándar de 20.0% más un cargo fijo de $0.00 USD por operación. Por ejemplo, en un cobro de $100.00 USD, la comisión de Fiverr es de $20.00, dejándote $80.00 libres. En una venta o transferencia de $1,000.00 USD, recibirás $800.00 netos tras descontar $200.00. En pagos internacionales o con cambio de divisa, se suma un 0.0% adicional.",
+          "faqs": [
+            {
+              "q": "¿Cuánto cobra Fiverr de comisión en 2026?",
+              "a": "La comisión estándar de Fiverr es del 20.0% más $0.00 USD fijos por transacción nacional, con un recargo aproximado del 0.0% en pagos internacionales."
+            },
+            {
+              "q": "¿Cuánto me descuenta Fiverr por $1,000 dólares?",
+              "a": "En un cobro de $1,000 USD, Fiverr retiene $200.00 de comisión estándar, por lo que recibes $800.00 netos."
+            },
+            {
+              "q": "¿Cómo calcular cuánto cobrar en Fiverr para recibir el monto exacto?",
+              "a": "Usa el cálculo inverso de nuestra herramienta: suma el cargo fijo ($0.00) al monto deseado y divídelo entre (1 - 0.2000)."
+            }
+          ]
+        }
+      }
+    },
+    "etsy": {
+      "name": "Etsy Payments",
+      "category": "E-Commerce",
+      "percent_fee": 6.5,
+      "fixed_fee": 0.25,
+      "intl_extra_percent": 1.5,
+      "affiliate_url": "https://etsy.com",
+      "seo": {
+        "en": {
+          "title": "Etsy Payments Fee Calculator (2026) - Net Payout & Invoice Calculator",
+          "h1": "Etsy Payments Fee Calculator",
+          "desc": "Calculate exact Etsy Payments fees (6.5% + $0.25). See your net payout on any amount and how much to invoice to avoid losing money to processing costs.",
+          "guide": "Etsy Payments operates in the E-Commerce sector with a standard transaction rate of 6.5% plus a fixed fee of $0.25 per transaction. For example, on a $100.00 payment, Etsy Payments deducts $6.75, leaving you with a net payout of $93.25. On a $1,000.00 transaction, your net payout is $934.75 after the $65.25 processing fee. If you accept international payments or currency conversions, an additional 1.5% cross-border fee may apply.",
+          "faqs": [
+            {
+              "q": "How much does Etsy Payments charge per transaction in 2026?",
+              "a": "The standard Etsy Payments processing fee is 6.5% + $0.25 per domestic transaction. International or currency conversion transactions add roughly 1.5%."
+            },
+            {
+              "q": "How much is the Etsy Payments fee on $1,000?",
+              "a": "For a $1,000 USD payment, Etsy Payments charges $65.25 in standard fees, meaning you receive $934.75 net in your account."
+            },
+            {
+              "q": "How do I pass Etsy Payments fees to my client?",
+              "a": "To receive the exact net amount after Etsy Payments deducts its 6.5% + $0.25 fee, use the Reverse Invoice formula: (Desired Amount + $0.25) / (1 - 0.0650)."
+            }
+          ]
+        },
+        "es": {
+          "title": "Calculadora de Comisiones Etsy Payments (2026) - Neto Exacto y Facturación",
+          "h1": "Calculadora de Comisiones de Etsy Payments",
+          "desc": "Calcula al instante las comisiones de Etsy Payments (6.5% + $0.25). Descubre cuánto recibes neto y cuánto debes cobrar para no perder dinero.",
+          "guide": "Etsy Payments es una plataforma líder en la categoría de E-Commerce que aplica una tarifa estándar de 6.5% más un cargo fijo de $0.25 USD por operación. Por ejemplo, en un cobro de $100.00 USD, la comisión de Etsy Payments es de $6.75, dejándote $93.25 libres. En una venta o transferencia de $1,000.00 USD, recibirás $934.75 netos tras descontar $65.25. En pagos internacionales o con cambio de divisa, se suma un 1.5% adicional.",
+          "faqs": [
+            {
+              "q": "¿Cuánto cobra Etsy Payments de comisión en 2026?",
+              "a": "La comisión estándar de Etsy Payments es del 6.5% más $0.25 USD fijos por transacción nacional, con un recargo aproximado del 1.5% en pagos internacionales."
+            },
+            {
+              "q": "¿Cuánto me descuenta Etsy Payments por $1,000 dólares?",
+              "a": "En un cobro de $1,000 USD, Etsy Payments retiene $65.25 de comisión estándar, por lo que recibes $934.75 netos."
+            },
+            {
+              "q": "¿Cómo calcular cuánto cobrar en Etsy Payments para recibir el monto exacto?",
+              "a": "Usa el cálculo inverso de nuestra herramienta: suma el cargo fijo ($0.25) al monto deseado y divídelo entre (1 - 0.0650)."
+            }
+          ]
+        }
+      }
+    },
+    "ebay": {
+      "name": "eBay Managed Payments",
+      "category": "E-Commerce",
+      "percent_fee": 13.25,
+      "fixed_fee": 0.3,
+      "intl_extra_percent": 1.65,
+      "affiliate_url": "https://ebay.com",
+      "seo": {
+        "en": {
+          "title": "eBay Managed Payments Fee Calculator (2026) - Net Payout & Invoice Calculator",
+          "h1": "eBay Managed Payments Fee Calculator",
+          "desc": "Calculate exact eBay Managed Payments fees (13.25% + $0.30). See your net payout on any amount and how much to invoice to avoid losing money to processing costs.",
+          "guide": "eBay Managed Payments operates in the E-Commerce sector with a standard transaction rate of 13.25% plus a fixed fee of $0.30 per transaction. For example, on a $100.00 payment, eBay Managed Payments deducts $13.55, leaving you with a net payout of $86.45. On a $1,000.00 transaction, your net payout is $867.20 after the $132.80 processing fee. If you accept international payments or currency conversions, an additional 1.65% cross-border fee may apply.",
+          "faqs": [
+            {
+              "q": "How much does eBay Managed Payments charge per transaction in 2026?",
+              "a": "The standard eBay Managed Payments processing fee is 13.25% + $0.30 per domestic transaction. International or currency conversion transactions add roughly 1.65%."
+            },
+            {
+              "q": "How much is the eBay Managed Payments fee on $1,000?",
+              "a": "For a $1,000 USD payment, eBay Managed Payments charges $132.80 in standard fees, meaning you receive $867.20 net in your account."
+            },
+            {
+              "q": "How do I pass eBay Managed Payments fees to my client?",
+              "a": "To receive the exact net amount after eBay Managed Payments deducts its 13.25% + $0.30 fee, use the Reverse Invoice formula: (Desired Amount + $0.30) / (1 - 0.1325)."
+            }
+          ]
+        },
+        "es": {
+          "title": "Calculadora de Comisiones eBay Managed Payments (2026) - Neto Exacto y Facturación",
+          "h1": "Calculadora de Comisiones de eBay Managed Payments",
+          "desc": "Calcula al instante las comisiones de eBay Managed Payments (13.25% + $0.30). Descubre cuánto recibes neto y cuánto debes cobrar para no perder dinero.",
+          "guide": "eBay Managed Payments es una plataforma líder en la categoría de E-Commerce que aplica una tarifa estándar de 13.25% más un cargo fijo de $0.30 USD por operación. Por ejemplo, en un cobro de $100.00 USD, la comisión de eBay Managed Payments es de $13.55, dejándote $86.45 libres. En una venta o transferencia de $1,000.00 USD, recibirás $867.20 netos tras descontar $132.80. En pagos internacionales o con cambio de divisa, se suma un 1.65% adicional.",
+          "faqs": [
+            {
+              "q": "¿Cuánto cobra eBay Managed Payments de comisión en 2026?",
+              "a": "La comisión estándar de eBay Managed Payments es del 13.25% más $0.30 USD fijos por transacción nacional, con un recargo aproximado del 1.65% en pagos internacionales."
+            },
+            {
+              "q": "¿Cuánto me descuenta eBay Managed Payments por $1,000 dólares?",
+              "a": "En un cobro de $1,000 USD, eBay Managed Payments retiene $132.80 de comisión estándar, por lo que recibes $867.20 netos."
+            },
+            {
+              "q": "¿Cómo calcular cuánto cobrar en eBay Managed Payments para recibir el monto exacto?",
+              "a": "Usa el cálculo inverso de nuestra herramienta: suma el cargo fijo ($0.30) al monto deseado y divídelo entre (1 - 0.1325)."
+            }
+          ]
+        }
+      }
+    },
+    "amazon": {
+      "name": "Amazon Seller Referral",
+      "category": "E-Commerce",
+      "percent_fee": 15.0,
+      "fixed_fee": 0.0,
+      "intl_extra_percent": 0.0,
+      "affiliate_url": "https://sell.amazon.com",
+      "seo": {
+        "en": {
+          "title": "Amazon Seller Referral Fee Calculator (2026) - Net Payout & Invoice Calculator",
+          "h1": "Amazon Seller Referral Fee Calculator",
+          "desc": "Calculate exact Amazon Seller Referral fees (15.0% + $0.00). See your net payout on any amount and how much to invoice to avoid losing money to processing costs.",
+          "guide": "Amazon Seller Referral operates in the E-Commerce sector with a standard transaction rate of 15.0% plus a fixed fee of $0.00 per transaction. For example, on a $100.00 payment, Amazon Seller Referral deducts $15.00, leaving you with a net payout of $85.00. On a $1,000.00 transaction, your net payout is $850.00 after the $150.00 processing fee. If you accept international payments or currency conversions, an additional 0.0% cross-border fee may apply.",
+          "faqs": [
+            {
+              "q": "How much does Amazon Seller Referral charge per transaction in 2026?",
+              "a": "The standard Amazon Seller Referral processing fee is 15.0% + $0.00 per domestic transaction. International or currency conversion transactions add roughly 0.0%."
+            },
+            {
+              "q": "How much is the Amazon Seller Referral fee on $1,000?",
+              "a": "For a $1,000 USD payment, Amazon Seller Referral charges $150.00 in standard fees, meaning you receive $850.00 net in your account."
+            },
+            {
+              "q": "How do I pass Amazon Seller Referral fees to my client?",
+              "a": "To receive the exact net amount after Amazon Seller Referral deducts its 15.0% + $0.00 fee, use the Reverse Invoice formula: (Desired Amount + $0.00) / (1 - 0.1500)."
+            }
+          ]
+        },
+        "es": {
+          "title": "Calculadora de Comisiones Amazon Seller Referral (2026) - Neto Exacto y Facturación",
+          "h1": "Calculadora de Comisiones de Amazon Seller Referral",
+          "desc": "Calcula al instante las comisiones de Amazon Seller Referral (15.0% + $0.00). Descubre cuánto recibes neto y cuánto debes cobrar para no perder dinero.",
+          "guide": "Amazon Seller Referral es una plataforma líder en la categoría de E-Commerce que aplica una tarifa estándar de 15.0% más un cargo fijo de $0.00 USD por operación. Por ejemplo, en un cobro de $100.00 USD, la comisión de Amazon Seller Referral es de $15.00, dejándote $85.00 libres. En una venta o transferencia de $1,000.00 USD, recibirás $850.00 netos tras descontar $150.00. En pagos internacionales o con cambio de divisa, se suma un 0.0% adicional.",
+          "faqs": [
+            {
+              "q": "¿Cuánto cobra Amazon Seller Referral de comisión en 2026?",
+              "a": "La comisión estándar de Amazon Seller Referral es del 15.0% más $0.00 USD fijos por transacción nacional, con un recargo aproximado del 0.0% en pagos internacionales."
+            },
+            {
+              "q": "¿Cuánto me descuenta Amazon Seller Referral por $1,000 dólares?",
+              "a": "En un cobro de $1,000 USD, Amazon Seller Referral retiene $150.00 de comisión estándar, por lo que recibes $850.00 netos."
+            },
+            {
+              "q": "¿Cómo calcular cuánto cobrar en Amazon Seller Referral para recibir el monto exacto?",
+              "a": "Usa el cálculo inverso de nuestra herramienta: suma el cargo fijo ($0.00) al monto deseado y divídelo entre (1 - 0.1500)."
+            }
+          ]
+        }
+      }
+    },
+    "tiktokshop": {
+      "name": "TikTok Shop",
+      "category": "E-Commerce",
+      "percent_fee": 6.0,
+      "fixed_fee": 0.3,
+      "intl_extra_percent": 0.0,
+      "affiliate_url": "https://seller.tiktok.com",
+      "seo": {
+        "en": {
+          "title": "TikTok Shop Fee Calculator (2026) - Net Payout & Invoice Calculator",
+          "h1": "TikTok Shop Fee Calculator",
+          "desc": "Calculate exact TikTok Shop fees (6.0% + $0.30). See your net payout on any amount and how much to invoice to avoid losing money to processing costs.",
+          "guide": "TikTok Shop operates in the E-Commerce sector with a standard transaction rate of 6.0% plus a fixed fee of $0.30 per transaction. For example, on a $100.00 payment, TikTok Shop deducts $6.30, leaving you with a net payout of $93.70. On a $1,000.00 transaction, your net payout is $939.70 after the $60.30 processing fee. If you accept international payments or currency conversions, an additional 0.0% cross-border fee may apply.",
+          "faqs": [
+            {
+              "q": "How much does TikTok Shop charge per transaction in 2026?",
+              "a": "The standard TikTok Shop processing fee is 6.0% + $0.30 per domestic transaction. International or currency conversion transactions add roughly 0.0%."
+            },
+            {
+              "q": "How much is the TikTok Shop fee on $1,000?",
+              "a": "For a $1,000 USD payment, TikTok Shop charges $60.30 in standard fees, meaning you receive $939.70 net in your account."
+            },
+            {
+              "q": "How do I pass TikTok Shop fees to my client?",
+              "a": "To receive the exact net amount after TikTok Shop deducts its 6.0% + $0.30 fee, use the Reverse Invoice formula: (Desired Amount + $0.30) / (1 - 0.0600)."
+            }
+          ]
+        },
+        "es": {
+          "title": "Calculadora de Comisiones TikTok Shop (2026) - Neto Exacto y Facturación",
+          "h1": "Calculadora de Comisiones de TikTok Shop",
+          "desc": "Calcula al instante las comisiones de TikTok Shop (6.0% + $0.30). Descubre cuánto recibes neto y cuánto debes cobrar para no perder dinero.",
+          "guide": "TikTok Shop es una plataforma líder en la categoría de E-Commerce que aplica una tarifa estándar de 6.0% más un cargo fijo de $0.30 USD por operación. Por ejemplo, en un cobro de $100.00 USD, la comisión de TikTok Shop es de $6.30, dejándote $93.70 libres. En una venta o transferencia de $1,000.00 USD, recibirás $939.70 netos tras descontar $60.30. En pagos internacionales o con cambio de divisa, se suma un 0.0% adicional.",
+          "faqs": [
+            {
+              "q": "¿Cuánto cobra TikTok Shop de comisión en 2026?",
+              "a": "La comisión estándar de TikTok Shop es del 6.0% más $0.30 USD fijos por transacción nacional, con un recargo aproximado del 0.0% en pagos internacionales."
+            },
+            {
+              "q": "¿Cuánto me descuenta TikTok Shop por $1,000 dólares?",
+              "a": "En un cobro de $1,000 USD, TikTok Shop retiene $60.30 de comisión estándar, por lo que recibes $939.70 netos."
+            },
+            {
+              "q": "¿Cómo calcular cuánto cobrar en TikTok Shop para recibir el monto exacto?",
+              "a": "Usa el cálculo inverso de nuestra herramienta: suma el cargo fijo ($0.30) al monto deseado y divídelo entre (1 - 0.0600)."
+            }
+          ]
+        }
+      }
+    },
+    "revolut": {
+      "name": "Revolut Business",
+      "category": "Global Transfers",
+      "percent_fee": 1.0,
+      "fixed_fee": 0.2,
+      "intl_extra_percent": 0.5,
+      "affiliate_url": "https://revolut.com",
+      "seo": {
+        "en": {
+          "title": "Revolut Business Fee Calculator (2026) - Net Payout & Invoice Calculator",
+          "h1": "Revolut Business Fee Calculator",
+          "desc": "Calculate exact Revolut Business fees (1.0% + $0.20). See your net payout on any amount and how much to invoice to avoid losing money to processing costs.",
+          "guide": "Revolut Business operates in the Global Transfers sector with a standard transaction rate of 1.0% plus a fixed fee of $0.20 per transaction. For example, on a $100.00 payment, Revolut Business deducts $1.20, leaving you with a net payout of $98.80. On a $1,000.00 transaction, your net payout is $989.80 after the $10.20 processing fee. If you accept international payments or currency conversions, an additional 0.5% cross-border fee may apply.",
+          "faqs": [
+            {
+              "q": "How much does Revolut Business charge per transaction in 2026?",
+              "a": "The standard Revolut Business processing fee is 1.0% + $0.20 per domestic transaction. International or currency conversion transactions add roughly 0.5%."
+            },
+            {
+              "q": "How much is the Revolut Business fee on $1,000?",
+              "a": "For a $1,000 USD payment, Revolut Business charges $10.20 in standard fees, meaning you receive $989.80 net in your account."
+            },
+            {
+              "q": "How do I pass Revolut Business fees to my client?",
+              "a": "To receive the exact net amount after Revolut Business deducts its 1.0% + $0.20 fee, use the Reverse Invoice formula: (Desired Amount + $0.20) / (1 - 0.0100)."
+            }
+          ]
+        },
+        "es": {
+          "title": "Calculadora de Comisiones Revolut Business (2026) - Neto Exacto y Facturación",
+          "h1": "Calculadora de Comisiones de Revolut Business",
+          "desc": "Calcula al instante las comisiones de Revolut Business (1.0% + $0.20). Descubre cuánto recibes neto y cuánto debes cobrar para no perder dinero.",
+          "guide": "Revolut Business es una plataforma líder en la categoría de Global Transfers que aplica una tarifa estándar de 1.0% más un cargo fijo de $0.20 USD por operación. Por ejemplo, en un cobro de $100.00 USD, la comisión de Revolut Business es de $1.20, dejándote $98.80 libres. En una venta o transferencia de $1,000.00 USD, recibirás $989.80 netos tras descontar $10.20. En pagos internacionales o con cambio de divisa, se suma un 0.5% adicional.",
+          "faqs": [
+            {
+              "q": "¿Cuánto cobra Revolut Business de comisión en 2026?",
+              "a": "La comisión estándar de Revolut Business es del 1.0% más $0.20 USD fijos por transacción nacional, con un recargo aproximado del 0.5% en pagos internacionales."
+            },
+            {
+              "q": "¿Cuánto me descuenta Revolut Business por $1,000 dólares?",
+              "a": "En un cobro de $1,000 USD, Revolut Business retiene $10.20 de comisión estándar, por lo que recibes $989.80 netos."
+            },
+            {
+              "q": "¿Cómo calcular cuánto cobrar en Revolut Business para recibir el monto exacto?",
+              "a": "Usa el cálculo inverso de nuestra herramienta: suma el cargo fijo ($0.20) al monto deseado y divídelo entre (1 - 0.0100)."
+            }
+          ]
+        }
+      }
+    },
+    "mercury": {
+      "name": "Mercury Wire & ACH",
+      "category": "Business Banking",
+      "percent_fee": 0.0,
+      "fixed_fee": 0.0,
+      "intl_extra_percent": 1.0,
+      "affiliate_url": "https://mercury.com",
+      "seo": {
+        "en": {
+          "title": "Mercury Wire & ACH Fee Calculator (2026) - Net Payout & Invoice Calculator",
+          "h1": "Mercury Wire & ACH Fee Calculator",
+          "desc": "Calculate exact Mercury Wire & ACH fees (0.0% + $0.00). See your net payout on any amount and how much to invoice to avoid losing money to processing costs.",
+          "guide": "Mercury Wire & ACH operates in the Business Banking sector with a standard transaction rate of 0.0% plus a fixed fee of $0.00 per transaction. For example, on a $100.00 payment, Mercury Wire & ACH deducts $0.00, leaving you with a net payout of $100.00. On a $1,000.00 transaction, your net payout is $1000.00 after the $0.00 processing fee. If you accept international payments or currency conversions, an additional 1.0% cross-border fee may apply.",
+          "faqs": [
+            {
+              "q": "How much does Mercury Wire & ACH charge per transaction in 2026?",
+              "a": "The standard Mercury Wire & ACH processing fee is 0.0% + $0.00 per domestic transaction. International or currency conversion transactions add roughly 1.0%."
+            },
+            {
+              "q": "How much is the Mercury Wire & ACH fee on $1,000?",
+              "a": "For a $1,000 USD payment, Mercury Wire & ACH charges $0.00 in standard fees, meaning you receive $1000.00 net in your account."
+            },
+            {
+              "q": "How do I pass Mercury Wire & ACH fees to my client?",
+              "a": "To receive the exact net amount after Mercury Wire & ACH deducts its 0.0% + $0.00 fee, use the Reverse Invoice formula: (Desired Amount + $0.00) / (1 - 0.0000)."
+            }
+          ]
+        },
+        "es": {
+          "title": "Calculadora de Comisiones Mercury Wire & ACH (2026) - Neto Exacto y Facturación",
+          "h1": "Calculadora de Comisiones de Mercury Wire & ACH",
+          "desc": "Calcula al instante las comisiones de Mercury Wire & ACH (0.0% + $0.00). Descubre cuánto recibes neto y cuánto debes cobrar para no perder dinero.",
+          "guide": "Mercury Wire & ACH es una plataforma líder en la categoría de Business Banking que aplica una tarifa estándar de 0.0% más un cargo fijo de $0.00 USD por operación. Por ejemplo, en un cobro de $100.00 USD, la comisión de Mercury Wire & ACH es de $0.00, dejándote $100.00 libres. En una venta o transferencia de $1,000.00 USD, recibirás $1000.00 netos tras descontar $0.00. En pagos internacionales o con cambio de divisa, se suma un 1.0% adicional.",
+          "faqs": [
+            {
+              "q": "¿Cuánto cobra Mercury Wire & ACH de comisión en 2026?",
+              "a": "La comisión estándar de Mercury Wire & ACH es del 0.0% más $0.00 USD fijos por transacción nacional, con un recargo aproximado del 1.0% en pagos internacionales."
+            },
+            {
+              "q": "¿Cuánto me descuenta Mercury Wire & ACH por $1,000 dólares?",
+              "a": "En un cobro de $1,000 USD, Mercury Wire & ACH retiene $0.00 de comisión estándar, por lo que recibes $1000.00 netos."
+            },
+            {
+              "q": "¿Cómo calcular cuánto cobrar en Mercury Wire & ACH para recibir el monto exacto?",
+              "a": "Usa el cálculo inverso de nuestra herramienta: suma el cargo fijo ($0.00) al monto deseado y divídelo entre (1 - 0.0000)."
+            }
+          ]
+        }
+      }
+    },
+    "deel": {
+      "name": "Deel Contractor",
+      "category": "Global Payroll & Freelance",
+      "percent_fee": 1.0,
+      "fixed_fee": 0.0,
+      "intl_extra_percent": 0.5,
+      "affiliate_url": "https://deel.com",
+      "seo": {
+        "en": {
+          "title": "Deel Contractor Fee Calculator (2026) - Net Payout & Invoice Calculator",
+          "h1": "Deel Contractor Fee Calculator",
+          "desc": "Calculate exact Deel Contractor fees (1.0% + $0.00). See your net payout on any amount and how much to invoice to avoid losing money to processing costs.",
+          "guide": "Deel Contractor operates in the Global Payroll & Freelance sector with a standard transaction rate of 1.0% plus a fixed fee of $0.00 per transaction. For example, on a $100.00 payment, Deel Contractor deducts $1.00, leaving you with a net payout of $99.00. On a $1,000.00 transaction, your net payout is $990.00 after the $10.00 processing fee. If you accept international payments or currency conversions, an additional 0.5% cross-border fee may apply.",
+          "faqs": [
+            {
+              "q": "How much does Deel Contractor charge per transaction in 2026?",
+              "a": "The standard Deel Contractor processing fee is 1.0% + $0.00 per domestic transaction. International or currency conversion transactions add roughly 0.5%."
+            },
+            {
+              "q": "How much is the Deel Contractor fee on $1,000?",
+              "a": "For a $1,000 USD payment, Deel Contractor charges $10.00 in standard fees, meaning you receive $990.00 net in your account."
+            },
+            {
+              "q": "How do I pass Deel Contractor fees to my client?",
+              "a": "To receive the exact net amount after Deel Contractor deducts its 1.0% + $0.00 fee, use the Reverse Invoice formula: (Desired Amount + $0.00) / (1 - 0.0100)."
+            }
+          ]
+        },
+        "es": {
+          "title": "Calculadora de Comisiones Deel Contractor (2026) - Neto Exacto y Facturación",
+          "h1": "Calculadora de Comisiones de Deel Contractor",
+          "desc": "Calcula al instante las comisiones de Deel Contractor (1.0% + $0.00). Descubre cuánto recibes neto y cuánto debes cobrar para no perder dinero.",
+          "guide": "Deel Contractor es una plataforma líder en la categoría de Global Payroll & Freelance que aplica una tarifa estándar de 1.0% más un cargo fijo de $0.00 USD por operación. Por ejemplo, en un cobro de $100.00 USD, la comisión de Deel Contractor es de $1.00, dejándote $99.00 libres. En una venta o transferencia de $1,000.00 USD, recibirás $990.00 netos tras descontar $10.00. En pagos internacionales o con cambio de divisa, se suma un 0.5% adicional.",
+          "faqs": [
+            {
+              "q": "¿Cuánto cobra Deel Contractor de comisión en 2026?",
+              "a": "La comisión estándar de Deel Contractor es del 1.0% más $0.00 USD fijos por transacción nacional, con un recargo aproximado del 0.5% en pagos internacionales."
+            },
+            {
+              "q": "¿Cuánto me descuenta Deel Contractor por $1,000 dólares?",
+              "a": "En un cobro de $1,000 USD, Deel Contractor retiene $10.00 de comisión estándar, por lo que recibes $990.00 netos."
+            },
+            {
+              "q": "¿Cómo calcular cuánto cobrar en Deel Contractor para recibir el monto exacto?",
+              "a": "Usa el cálculo inverso de nuestra herramienta: suma el cargo fijo ($0.00) al monto deseado y divídelo entre (1 - 0.0100)."
+            }
+          ]
+        }
+      }
+    },
+    "skrill": {
+      "name": "Skrill",
+      "category": "Payment Processor",
+      "percent_fee": 2.99,
+      "fixed_fee": 0.0,
+      "intl_extra_percent": 1.99,
+      "affiliate_url": "https://skrill.com",
+      "seo": {
+        "en": {
+          "title": "Skrill Fee Calculator (2026) - Net Payout & Invoice Calculator",
+          "h1": "Skrill Fee Calculator",
+          "desc": "Calculate exact Skrill fees (2.99% + $0.00). See your net payout on any amount and how much to invoice to avoid losing money to processing costs.",
+          "guide": "Skrill operates in the Payment Processor sector with a standard transaction rate of 2.99% plus a fixed fee of $0.00 per transaction. For example, on a $100.00 payment, Skrill deducts $2.99, leaving you with a net payout of $97.01. On a $1,000.00 transaction, your net payout is $970.10 after the $29.90 processing fee. If you accept international payments or currency conversions, an additional 1.99% cross-border fee may apply.",
+          "faqs": [
+            {
+              "q": "How much does Skrill charge per transaction in 2026?",
+              "a": "The standard Skrill processing fee is 2.99% + $0.00 per domestic transaction. International or currency conversion transactions add roughly 1.99%."
+            },
+            {
+              "q": "How much is the Skrill fee on $1,000?",
+              "a": "For a $1,000 USD payment, Skrill charges $29.90 in standard fees, meaning you receive $970.10 net in your account."
+            },
+            {
+              "q": "How do I pass Skrill fees to my client?",
+              "a": "To receive the exact net amount after Skrill deducts its 2.99% + $0.00 fee, use the Reverse Invoice formula: (Desired Amount + $0.00) / (1 - 0.0299)."
+            }
+          ]
+        },
+        "es": {
+          "title": "Calculadora de Comisiones Skrill (2026) - Neto Exacto y Facturación",
+          "h1": "Calculadora de Comisiones de Skrill",
+          "desc": "Calcula al instante las comisiones de Skrill (2.99% + $0.00). Descubre cuánto recibes neto y cuánto debes cobrar para no perder dinero.",
+          "guide": "Skrill es una plataforma líder en la categoría de Payment Processor que aplica una tarifa estándar de 2.99% más un cargo fijo de $0.00 USD por operación. Por ejemplo, en un cobro de $100.00 USD, la comisión de Skrill es de $2.99, dejándote $97.01 libres. En una venta o transferencia de $1,000.00 USD, recibirás $970.10 netos tras descontar $29.90. En pagos internacionales o con cambio de divisa, se suma un 1.99% adicional.",
+          "faqs": [
+            {
+              "q": "¿Cuánto cobra Skrill de comisión en 2026?",
+              "a": "La comisión estándar de Skrill es del 2.99% más $0.00 USD fijos por transacción nacional, con un recargo aproximado del 1.99% en pagos internacionales."
+            },
+            {
+              "q": "¿Cuánto me descuenta Skrill por $1,000 dólares?",
+              "a": "En un cobro de $1,000 USD, Skrill retiene $29.90 de comisión estándar, por lo que recibes $970.10 netos."
+            },
+            {
+              "q": "¿Cómo calcular cuánto cobrar en Skrill para recibir el monto exacto?",
+              "a": "Usa el cálculo inverso de nuestra herramienta: suma el cargo fijo ($0.00) al monto deseado y divídelo entre (1 - 0.0299)."
+            }
+          ]
+        }
+      }
+    },
+    "venmo": {
+      "name": "Venmo Business",
+      "category": "Payment Processor",
+      "percent_fee": 1.9,
+      "fixed_fee": 0.1,
+      "intl_extra_percent": 0.0,
+      "affiliate_url": "https://venmo.com",
+      "seo": {
+        "en": {
+          "title": "Venmo Business Fee Calculator (2026) - Net Payout & Invoice Calculator",
+          "h1": "Venmo Business Fee Calculator",
+          "desc": "Calculate exact Venmo Business fees (1.9% + $0.10). See your net payout on any amount and how much to invoice to avoid losing money to processing costs.",
+          "guide": "Venmo Business operates in the Payment Processor sector with a standard transaction rate of 1.9% plus a fixed fee of $0.10 per transaction. For example, on a $100.00 payment, Venmo Business deducts $2.00, leaving you with a net payout of $98.00. On a $1,000.00 transaction, your net payout is $980.90 after the $19.10 processing fee. If you accept international payments or currency conversions, an additional 0.0% cross-border fee may apply.",
+          "faqs": [
+            {
+              "q": "How much does Venmo Business charge per transaction in 2026?",
+              "a": "The standard Venmo Business processing fee is 1.9% + $0.10 per domestic transaction. International or currency conversion transactions add roughly 0.0%."
+            },
+            {
+              "q": "How much is the Venmo Business fee on $1,000?",
+              "a": "For a $1,000 USD payment, Venmo Business charges $19.10 in standard fees, meaning you receive $980.90 net in your account."
+            },
+            {
+              "q": "How do I pass Venmo Business fees to my client?",
+              "a": "To receive the exact net amount after Venmo Business deducts its 1.9% + $0.10 fee, use the Reverse Invoice formula: (Desired Amount + $0.10) / (1 - 0.0190)."
+            }
+          ]
+        },
+        "es": {
+          "title": "Calculadora de Comisiones Venmo Business (2026) - Neto Exacto y Facturación",
+          "h1": "Calculadora de Comisiones de Venmo Business",
+          "desc": "Calcula al instante las comisiones de Venmo Business (1.9% + $0.10). Descubre cuánto recibes neto y cuánto debes cobrar para no perder dinero.",
+          "guide": "Venmo Business es una plataforma líder en la categoría de Payment Processor que aplica una tarifa estándar de 1.9% más un cargo fijo de $0.10 USD por operación. Por ejemplo, en un cobro de $100.00 USD, la comisión de Venmo Business es de $2.00, dejándote $98.00 libres. En una venta o transferencia de $1,000.00 USD, recibirás $980.90 netos tras descontar $19.10. En pagos internacionales o con cambio de divisa, se suma un 0.0% adicional.",
+          "faqs": [
+            {
+              "q": "¿Cuánto cobra Venmo Business de comisión en 2026?",
+              "a": "La comisión estándar de Venmo Business es del 1.9% más $0.10 USD fijos por transacción nacional, con un recargo aproximado del 0.0% en pagos internacionales."
+            },
+            {
+              "q": "¿Cuánto me descuenta Venmo Business por $1,000 dólares?",
+              "a": "En un cobro de $1,000 USD, Venmo Business retiene $19.10 de comisión estándar, por lo que recibes $980.90 netos."
+            },
+            {
+              "q": "¿Cómo calcular cuánto cobrar en Venmo Business para recibir el monto exacto?",
+              "a": "Usa el cálculo inverso de nuestra herramienta: suma el cargo fijo ($0.10) al monto deseado y divídelo entre (1 - 0.0190)."
+            }
+          ]
+        }
+      }
+    },
+    "cashapp": {
+      "name": "Cash App Business",
+      "category": "Payment Processor",
+      "percent_fee": 2.75,
+      "fixed_fee": 0.0,
+      "intl_extra_percent": 0.0,
+      "affiliate_url": "https://cash.app",
+      "seo": {
+        "en": {
+          "title": "Cash App Business Fee Calculator (2026) - Net Payout & Invoice Calculator",
+          "h1": "Cash App Business Fee Calculator",
+          "desc": "Calculate exact Cash App Business fees (2.75% + $0.00). See your net payout on any amount and how much to invoice to avoid losing money to processing costs.",
+          "guide": "Cash App Business operates in the Payment Processor sector with a standard transaction rate of 2.75% plus a fixed fee of $0.00 per transaction. For example, on a $100.00 payment, Cash App Business deducts $2.75, leaving you with a net payout of $97.25. On a $1,000.00 transaction, your net payout is $972.50 after the $27.50 processing fee. If you accept international payments or currency conversions, an additional 0.0% cross-border fee may apply.",
+          "faqs": [
+            {
+              "q": "How much does Cash App Business charge per transaction in 2026?",
+              "a": "The standard Cash App Business processing fee is 2.75% + $0.00 per domestic transaction. International or currency conversion transactions add roughly 0.0%."
+            },
+            {
+              "q": "How much is the Cash App Business fee on $1,000?",
+              "a": "For a $1,000 USD payment, Cash App Business charges $27.50 in standard fees, meaning you receive $972.50 net in your account."
+            },
+            {
+              "q": "How do I pass Cash App Business fees to my client?",
+              "a": "To receive the exact net amount after Cash App Business deducts its 2.75% + $0.00 fee, use the Reverse Invoice formula: (Desired Amount + $0.00) / (1 - 0.0275)."
+            }
+          ]
+        },
+        "es": {
+          "title": "Calculadora de Comisiones Cash App Business (2026) - Neto Exacto y Facturación",
+          "h1": "Calculadora de Comisiones de Cash App Business",
+          "desc": "Calcula al instante las comisiones de Cash App Business (2.75% + $0.00). Descubre cuánto recibes neto y cuánto debes cobrar para no perder dinero.",
+          "guide": "Cash App Business es una plataforma líder en la categoría de Payment Processor que aplica una tarifa estándar de 2.75% más un cargo fijo de $0.00 USD por operación. Por ejemplo, en un cobro de $100.00 USD, la comisión de Cash App Business es de $2.75, dejándote $97.25 libres. En una venta o transferencia de $1,000.00 USD, recibirás $972.50 netos tras descontar $27.50. En pagos internacionales o con cambio de divisa, se suma un 0.0% adicional.",
+          "faqs": [
+            {
+              "q": "¿Cuánto cobra Cash App Business de comisión en 2026?",
+              "a": "La comisión estándar de Cash App Business es del 2.75% más $0.00 USD fijos por transacción nacional, con un recargo aproximado del 0.0% en pagos internacionales."
+            },
+            {
+              "q": "¿Cuánto me descuenta Cash App Business por $1,000 dólares?",
+              "a": "En un cobro de $1,000 USD, Cash App Business retiene $27.50 de comisión estándar, por lo que recibes $972.50 netos."
+            },
+            {
+              "q": "¿Cómo calcular cuánto cobrar en Cash App Business para recibir el monto exacto?",
+              "a": "Usa el cálculo inverso de nuestra herramienta: suma el cargo fijo ($0.00) al monto deseado y divídelo entre (1 - 0.0275)."
+            }
+          ]
+        }
+      }
+    },
+    "kofi": {
+      "name": "Ko-fi",
+      "category": "Creator Economy",
+      "percent_fee": 5.0,
+      "fixed_fee": 0.3,
+      "intl_extra_percent": 1.0,
+      "affiliate_url": "https://ko-fi.com",
+      "seo": {
+        "en": {
+          "title": "Ko-fi Fee Calculator (2026) - Net Payout & Invoice Calculator",
+          "h1": "Ko-fi Fee Calculator",
+          "desc": "Calculate exact Ko-fi fees (5.0% + $0.30). See your net payout on any amount and how much to invoice to avoid losing money to processing costs.",
+          "guide": "Ko-fi operates in the Creator Economy sector with a standard transaction rate of 5.0% plus a fixed fee of $0.30 per transaction. For example, on a $100.00 payment, Ko-fi deducts $5.30, leaving you with a net payout of $94.70. On a $1,000.00 transaction, your net payout is $949.70 after the $50.30 processing fee. If you accept international payments or currency conversions, an additional 1.0% cross-border fee may apply.",
+          "faqs": [
+            {
+              "q": "How much does Ko-fi charge per transaction in 2026?",
+              "a": "The standard Ko-fi processing fee is 5.0% + $0.30 per domestic transaction. International or currency conversion transactions add roughly 1.0%."
+            },
+            {
+              "q": "How much is the Ko-fi fee on $1,000?",
+              "a": "For a $1,000 USD payment, Ko-fi charges $50.30 in standard fees, meaning you receive $949.70 net in your account."
+            },
+            {
+              "q": "How do I pass Ko-fi fees to my client?",
+              "a": "To receive the exact net amount after Ko-fi deducts its 5.0% + $0.30 fee, use the Reverse Invoice formula: (Desired Amount + $0.30) / (1 - 0.0500)."
+            }
+          ]
+        },
+        "es": {
+          "title": "Calculadora de Comisiones Ko-fi (2026) - Neto Exacto y Facturación",
+          "h1": "Calculadora de Comisiones de Ko-fi",
+          "desc": "Calcula al instante las comisiones de Ko-fi (5.0% + $0.30). Descubre cuánto recibes neto y cuánto debes cobrar para no perder dinero.",
+          "guide": "Ko-fi es una plataforma líder en la categoría de Creator Economy que aplica una tarifa estándar de 5.0% más un cargo fijo de $0.30 USD por operación. Por ejemplo, en un cobro de $100.00 USD, la comisión de Ko-fi es de $5.30, dejándote $94.70 libres. En una venta o transferencia de $1,000.00 USD, recibirás $949.70 netos tras descontar $50.30. En pagos internacionales o con cambio de divisa, se suma un 1.0% adicional.",
+          "faqs": [
+            {
+              "q": "¿Cuánto cobra Ko-fi de comisión en 2026?",
+              "a": "La comisión estándar de Ko-fi es del 5.0% más $0.30 USD fijos por transacción nacional, con un recargo aproximado del 1.0% en pagos internacionales."
+            },
+            {
+              "q": "¿Cuánto me descuenta Ko-fi por $1,000 dólares?",
+              "a": "En un cobro de $1,000 USD, Ko-fi retiene $50.30 de comisión estándar, por lo que recibes $949.70 netos."
+            },
+            {
+              "q": "¿Cómo calcular cuánto cobrar en Ko-fi para recibir el monto exacto?",
+              "a": "Usa el cálculo inverso de nuestra herramienta: suma el cargo fijo ($0.30) al monto deseado y divídelo entre (1 - 0.0500)."
+            }
+          ]
+        }
+      }
+    },
+    "substack": {
+      "name": "Substack",
+      "category": "Creator Economy",
+      "percent_fee": 10.0,
+      "fixed_fee": 0.3,
+      "intl_extra_percent": 1.5,
+      "affiliate_url": "https://substack.com",
+      "seo": {
+        "en": {
+          "title": "Substack Fee Calculator (2026) - Net Payout & Invoice Calculator",
+          "h1": "Substack Fee Calculator",
+          "desc": "Calculate exact Substack fees (10.0% + $0.30). See your net payout on any amount and how much to invoice to avoid losing money to processing costs.",
+          "guide": "Substack operates in the Creator Economy sector with a standard transaction rate of 10.0% plus a fixed fee of $0.30 per transaction. For example, on a $100.00 payment, Substack deducts $10.30, leaving you with a net payout of $89.70. On a $1,000.00 transaction, your net payout is $899.70 after the $100.30 processing fee. If you accept international payments or currency conversions, an additional 1.5% cross-border fee may apply.",
+          "faqs": [
+            {
+              "q": "How much does Substack charge per transaction in 2026?",
+              "a": "The standard Substack processing fee is 10.0% + $0.30 per domestic transaction. International or currency conversion transactions add roughly 1.5%."
+            },
+            {
+              "q": "How much is the Substack fee on $1,000?",
+              "a": "For a $1,000 USD payment, Substack charges $100.30 in standard fees, meaning you receive $899.70 net in your account."
+            },
+            {
+              "q": "How do I pass Substack fees to my client?",
+              "a": "To receive the exact net amount after Substack deducts its 10.0% + $0.30 fee, use the Reverse Invoice formula: (Desired Amount + $0.30) / (1 - 0.1000)."
+            }
+          ]
+        },
+        "es": {
+          "title": "Calculadora de Comisiones Substack (2026) - Neto Exacto y Facturación",
+          "h1": "Calculadora de Comisiones de Substack",
+          "desc": "Calcula al instante las comisiones de Substack (10.0% + $0.30). Descubre cuánto recibes neto y cuánto debes cobrar para no perder dinero.",
+          "guide": "Substack es una plataforma líder en la categoría de Creator Economy que aplica una tarifa estándar de 10.0% más un cargo fijo de $0.30 USD por operación. Por ejemplo, en un cobro de $100.00 USD, la comisión de Substack es de $10.30, dejándote $89.70 libres. En una venta o transferencia de $1,000.00 USD, recibirás $899.70 netos tras descontar $100.30. En pagos internacionales o con cambio de divisa, se suma un 1.5% adicional.",
+          "faqs": [
+            {
+              "q": "¿Cuánto cobra Substack de comisión en 2026?",
+              "a": "La comisión estándar de Substack es del 10.0% más $0.30 USD fijos por transacción nacional, con un recargo aproximado del 1.5% en pagos internacionales."
+            },
+            {
+              "q": "¿Cuánto me descuenta Substack por $1,000 dólares?",
+              "a": "En un cobro de $1,000 USD, Substack retiene $100.30 de comisión estándar, por lo que recibes $899.70 netos."
+            },
+            {
+              "q": "¿Cómo calcular cuánto cobrar en Substack para recibir el monto exacto?",
+              "a": "Usa el cálculo inverso de nuestra herramienta: suma el cargo fijo ($0.30) al monto deseado y divídelo entre (1 - 0.1000)."
+            }
+          ]
+        }
+      }
+    },
+    "coinbase": {
+      "name": "Coinbase Commerce",
+      "category": "Crypto Payments",
+      "percent_fee": 1.0,
+      "fixed_fee": 0.0,
+      "intl_extra_percent": 0.0,
+      "affiliate_url": "https://commerce.coinbase.com",
+      "seo": {
+        "en": {
+          "title": "Coinbase Commerce Fee Calculator (2026) - Net Payout & Invoice Calculator",
+          "h1": "Coinbase Commerce Fee Calculator",
+          "desc": "Calculate exact Coinbase Commerce fees (1.0% + $0.00). See your net payout on any amount and how much to invoice to avoid losing money to processing costs.",
+          "guide": "Coinbase Commerce operates in the Crypto Payments sector with a standard transaction rate of 1.0% plus a fixed fee of $0.00 per transaction. For example, on a $100.00 payment, Coinbase Commerce deducts $1.00, leaving you with a net payout of $99.00. On a $1,000.00 transaction, your net payout is $990.00 after the $10.00 processing fee. If you accept international payments or currency conversions, an additional 0.0% cross-border fee may apply.",
+          "faqs": [
+            {
+              "q": "How much does Coinbase Commerce charge per transaction in 2026?",
+              "a": "The standard Coinbase Commerce processing fee is 1.0% + $0.00 per domestic transaction. International or currency conversion transactions add roughly 0.0%."
+            },
+            {
+              "q": "How much is the Coinbase Commerce fee on $1,000?",
+              "a": "For a $1,000 USD payment, Coinbase Commerce charges $10.00 in standard fees, meaning you receive $990.00 net in your account."
+            },
+            {
+              "q": "How do I pass Coinbase Commerce fees to my client?",
+              "a": "To receive the exact net amount after Coinbase Commerce deducts its 1.0% + $0.00 fee, use the Reverse Invoice formula: (Desired Amount + $0.00) / (1 - 0.0100)."
+            }
+          ]
+        },
+        "es": {
+          "title": "Calculadora de Comisiones Coinbase Commerce (2026) - Neto Exacto y Facturación",
+          "h1": "Calculadora de Comisiones de Coinbase Commerce",
+          "desc": "Calcula al instante las comisiones de Coinbase Commerce (1.0% + $0.00). Descubre cuánto recibes neto y cuánto debes cobrar para no perder dinero.",
+          "guide": "Coinbase Commerce es una plataforma líder en la categoría de Crypto Payments que aplica una tarifa estándar de 1.0% más un cargo fijo de $0.00 USD por operación. Por ejemplo, en un cobro de $100.00 USD, la comisión de Coinbase Commerce es de $1.00, dejándote $99.00 libres. En una venta o transferencia de $1,000.00 USD, recibirás $990.00 netos tras descontar $10.00. En pagos internacionales o con cambio de divisa, se suma un 0.0% adicional.",
+          "faqs": [
+            {
+              "q": "¿Cuánto cobra Coinbase Commerce de comisión en 2026?",
+              "a": "La comisión estándar de Coinbase Commerce es del 1.0% más $0.00 USD fijos por transacción nacional, con un recargo aproximado del 0.0% en pagos internacionales."
+            },
+            {
+              "q": "¿Cuánto me descuenta Coinbase Commerce por $1,000 dólares?",
+              "a": "En un cobro de $1,000 USD, Coinbase Commerce retiene $10.00 de comisión estándar, por lo que recibes $990.00 netos."
+            },
+            {
+              "q": "¿Cómo calcular cuánto cobrar en Coinbase Commerce para recibir el monto exacto?",
+              "a": "Usa el cálculo inverso de nuestra herramienta: suma el cargo fijo ($0.00) al monto deseado y divídelo entre (1 - 0.0100)."
+            }
+          ]
+        }
+      }
+    }
+  }
+}
