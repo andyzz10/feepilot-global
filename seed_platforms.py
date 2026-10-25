@@ -6,7 +6,7 @@ RAW_PLATFORMS = [
     # key, Name, Category, % Fee, Fixed $, Intl Extra %, Official/Affiliate URL
     ("stripe", "Stripe", "Payment Processor", 2.9, 0.30, 1.5, "https://stripe.com"),
     ("paypal", "PayPal", "Payment Processor", 3.49, 0.49, 1.5, "https://paypal.com"),
-    ("wise", "Wise", "Global Transfers", 0.65, 0.45, 0.0, "https://wise.com"),
+    ("wise", "Wise", "Global Transfers", 0.65, 0.45, 0.0, "https://wise.com/invite/dic/andya788"),
     ("payoneer", "Payoneer", "Global Transfers", 3.0, 0.00, 1.0, "https://payoneer.com"),
     ("shopify", "Shopify Payments", "E-Commerce", 2.9, 0.30, 2.0, "https://shopify.com"),
     ("square", "Square", "Payment Processor", 2.9, 0.30, 1.0, "https://squareup.com"),
