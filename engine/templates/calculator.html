@@ -6,6 +6,15 @@
   <title>{{ title }}</title>
   <meta name="description" content="{{ desc }}">
   <link rel="canonical" href="{{ request.build_absolute_uri }}">
+  {% if is_comparison %}
+  <link rel="alternate" hreflang="en" href="{{ request.scheme }}://{{ request.get_host }}/en/{{ slug }}-fees/">
+  <link rel="alternate" hreflang="es" href="{{ request.scheme }}://{{ request.get_host }}/es/{{ slug }}-fees/">
+  <link rel="alternate" hreflang="x-default" href="{{ request.scheme }}://{{ request.get_host }}/en/{{ slug }}-fees/">
+  {% else %}
+  <link rel="alternate" hreflang="en" href="{{ request.scheme }}://{{ request.get_host }}/en/{{ slug }}-fee-calculator/">
+  <link rel="alternate" hreflang="es" href="{{ request.scheme }}://{{ request.get_host }}/es/{{ slug }}-fee-calculator/">
+  <link rel="alternate" hreflang="x-default" href="{{ request.scheme }}://{{ request.get_host }}/en/{{ slug }}-fee-calculator/">
+  {% endif %}
   <meta name="theme-color" content="#F4F6F1">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%239FE870'/%3E%3Ctext x='50%25' y='54%25' dominant-baseline='middle' text-anchor='middle' font-family='system-ui,sans-serif' font-weight='800' font-size='34' letter-spacing='-2' fill='%230A1A0F'%3EFP%3C/text%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -363,9 +372,9 @@
         <p class="subtitle rise" style="--d: 90ms;">{{ desc }}</p>
       </div>
       <div class="hero-rate rise" style="--d: 180ms;">
-        <p class="rate-label">{% if lang == 'en' %}Standard rate{% else %}Tarifa estándar{% endif %}</p>
-        <p class="rate-figure">{{ primary.percent_fee }}% + ${{ primary.fixed_fee|floatformat:2 }}</p>
-        <p class="rate-cat">{{ primary.category }}</p>
+        <p class="rate-label" id="heroRateLabel">{% if lang == 'en' %}Verified 2026 standard rate{% else %}Tarifa estándar verificada 2026{% endif %}</p>
+        <p class="rate-figure" id="heroRateFigure">{{ primary.percent_fee }}% + ${{ primary.fixed_fee|floatformat:2 }}</p>
+        <p class="rate-cat" id="heroRateCat">{{ primary.category }}</p>
       </div>
     </section>
 
@@ -377,7 +386,7 @@
       <div class="grid">
         <div class="card input-card rise" style="--d: 120ms;">
           <label for="amountInput">{% if lang == 'en' %}Transaction Amount ($ USD){% else %}Monto de la Transacción ($ USD){% endif %}</label>
-          <input type="number" id="amountInput" value="1000" min="1" step="any">
+          <input type="number" id="amountInput" value="1000" min="1" step="any" data-clarity-mask="true">
 
           <div class="quick-btns">
             <button type="button" class="q-btn" onclick="setAmt(50)">$50</button>
@@ -394,25 +403,25 @@
             {% endfor %}
           </select>
 
-          <label for="countrySelect">{% if lang == 'en' %}Account Country / Merchant Region{% else %}País de la Cuenta / Región Comercial{% endif %}</label>
+          <label for="countrySelect">{% if lang == 'en' %}Account Country / Merchant Region (Card Benchmark){% else %}País de la Cuenta / Región Comercial (Referencia){% endif %}</label>
           <select id="countrySelect">
-            <option value="default" selected>{% if lang == 'en' %}🌐 Platform Default (Standard){% else %}🌐 Estándar de la Plataforma{% endif %}</option>
-            <option value="2.9|0.30">🇺🇸 United States (2.9% + $0.30)</option>
-            <option value="1.5|0.25">🇪🇸 Spain / España (1.5% + $0.25)</option>
-            <option value="1.5|0.25">🇪🇺 European Union / Eurozone (1.5% + $0.25)</option>
-            <option value="1.5|0.25">🇬🇧 United Kingdom (1.5% + $0.25)</option>
-            <option value="2.9|0.30">🇨🇦 Canada (2.9% + $0.30)</option>
-            <option value="1.75|0.30">🇦🇺 Australia (1.75% + $0.30)</option>
-            <option value="3.6|0.15">🇲🇽 Mexico (3.6% + $0.15)</option>
-            <option value="3.6|0.30">🇪🇨 Ecuador (3.6% + $0.30)</option>
-            <option value="3.6|0.30">🇨🇴 Colombia (3.6% + $0.30)</option>
-            <option value="3.6|0.30">🇦🇷 Argentina (3.6% + $0.30)</option>
-            <option value="3.6|0.30">🇨🇱 Chile (3.6% + $0.30)</option>
-            <option value="3.6|0.30">🇵🇪 Peru (3.6% + $0.30)</option>
-            <option value="3.99|0.10">🇧🇷 Brazil (3.99% + $0.10)</option>
-            <option value="3.4|0.50">🇸🇬 Singapore (3.4% + $0.50)</option>
-            <option value="3.6|0.00">🇯🇵 Japan (3.6% + $0.00)</option>
-            <option value="2.0|0.20">🇮🇳 India (2.0% + $0.20)</option>
+            <option value="default" selected>{% if lang == 'en' %}🌐 Official Platform Default (Verified){% else %}🌐 Estándar Oficial de la Plataforma (Verificado){% endif %}</option>
+            <option value="2.9|0.30">🇺🇸 United States (2.9% + $0.30 est.)</option>
+            <option value="1.5|0.25">🇪🇸 Spain / España (1.5% + $0.25 est.)</option>
+            <option value="1.5|0.25">🇪🇺 European Union / Eurozone (1.5% + $0.25 est.)</option>
+            <option value="1.5|0.25">🇬🇧 United Kingdom (1.5% + $0.25 est.)</option>
+            <option value="2.9|0.30">🇨🇦 Canada (2.9% + $0.30 est.)</option>
+            <option value="1.75|0.30">🇦🇺 Australia (1.75% + $0.30 est.)</option>
+            <option value="3.6|0.15">🇲🇽 Mexico (3.6% + $0.15 est.)</option>
+            <option value="3.6|0.30">🇪🇨 Ecuador (3.6% + $0.30 est.)</option>
+            <option value="3.6|0.30">🇨🇴 Colombia (3.6% + $0.30 est.)</option>
+            <option value="3.6|0.30">🇦🇷 Argentina (3.6% + $0.30 est.)</option>
+            <option value="3.6|0.30">🇨🇱 Chile (3.6% + $0.30 est.)</option>
+            <option value="3.6|0.30">🇵🇪 Peru (3.6% + $0.30 est.)</option>
+            <option value="3.99|0.10">🇧🇷 Brazil (3.99% + $0.10 est.)</option>
+            <option value="3.4|0.50">🇸🇬 Singapore (3.4% + $0.50 est.)</option>
+            <option value="3.6|0.00">🇯🇵 Japan (3.6% + $0.00 est.)</option>
+            <option value="2.0|0.20">🇮🇳 India (2.0% + $0.20 est.)</option>
           </select>
 
           <label for="p2Select">{% if lang == 'en' %}Compare Against (VS){% else %}Comparar Contra (VS){% endif %}</label>
@@ -424,7 +433,7 @@
 
           <label class="checkbox-row">
             <input type="checkbox" id="intlCheck">
-            <span>{% if lang == 'en' %}International Card / Cross-Border (+FX Fee){% else %}Pago Internacional / Cambio de Divisa{% endif %}<small>{% if lang == 'en' %}Adds +{{ primary.intl_extra_percent }}% to the fee{% else %}Suma +{{ primary.intl_extra_percent }}% a la comisión{% endif %}</small></span>
+            <span>{% if lang == 'en' %}International Card / Cross-Border (+FX Fee){% else %}Pago Internacional / Cambio de Divisa{% endif %}<small id="intlSmallText">{% if lang == 'en' %}Adds +{{ primary.intl_extra_percent }}% to the fee{% else %}Suma +{{ primary.intl_extra_percent }}% a la comisión{% endif %}</small></span>
           </label>
         </div>
 
@@ -465,23 +474,23 @@
 
     <section class="container section">
       <div class="cols">
-        <!-- TABLA DE TRAMOS PRE-CALCULADA (Posiciona en Google para montos exactos) -->
+        <!-- TABLA DE TRAMOS PRE-CALCULADA Y SINCRONIZADA EN TIEMPO REAL -->
         <div class="panel col-table rise-scroll">
           <div class="panel-head">
-            <h2>{{ primary.name }} {% if lang == 'en' %}Fee Schedule Table ($10 to $10,000){% else %}Tabla de Comisiones ($10 a $10,000 USD){% endif %}</h2>
-            <span class="meta">{% if lang == 'en' %}Standard rate, USD{% else %}Tarifa estándar, USD{% endif %}</span>
+            <h2 id="tableTitle"><span id="tablePlatformName">{{ primary.name }}</span> {% if lang == 'en' %}Fee Schedule Table ($10 to $10,000){% else %}Tabla de Comisiones ($10 a $10,000 USD){% endif %}</h2>
+            <span class="meta" id="tableMetaRate">{% if lang == 'en' %}Verified 2026 rate, USD{% else %}Tarifa verificada 2026, USD{% endif %}</span>
           </div>
           <div class="table-wrap">
             <table>
               <thead>
                 <tr>
                   <th>{% if lang == 'en' %}Invoice Amount{% else %}Monto Cobrado{% endif %}</th>
-                  <th>{{ primary.name }} {% if lang == 'en' %}Fee{% else %}Comisión{% endif %}</th>
+                  <th><span id="thPlatformName">{{ primary.name }}</span> {% if lang == 'en' %}Fee{% else %}Comisión{% endif %}</th>
                   <th>{% if lang == 'en' %}You Receive (Net){% else %}Recibes Neto{% endif %}</th>
                   <th>{% if lang == 'en' %}Ask For (Zero Fee Loss){% else %}Cobrar para no perder{% endif %}</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody id="feeTableBody">
                 {% for row in fee_table %}
                 <tr>
                   <td class="c-amt">${{ row.amount }}</td>
@@ -503,19 +512,19 @@
           </div>
 
           <div class="panel formula rise-scroll">
-            <h2>{% if lang == 'en' %}The formula{% else %}La fórmula{% endif %}</h2>
+            <h2>{% if lang == 'en' %}The formula (Verified 2026){% else %}La fórmula (Verificada 2026){% endif %}</h2>
             <dl class="kv">
               <div>
                 <dt>{% if lang == 'en' %}Fee{% else %}Comisión{% endif %}</dt>
-                <dd>{% if lang == 'en' %}amount{% else %}monto{% endif %} × {{ primary.percent_fee }}% + ${{ primary.fixed_fee|floatformat:2 }}</dd>
+                <dd id="formulaFee">{% if lang == 'en' %}amount{% else %}monto{% endif %} × {{ primary.percent_fee }}% + ${{ primary.fixed_fee|floatformat:2 }}</dd>
               </div>
               <div>
                 <dt>{% if lang == 'en' %}International add-on{% else %}Recargo internacional{% endif %}</dt>
-                <dd>+{{ primary.intl_extra_percent }}% {% if lang == 'en' %}of the amount{% else %}del monto{% endif %}</dd>
+                <dd id="formulaIntl">+{{ primary.intl_extra_percent }}% {% if lang == 'en' %}of the amount{% else %}del monto{% endif %}</dd>
               </div>
               <div>
                 <dt>{% if lang == 'en' %}Invoice to receive an exact net{% else %}Factura para recibir un neto exacto{% endif %}</dt>
-                <dd>({% if lang == 'en' %}amount{% else %}monto{% endif %} + ${{ primary.fixed_fee|floatformat:2 }}) ÷ (1 − {{ primary.percent_fee }}%)</dd>
+                <dd id="formulaReverse">({% if lang == 'en' %}amount{% else %}monto{% endif %} + ${{ primary.fixed_fee|floatformat:2 }}) ÷ (1 − {{ primary.percent_fee }}%)</dd>
               </div>
             </dl>
           </div>
@@ -567,7 +576,7 @@
       <div class="footer-row">
         <div>© 2026 FeePilot Global. Built for High-Performance Financial Transparency.</div>
         <nav class="footer-links">
-          <a href="/legal/about/">About</a>
+          <a href="/legal/about/">About & Methodology</a>
           <a href="/legal/privacy/">Privacy Policy</a>
           <a href="/legal/terms/">Terms of Service</a>
           <a href="/sitemap.xml">Sitemap (650+ URLs)</a>
@@ -580,6 +589,12 @@
   <script>
     const PLATFORMS = {{ platforms_json|safe }};
     const LANG = "{{ lang }}";
+    const TIERS = [10, 25, 50, 100, 250, 500, 1000, 2500, 5000, 10000];
+
+    // Redondeo financiero exacto a 2 decimales (centavos)
+    function roundCents(num) {
+      return Math.round((num + Number.EPSILON) * 100) / 100;
+    }
 
     // Lógica de Modo Oscuro / Claro
     function syncThemeBtn() {
@@ -627,31 +642,68 @@
       const p = PLATFORMS[key];
       let basePct = p.percent_fee;
       let fixedFee = p.fixed_fee;
+      const isCustomRegion = customCountryVal && customCountryVal !== 'default';
 
-      if (customCountryVal && customCountryVal !== 'default') {
+      if (isCustomRegion) {
         const parts = customCountryVal.split('|');
         basePct = parseFloat(parts[0]);
         fixedFee = parseFloat(parts[1]);
       }
 
-      const pct = (basePct + (isIntl ? p.intl_extra_percent : 0)) / 100;
-      const fee = (amount * pct) + fixedFee;
-      const net = Math.max(0, amount - fee);
-      const reverse = pct < 1 ? (amount + fixedFee) / (1 - pct) : amount;
-      return { name: p.name, fee, net, reverse, url: p.affiliate_url };
+      const activePctNum = roundCents(basePct + (isIntl ? p.intl_extra_percent : 0));
+      const pct = activePctNum / 100;
+      const rawFee = amount > 0 ? (amount * pct) + fixedFee : 0;
+      const fee = roundCents(rawFee);
+      const net = roundCents(Math.max(0, amount - fee));
+      const reverse = (amount > 0 && pct < 1) ? roundCents((amount + fixedFee) / (1 - pct)) : 0;
+
+      return {
+        name: p.name,
+        category: p.category,
+        fee,
+        net,
+        reverse,
+        url: p.affiliate_url,
+        activePctNum,
+        fixedFee,
+        intlExtra: p.intl_extra_percent,
+        isCustomRegion
+      };
     }
 
     function updateUI() {
-      const amount = parseFloat(amountInput.value) || 0;
+      const amount = Math.max(0, parseFloat(amountInput.value) || 0);
       const isIntl = intlCheck.checked;
       const r1 = calcPlatform(amount, p1Select.value, isIntl, countrySelect.value);
       const r2 = calcPlatform(amount, p2Select.value, isIntl, 'default');
 
+      // 1. Actualiza panel principal de resultados
       document.getElementById('p1Name').textContent = r1.name;
       document.getElementById('p1Net').textContent = `$${r1.net.toFixed(2)}`;
       document.getElementById('p1Fee').textContent = `-$${r1.fee.toFixed(2)}`;
       document.getElementById('p1Reverse').textContent = `$${r1.reverse.toFixed(2)}`;
 
+      // 2. Actualiza subtítulo del checkbox internacional y el indicador superior de tarifa verificada/estimada
+      const intlSmall = document.getElementById('intlSmallText');
+      if (intlSmall) {
+        intlSmall.textContent = LANG === 'en'
+          ? `Adds +${r1.intlExtra}% to the fee`
+          : `Suma +${r1.intlExtra}% a la comisión`;
+      }
+      const heroFig = document.getElementById('heroRateFigure');
+      const heroLbl = document.getElementById('heroRateLabel');
+      const heroCat = document.getElementById('heroRateCat');
+      if (heroFig) heroFig.textContent = `${r1.activePctNum}% + $${r1.fixedFee.toFixed(2)}`;
+      if (heroCat) heroCat.textContent = r1.category;
+      if (heroLbl) {
+        if (r1.isCustomRegion) {
+          heroLbl.textContent = LANG === 'en' ? 'Regional estimate (2026)' : 'Estimación regional (2026)';
+        } else {
+          heroLbl.textContent = LANG === 'en' ? 'Verified 2026 standard rate' : 'Tarifa estándar verificada 2026';
+        }
+      }
+
+      // 3. Actualiza comparativa VS
       document.getElementById('vsTitle').innerHTML = `<strong>VS ${r2.name}</strong> (Fee: $${r2.fee.toFixed(2)})`;
       const diff = Math.abs(r1.fee - r2.fee).toFixed(2);
       const cheaper = r1.fee < r2.fee ? r1 : r2;
@@ -669,6 +721,40 @@
         : `En un cobro de $${amount.toFixed(2)}, con ${r2.name} recibes $${r2.net.toFixed(2)} netos.`;
 
       document.getElementById('affiliateBtn').href = cheaper.url;
+
+      // 4. Sincroniza la caja de "La fórmula" con la tasa activa
+      const wordAmt = LANG === 'en' ? 'amount' : 'monto';
+      const wordOf = LANG === 'en' ? 'of the amount' : 'del monto';
+      const fFee = document.getElementById('formulaFee');
+      const fIntl = document.getElementById('formulaIntl');
+      const fRev = document.getElementById('formulaReverse');
+      if (fFee) fFee.textContent = `${wordAmt} × ${r1.activePctNum}% + $${r1.fixedFee.toFixed(2)}`;
+      if (fIntl) fIntl.textContent = `+${r1.intlExtra}% ${wordOf}`;
+      if (fRev) fRev.textContent = `(${wordAmt} + $${r1.fixedFee.toFixed(2)}) ÷ (1 − ${r1.activePctNum}%)`;
+
+      // 5. Sincroniza en vivo la Tabla de Comisiones ($10 a $10,000) para que nunca muestre datos desfasados
+      const tbody = document.getElementById('feeTableBody');
+      const tName1 = document.getElementById('tablePlatformName');
+      const tName2 = document.getElementById('thPlatformName');
+      const tMeta = document.getElementById('tableMetaRate');
+      if (tName1) tName1.textContent = r1.name;
+      if (tName2) tName2.textContent = r1.name;
+      if (tMeta) {
+        tMeta.textContent = r1.isCustomRegion
+          ? (LANG === 'en' ? `Regional est. (${r1.activePctNum}% + $${r1.fixedFee.toFixed(2)})` : `Est. regional (${r1.activePctNum}% + $${r1.fixedFee.toFixed(2)})`)
+          : (LANG === 'en' ? `Verified rate (${r1.activePctNum}% + $${r1.fixedFee.toFixed(2)})` : `Tarifa verificada (${r1.activePctNum}% + $${r1.fixedFee.toFixed(2)})`);
+      }
+      if (tbody) {
+        tbody.innerHTML = TIERS.map(t => {
+          const rowCalc = calcPlatform(t, p1Select.value, isIntl, countrySelect.value);
+          return `<tr>
+            <td class="c-amt">$${t}</td>
+            <td class="c-fee">-$${rowCalc.fee.toFixed(2)}</td>
+            <td class="c-net">$${rowCalc.net.toFixed(2)}</td>
+            <td class="c-ask">$${rowCalc.reverse.toFixed(2)}</td>
+          </tr>`;
+        }).join('');
+      }
     }
 
     // Filtro de búsqueda instantáneo
