@@ -1,16 +1,26 @@
 <!DOCTYPE html>
 <html lang="{{ lang }}">
 <head>
-  <meta name="google-site-verification" content="2gIbjjfwqJAucgbzzmpf8KSGb252j59xscWgfloyA2Q" />
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{{ title }}</title>
   <meta name="description" content="{{ desc }}">
   <link rel="canonical" href="{{ request.build_absolute_uri }}">
   <meta name="theme-color" content="#F4F6F1">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%239FE870'/%3E%3Ctext x='50%25' y='54%25' dominant-baseline='middle' text-anchor='middle' font-family='system-ui,sans-serif' font-weight='800' font-size='34' letter-spacing='-2' fill='%230A1A0F'%3EFP%3C/text%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Detecta y aplica el Modo Oscuro antes de renderizar para evitar parpadeos -->
+  <script>
+    (function() {
+      var saved = localStorage.getItem('fp_theme');
+      if (saved === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    })();
+  </script>
 
   <!-- Schema JSON-LD Doble: SoftwareApplication + FAQPage para ocupar el doble de espacio en Google -->
   <script type="application/ld+json">
@@ -40,13 +50,21 @@
   </script>
 
   <style>
+    /* Fuente ligera para que Windows muestre banderas reales a color en lugar de letras (US, MX, ES) */
+    @font-face {
+      font-family: "Twemoji Country Flags";
+      unicode-range: U+1F1E6-1F1FF, U+1F3F4, U+E0062-E0063, U+E0065, U+E0067, U+E006C, U+E006E, U+E0073-E0074, U+E0077, U+E007F;
+      src: url("https://cdn.jsdelivr.net/npm/country-flag-emoji-polyfill@0.1/dist/TwemojiCountryFlags.woff2") format("woff2");
+      font-display: swap;
+    }
+
     /* ───────────── Tokens ───────────── */
     :root {
       --ground: #F4F6F1; --surface: #FFFFFF; --tone: #E9EDE4;
       --ink: #0A1A0F; --ink-2: #47574C; --line: #C3CBBB; --field-line: #7F8D81;
       --accent: #9FE870; --accent-hover: #B5F18E;
       --dark: #0A1A0F; --dark-2: #12271A; --dark-line: #2A4733; --dark-ink: #F3F7F0; --dark-muted: #A8B9AC;
-      --font: "Geist", "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      --font: "Twemoji Country Flags", "Geist", "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
       --ease: cubic-bezier(.2, .7, .2, 1);
       --gutter: clamp(16px, 4vw, 40px);
       --gap: 24px;
@@ -55,13 +73,27 @@
       --r: 6px;
     }
 
+    /* ───────────── Tokens Modo Oscuro ───────────── */
+    html[data-theme="dark"] {
+      --ground: #07120B;
+      --surface: #0E1F14;
+      --tone: #152C1E;
+      --ink: #F3F7F0;
+      --ink-2: #A8B9AC;
+      --line: #223B2B;
+      --field-line: #395A45;
+      --dark: #102317;
+      --dark-2: #162F20;
+      --dark-line: #2A4733;
+    }
+
     /* ───────────── Base ───────────── */
     * { box-sizing: border-box; margin: 0; padding: 0; }
     html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
-    body { font-family: var(--font); background: var(--ground); color: var(--ink); font-size: 16px; line-height: 1.55; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+    body { font-family: var(--font); background: var(--ground); color: var(--ink); font-size: 16px; line-height: 1.55; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; transition: background-color .2s, color .2s; }
     input, select, button { font: inherit; color: inherit; }
     a { color: inherit; text-decoration: none; }
-    ::selection { background: var(--accent); color: var(--ink); }
+    ::selection { background: var(--accent); color: #0A1A0F; }
     a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
     .result-card a:focus-visible, .site-footer a:focus-visible { outline-color: var(--accent); }
     .container { width: 100%; max-width: calc(1240px + 2 * var(--gutter)); margin-inline: auto; padding-inline: var(--gutter); }
@@ -70,17 +102,21 @@
     .big-num, .fee-num, .invoice-num, #vsTitle, #vsDiff, #vsExplain, .rate-figure, .split-legend, table, .kv dd, input[type="number"], .q-btn { font-variant-numeric: tabular-nums; }
 
     /* ───────────── Header ───────────── */
-    header.site-header { position: sticky; top: 0; z-index: 20; background: var(--ground); border-bottom: 1px solid var(--line); }
+    header.site-header { position: sticky; top: 0; z-index: 20; background: var(--ground); border-bottom: 1px solid var(--line); transition: background-color .2s, border-color .2s; }
     .nav { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 64px; }
     .brand { font-weight: 700; font-size: 1.25rem; letter-spacing: -0.03em; white-space: nowrap; }
-    .brand span { background: var(--accent); color: var(--ink); padding: 0 .2em; margin-inline: .04em; border-radius: 4px; display: inline-block; line-height: 1.15; }
+    .brand span { background: var(--accent); color: #0A1A0F; padding: 0 .2em; margin-inline: .04em; border-radius: 4px; display: inline-block; line-height: 1.15; }
     .crumb { flex: 1; min-width: 0; display: flex; align-items: center; gap: 10px; color: var(--ink-2); font-size: .9375rem; }
     .crumb-now { color: var(--ink); font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .nav-actions { display: flex; align-items: center; gap: 10px; }
+    .theme-toggle { display: inline-flex; align-items: center; justify-content: center; gap: 6px; height: 36px; padding: 0 12px; background: transparent; border: 1px solid var(--ink); border-radius: 999px; cursor: pointer; font-size: .8125rem; font-weight: 600; color: var(--ink); transition: background-color .15s, color .15s, transform .15s; }
+    .theme-toggle:hover { background: var(--tone); }
+    .theme-toggle:active { transform: scale(.96); }
     .lang-switch { display: inline-flex; gap: 2px; padding: 3px; border: 1px solid var(--ink); border-radius: 999px; }
     .lang-switch a { font-size: .8125rem; font-weight: 600; letter-spacing: .01em; padding: 6px 14px; border-radius: 999px; transition: background-color .15s, color .15s, transform .15s; }
     .lang-switch a:hover { background: var(--tone); }
     .lang-switch a:active { transform: scale(.96); }
-    .lang-switch a.active { background: var(--ink); color: var(--dark-ink); }
+    .lang-switch a.active { background: var(--ink); color: var(--ground); }
 
     /* ───────────── Hero ───────────── */
     .hero { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gap); row-gap: 28px; align-items: end; padding-top: clamp(36px, 5vw, 72px); }
@@ -110,10 +146,13 @@
     select { -webkit-appearance: none; appearance: none; padding-right: 44px; cursor: pointer;
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 14 14' fill='none' stroke='%230A1A0F' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2.5 5L7 9.5L11.5 5'/%3E%3C/svg%3E");
       background-repeat: no-repeat; background-position: right 16px center; }
+    html[data-theme="dark"] select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 14 14' fill='none' stroke='%23F3F7F0' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2.5 5L7 9.5L11.5 5'/%3E%3C/svg%3E");
+    }
 
     .quick-btns { display: flex; gap: 8px; margin-bottom: 36px; flex-wrap: wrap; }
     .q-btn { background: transparent; border: 1px solid var(--field-line); color: var(--ink); padding: 8px 16px; border-radius: 999px; cursor: pointer; font-size: .875rem; font-weight: 500; transition: background-color .15s, color .15s, border-color .15s, transform .15s; }
-    .q-btn:hover { background: var(--ink); border-color: var(--ink); color: var(--dark-ink); }
+    .q-btn:hover { background: var(--ink); border-color: var(--ink); color: var(--ground); }
     .q-btn:active { transform: scale(.95); }
 
     label.checkbox-row { display: flex; align-items: center; gap: 12px; margin: auto 0 0; min-height: 68px; padding: 14px 16px; border: 1px solid var(--line); border-radius: var(--r); cursor: pointer; font-size: .9375rem; font-weight: 500; color: var(--ink); transition: border-color .15s, background-color .15s; }
@@ -123,10 +162,14 @@
     input[type="checkbox"]:checked { background-color: var(--ink);
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 14 14' fill='none' stroke='%23F3F7F0' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 7.2L5.8 10L11 4'/%3E%3C/svg%3E");
       background-repeat: no-repeat; background-position: center; }
+    html[data-theme="dark"] input[type="checkbox"]:checked {
+      background-color: var(--accent); border-color: var(--accent);
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 14 14' fill='none' stroke='%230A1A0F' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 7.2L5.8 10L11 4'/%3E%3C/svg%3E");
+    }
     label.checkbox-row span small { display: block; margin-top: 2px; font-size: .8125rem; font-weight: 400; color: var(--ink-2); }
 
     /* result panel */
-    .result-card { background: var(--dark); border-color: var(--dark); color: var(--dark-ink); display: flex; flex-direction: column; }
+    .result-card { background: var(--dark); border-color: var(--dark-line); color: var(--dark-ink); display: flex; flex-direction: column; }
     .result-box { margin-bottom: 24px; }
     .result-row { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; }
     .result-row > span:first-child { min-width: 0; }
@@ -157,7 +200,7 @@
     #vsTitle strong { color: var(--dark-ink); font-weight: 600; }
     #vsDiff { color: var(--accent); font-weight: 600; }
     .vs-explain { font-size: .9375rem; color: var(--dark-muted); }
-    .cta-btn { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; min-height: 52px; margin-top: 18px; padding: 12px 20px; background: var(--accent); color: var(--ink); text-align: center; font-weight: 600; border-radius: 999px; transition: background-color .15s, transform .15s; }
+    .cta-btn { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; min-height: 52px; margin-top: 18px; padding: 12px 20px; background: var(--accent); color: #0A1A0F; text-align: center; font-weight: 600; border-radius: 999px; transition: background-color .15s, transform .15s; }
     .cta-btn:hover { background: var(--accent-hover); transform: translateY(-1px); }
     .cta-btn:active { transform: scale(.98); }
 
@@ -206,10 +249,13 @@
     #searchFilter { grid-column: 8 / -1; margin-bottom: 0; height: 52px; font-size: .9375rem; padding-left: 44px;
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 18 18' fill='none' stroke='%230A1A0F' stroke-width='1.8' stroke-linecap='round'%3E%3Ccircle cx='8' cy='8' r='5.5'/%3E%3Cpath d='M12.5 12.5L16 16'/%3E%3C/svg%3E");
       background-repeat: no-repeat; background-position: 14px center; }
+    html[data-theme="dark"] #searchFilter {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 18 18' fill='none' stroke='%23F3F7F0' stroke-width='1.8' stroke-linecap='round'%3E%3Ccircle cx='8' cy='8' r='5.5'/%3E%3Cpath d='M12.5 12.5L16 16'/%3E%3C/svg%3E");
+    }
     #searchFilter::placeholder { color: var(--ink-2); opacity: 1; }
     .pill-grid { display: flex; flex-wrap: wrap; gap: 8px; }
     .pill { display: inline-block; padding: 9px 16px; line-height: 1.2; background: var(--surface); border: 1px solid var(--field-line); border-radius: 999px; color: var(--ink); font-size: .9375rem; font-weight: 500; transition: background-color .15s, color .15s, border-color .15s, transform .15s; }
-    .pill:hover { background: var(--ink); border-color: var(--ink); color: var(--dark-ink); transform: translateY(-2px); }
+    .pill:hover { background: var(--ink); border-color: var(--ink); color: var(--ground); transform: translateY(-2px); }
     .pill:active { transform: scale(.97); }
 
     .site-footer { background: var(--dark); color: var(--dark-muted); padding: 48px 0 clamp(16px, 2.5vw, 40px); overflow: hidden; }
@@ -264,14 +310,17 @@
       .q-btn { flex: 1 1 auto; padding: 11px 12px; }
     }
   </style>
+
   <!-- Google Analytics 4 (GA4) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id="></script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-WLVCBX62CJ"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
     gtag('config', 'G-WLVCBX62CJ');
   </script>
+
+  <!-- Microsoft Clarity -->
   <script type="text/javascript">
     (function(c,l,a,r,i,t,y){
         c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
@@ -289,14 +338,20 @@
         <span aria-hidden="true">/</span>
         <span class="crumb-now">{{ primary.name }}{% if is_comparison %} vs {{ secondary.name }}{% endif %}</span>
       </nav>
-      <div class="lang-switch">
-        {% if is_comparison %}
-          <a href="/en/{{ slug }}-fees/" hreflang="en" class="{% if lang == 'en' %}active{% endif %}">EN</a>
-          <a href="/es/{{ slug }}-fees/" hreflang="es" class="{% if lang == 'es' %}active{% endif %}">ES</a>
-        {% else %}
-          <a href="/en/{{ slug }}-fee-calculator/" hreflang="en" class="{% if lang == 'en' %}active{% endif %}">EN</a>
-          <a href="/es/{{ slug }}-fee-calculator/" hreflang="es" class="{% if lang == 'es' %}active{% endif %}">ES</a>
-        {% endif %}
+      <div class="nav-actions">
+        <button type="button" class="theme-toggle" id="themeToggle" onclick="toggleTheme()" aria-label="Toggle Dark Mode">
+          <span id="themeIcon">🌙</span>
+          <span id="themeLabel">{% if lang == 'en' %}Dark{% else %}Oscuro{% endif %}</span>
+        </button>
+        <div class="lang-switch">
+          {% if is_comparison %}
+            <a href="/en/{{ slug }}-fees/" hreflang="en" class="{% if lang == 'en' %}active{% endif %}">EN</a>
+            <a href="/es/{{ slug }}-fees/" hreflang="es" class="{% if lang == 'es' %}active{% endif %}">ES</a>
+          {% else %}
+            <a href="/en/{{ slug }}-fee-calculator/" hreflang="en" class="{% if lang == 'en' %}active{% endif %}">EN</a>
+            <a href="/es/{{ slug }}-fee-calculator/" hreflang="es" class="{% if lang == 'es' %}active{% endif %}">ES</a>
+          {% endif %}
+        </div>
       </div>
     </div>
   </header>
@@ -337,6 +392,27 @@
             {% for key, p in all_platforms.items %}
               <option value="{{ key }}" {% if key == p1_key %}selected{% endif %}>{{ p.name }} ({{ p.percent_fee }}% + ${{ p.fixed_fee }})</option>
             {% endfor %}
+          </select>
+
+          <label for="countrySelect">{% if lang == 'en' %}Account Country / Merchant Region{% else %}País de la Cuenta / Región Comercial{% endif %}</label>
+          <select id="countrySelect">
+            <option value="default" selected>{% if lang == 'en' %}🌐 Platform Default (Standard){% else %}🌐 Estándar de la Plataforma{% endif %}</option>
+            <option value="2.9|0.30">🇺🇸 United States (2.9% + $0.30)</option>
+            <option value="1.5|0.25">🇪🇸 Spain / España (1.5% + $0.25)</option>
+            <option value="1.5|0.25">🇪🇺 European Union / Eurozone (1.5% + $0.25)</option>
+            <option value="1.5|0.25">🇬🇧 United Kingdom (1.5% + $0.25)</option>
+            <option value="2.9|0.30">🇨🇦 Canada (2.9% + $0.30)</option>
+            <option value="1.75|0.30">🇦🇺 Australia (1.75% + $0.30)</option>
+            <option value="3.6|0.15">🇲🇽 Mexico (3.6% + $0.15)</option>
+            <option value="3.6|0.30">🇪🇨 Ecuador (3.6% + $0.30)</option>
+            <option value="3.6|0.30">🇨🇴 Colombia (3.6% + $0.30)</option>
+            <option value="3.6|0.30">🇦🇷 Argentina (3.6% + $0.30)</option>
+            <option value="3.6|0.30">🇨🇱 Chile (3.6% + $0.30)</option>
+            <option value="3.6|0.30">🇵🇪 Peru (3.6% + $0.30)</option>
+            <option value="3.99|0.10">🇧🇷 Brazil (3.99% + $0.10)</option>
+            <option value="3.4|0.50">🇸🇬 Singapore (3.4% + $0.50)</option>
+            <option value="3.6|0.00">🇯🇵 Japan (3.6% + $0.00)</option>
+            <option value="2.0|0.20">🇮🇳 India (2.0% + $0.20)</option>
           </select>
 
           <label for="p2Select">{% if lang == 'en' %}Compare Against (VS){% else %}Comparar Contra (VS){% endif %}</label>
@@ -505,8 +581,35 @@
     const PLATFORMS = {{ platforms_json|safe }};
     const LANG = "{{ lang }}";
 
+    // Lógica de Modo Oscuro / Claro
+    function syncThemeBtn() {
+      const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+      const icon = document.getElementById('themeIcon');
+      const label = document.getElementById('themeLabel');
+      if (icon && label) {
+        icon.textContent = isDark ? '☀️' : '🌙';
+        label.textContent = isDark
+          ? (LANG === 'en' ? 'Light' : 'Claro')
+          : (LANG === 'en' ? 'Dark' : 'Oscuro');
+      }
+    }
+
+    function toggleTheme() {
+      const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+      if (isDark) {
+        document.documentElement.removeAttribute('data-theme');
+        localStorage.setItem('fp_theme', 'light');
+      } else {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        localStorage.setItem('fp_theme', 'dark');
+      }
+      syncThemeBtn();
+    }
+    syncThemeBtn();
+
     const amountInput = document.getElementById('amountInput');
     const p1Select = document.getElementById('p1Select');
+    const countrySelect = document.getElementById('countrySelect');
     const p2Select = document.getElementById('p2Select');
     const intlCheck = document.getElementById('intlCheck');
 
@@ -515,20 +618,34 @@
       updateUI();
     }
 
-    function calcPlatform(amount, key, isIntl) {
+    p1Select.addEventListener('change', () => {
+      countrySelect.value = 'default';
+      updateUI();
+    });
+
+    function calcPlatform(amount, key, isIntl, customCountryVal) {
       const p = PLATFORMS[key];
-      const pct = (p.percent_fee + (isIntl ? p.intl_extra_percent : 0)) / 100;
-      const fee = (amount * pct) + p.fixed_fee;
+      let basePct = p.percent_fee;
+      let fixedFee = p.fixed_fee;
+
+      if (customCountryVal && customCountryVal !== 'default') {
+        const parts = customCountryVal.split('|');
+        basePct = parseFloat(parts[0]);
+        fixedFee = parseFloat(parts[1]);
+      }
+
+      const pct = (basePct + (isIntl ? p.intl_extra_percent : 0)) / 100;
+      const fee = (amount * pct) + fixedFee;
       const net = Math.max(0, amount - fee);
-      const reverse = pct < 1 ? (amount + p.fixed_fee) / (1 - pct) : amount;
+      const reverse = pct < 1 ? (amount + fixedFee) / (1 - pct) : amount;
       return { name: p.name, fee, net, reverse, url: p.affiliate_url };
     }
 
     function updateUI() {
       const amount = parseFloat(amountInput.value) || 0;
       const isIntl = intlCheck.checked;
-      const r1 = calcPlatform(amount, p1Select.value, isIntl);
-      const r2 = calcPlatform(amount, p2Select.value, isIntl);
+      const r1 = calcPlatform(amount, p1Select.value, isIntl, countrySelect.value);
+      const r2 = calcPlatform(amount, p2Select.value, isIntl, 'default');
 
       document.getElementById('p1Name').textContent = r1.name;
       document.getElementById('p1Net').textContent = `$${r1.net.toFixed(2)}`;
@@ -562,7 +679,7 @@
       });
     });
 
-    [amountInput, p1Select, p2Select, intlCheck].forEach(el => el.addEventListener('input', updateUI));
+    [amountInput, p1Select, countrySelect, p2Select, intlCheck].forEach(el => el.addEventListener('input', updateUI));
     updateUI();
   </script>
 
