@@ -137,7 +137,13 @@
     .rate-label, .rate-cat { font-size: .875rem; line-height: 1.3; color: var(--ink-2); }
     .rate-figure { margin: 4px 0; font-size: clamp(1.625rem, 1rem + 1.4vw, 2.25rem); font-weight: 700; letter-spacing: -0.03em; line-height: 1.1; white-space: nowrap; }
 
-    .ad-slot { display: flex; align-items: center; justify-content: center; text-align: center; width: 100%; min-height: 95px; padding: 12px; margin: clamp(28px, 4vw, 48px) 0; border: 1px dashed var(--field-line); border-radius: var(--r); color: var(--ink-2); font-size: .8125rem; }
+    /* Barra interactiva de Ranking Top 3 (reemplaza el placeholder vacío de AdSense) */
+    .top3-bar { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px 20px; width: 100%; padding: 14px 20px; margin: clamp(24px, 3.5vw, 40px) 0; background: var(--tone); border: 1px solid var(--line); border-radius: var(--r); font-size: .875rem; }
+    .top3-title { font-weight: 600; color: var(--ink); display: flex; align-items: center; gap: 8px; }
+    .top3-badges { display: flex; flex-wrap: wrap; gap: 8px; }
+    .top3-badge { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; background: var(--surface); border: 1px solid var(--field-line); border-radius: 999px; font-size: .8125rem; font-weight: 500; color: var(--ink); cursor: pointer; transition: all .15s; }
+    .top3-badge:hover { background: var(--ink); border-color: var(--ink); color: var(--ground); transform: translateY(-1px); }
+    .top3-badge b { font-weight: 700; }
 
     /* ───────────── Calculator ───────────── */
     .grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: var(--gap); align-items: stretch; }
@@ -147,6 +153,12 @@
     .input-card { display: flex; flex-direction: column; }
 
     label { display: block; font-size: .875rem; font-weight: 500; color: var(--ink-2); margin-bottom: 8px; }
+    .label-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 8px; }
+    .label-row label { margin-bottom: 0; }
+    .swap-btn { display: inline-flex; align-items: center; gap: 4px; padding: 3px 10px; background: var(--tone); border: 1px solid var(--field-line); border-radius: 999px; font-size: .75rem; font-weight: 600; color: var(--ink); cursor: pointer; transition: all .15s; }
+    .swap-btn:hover { background: var(--ink); border-color: var(--ink); color: var(--ground); }
+    .swap-btn:active { transform: scale(.95); }
+
     input[type="number"], input[type="text"], select { width: 100%; height: 54px; padding: 0 14px; margin-bottom: 28px; background: var(--surface); border: 1px solid var(--field-line); color: var(--ink); border-radius: var(--r); font-size: 1rem; outline: none; transition: border-color .15s; }
     input[type="number"]:hover, input[type="text"]:hover, select:hover { border-color: var(--ink); }
     input[type="number"]:focus, input[type="text"]:focus, select:focus { border-color: var(--ink); outline: 2px solid var(--ink); outline-offset: 2px; }
@@ -158,6 +170,11 @@
     html[data-theme="dark"] select {
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 14 14' fill='none' stroke='%23F3F7F0' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2.5 5L7 9.5L11.5 5'/%3E%3C/svg%3E");
     }
+
+    /* Casillas de Tarifa Personalizada (ocultas salvo cuando elige Custom Rate) */
+    .custom-rate-box { display: none; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: -14px; margin-bottom: 24px; padding: 14px; background: var(--tone); border: 1px solid var(--line); border-radius: var(--r); }
+    .custom-rate-box.active { display: grid; }
+    .custom-rate-box input[type="number"] { height: 44px; margin-bottom: 0; font-size: .95rem; }
 
     .quick-btns { display: flex; gap: 8px; margin-bottom: 36px; flex-wrap: wrap; }
     .q-btn { background: transparent; border: 1px solid var(--field-line); color: var(--ink); padding: 8px 16px; border-radius: 999px; cursor: pointer; font-size: .875rem; font-weight: 500; transition: background-color .15s, color .15s, border-color .15s, transform .15s; }
@@ -184,12 +201,18 @@
     .result-row > span:first-child { min-width: 0; }
     .result-row > span:last-child { text-align: right; }
     .result-main { flex-direction: column; align-items: flex-start; gap: 8px; }
-    .result-main > span:first-child { color: var(--dark-muted); font-size: 1rem; }
-    .result-main > span:last-child { text-align: left; max-width: 100%; }
+    .result-main-head { width: 100%; display: flex; justify-content: space-between; align-items: center; gap: 12px; color: var(--dark-muted); font-size: 1rem; }
     .result-main strong { color: var(--dark-ink); font-weight: 600; }
     .big-num { display: block; font-size: clamp(2.75rem, 2rem + 4.2vw, 5.25rem); font-weight: 700; letter-spacing: -0.05em; line-height: 1; color: var(--accent); overflow-wrap: anywhere; }
     .big-num.tick { animation: tick .2s var(--ease); }
     @keyframes tick { from { opacity: .5; transform: translateY(3px); } to { opacity: 1; transform: none; } }
+
+    /* Botones de Copiar y Compartir en el panel de resultados */
+    .action-Group { display: inline-flex; align-items: center; gap: 6px; }
+    .copy-pill { display: inline-flex; align-items: center; gap: 5px; padding: 4px 10px; background: var(--dark-2); border: 1px solid var(--dark-line); border-radius: 999px; color: var(--dark-muted); font-size: .75rem; font-weight: 600; cursor: pointer; transition: all .15s; white-space: nowrap; }
+    .copy-pill:hover { border-color: var(--accent); color: var(--accent); }
+    .copy-pill:active { transform: scale(.95); }
+    .invoice-wrap { display: inline-flex; align-items: center; gap: 10px; }
 
     .split { height: 8px; margin-top: 24px; background: var(--dark-line); border-radius: 4px; overflow: hidden; }
     .split i { display: block; height: 100%; background: var(--accent); transform-origin: left center; transform: scaleX(0); transition: transform .35s var(--ease); }
@@ -198,7 +221,7 @@
     .split-legend span::before { content: ""; display: inline-block; width: 8px; height: 8px; margin-right: 6px; border-radius: 2px; background: var(--accent); }
     .split-legend span:last-child::before { background: var(--dark-line); }
 
-    .result-box .result-row:not(.result-main) { padding: 16px 0; border-top: 1px solid var(--dark-line); color: var(--dark-muted); font-size: .9375rem; }
+    .result-box .result-row:not(.result-main) { padding: 16px 0; border-top: 1px solid var(--dark-line); color: var(--dark-muted); font-size: .9375rem; align-items: center; }
     .fee-num, .invoice-num { color: var(--dark-ink); font-weight: 600; font-size: 1.25rem; white-space: nowrap; letter-spacing: -0.01em; }
     .invoice-num { font-size: 1.5rem; font-weight: 700; }
 
@@ -231,7 +254,7 @@
     th:first-child, td:first-child { text-align: left; }
     th { height: 44px; background: var(--tone); font-size: .8125rem; font-weight: 600; line-height: 1.25; white-space: normal; vertical-align: middle; }
     tbody tr:last-child td { border-bottom: 0; }
-    tbody tr { transition: background-color .15s; }
+    tbody tr { transition: background-color .15s; cursor: pointer; }
     tbody tr:hover { background: var(--ground); }
     td.c-amt { font-weight: 600; }
     td.c-fee { color: var(--ink-2); }
@@ -244,8 +267,10 @@
     .kv > div:last-child { border-bottom: 0; }
     .kv dt { font-size: .8125rem; color: var(--ink-2); }
     .kv dd { font-size: 1rem; font-weight: 600; }
+    .source-link { display: inline-flex; align-items: center; gap: 4px; text-decoration: underline; text-underline-offset: 3px; color: var(--ink); }
+    .source-link:hover { color: var(--ink-2); }
 
-    .faq-section { margin-top: 16px; }
+    .faq-section { margin-top: var(--gap-section); }
     .section-head { margin-bottom: 28px; }
     .faq-list { border-top: 1px solid var(--ink); }
     .faq-item { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gap); row-gap: 10px; padding: 28px 0; border-bottom: 1px solid var(--line); }
@@ -313,6 +338,7 @@
       th { font-size: .75rem; }
       .vs-banner { padding: 16px; }
       .footer-links { gap: 8px 20px; }
+      .result-main-head { flex-wrap: wrap; }
     }
     @media (max-width: 380px) {
       .quick-btns { flex-wrap: wrap; }
@@ -378,8 +404,14 @@
       </div>
     </section>
 
+    <!-- Ranking Interactivo en Vivo: Calcula el Top 3 más económico para el monto actual -->
     <div class="container">
-      <div class="ad-slot">[ Google AdSense Top Leaderboard - 728x90 / Responsive ]</div>
+      <div class="top3-bar">
+        <span class="top3-title" id="top3Heading">
+          ⚡ {% if lang == 'en' %}Lowest-Fee Options for $1,000:{% else %}Opciones más económicas para $1,000:{% endif %}
+        </span>
+        <div class="top3-badges" id="top3Container"></div>
+      </div>
     </div>
 
     <section class="container">
@@ -403,28 +435,46 @@
             {% endfor %}
           </select>
 
-          <label for="countrySelect">{% if lang == 'en' %}Account Country / Merchant Region (Card Benchmark){% else %}País de la Cuenta / Región Comercial (Referencia){% endif %}</label>
+          <label for="countrySelect" id="countrySelectLabel">{% if lang == 'en' %}Account Country / Merchant Region{% else %}País de la Cuenta / Región Comercial{% endif %}</label>
           <select id="countrySelect">
             <option value="default" selected>{% if lang == 'en' %}🌐 Official Platform Default (Verified){% else %}🌐 Estándar Oficial de la Plataforma (Verificado){% endif %}</option>
-            <option value="2.9|0.30">🇺🇸 United States (2.9% + $0.30 est.)</option>
-            <option value="1.5|0.25">🇪🇸 Spain / España (1.5% + $0.25 est.)</option>
-            <option value="1.5|0.25">🇪🇺 European Union / Eurozone (1.5% + $0.25 est.)</option>
-            <option value="1.5|0.25">🇬🇧 United Kingdom (1.5% + $0.25 est.)</option>
-            <option value="2.9|0.30">🇨🇦 Canada (2.9% + $0.30 est.)</option>
-            <option value="1.75|0.30">🇦🇺 Australia (1.75% + $0.30 est.)</option>
-            <option value="3.6|0.15">🇲🇽 Mexico (3.6% + $0.15 est.)</option>
-            <option value="3.6|0.30">🇪🇨 Ecuador (3.6% + $0.30 est.)</option>
-            <option value="3.6|0.30">🇨🇴 Colombia (3.6% + $0.30 est.)</option>
-            <option value="3.6|0.30">🇦🇷 Argentina (3.6% + $0.30 est.)</option>
-            <option value="3.6|0.30">🇨🇱 Chile (3.6% + $0.30 est.)</option>
-            <option value="3.6|0.30">🇵🇪 Peru (3.6% + $0.30 est.)</option>
-            <option value="3.99|0.10">🇧🇷 Brazil (3.99% + $0.10 est.)</option>
-            <option value="3.4|0.50">🇸🇬 Singapore (3.4% + $0.50 est.)</option>
-            <option value="3.6|0.00">🇯🇵 Japan (3.6% + $0.00 est.)</option>
-            <option value="2.0|0.20">🇮🇳 India (2.0% + $0.20 est.)</option>
+            <option value="2.9|0.30" data-country="🇺🇸 United States">🇺🇸 United States (2.9% + $0.30)</option>
+            <option value="1.5|0.25" data-country="🇪🇸 Spain / España">🇪🇸 Spain / España (1.5% + $0.25)</option>
+            <option value="1.5|0.25" data-country="🇪🇺 European Union">🇪🇺 European Union / Eurozone (1.5% + $0.25)</option>
+            <option value="1.5|0.25" data-country="🇬🇧 United Kingdom">🇬🇧 United Kingdom (1.5% + $0.25)</option>
+            <option value="2.9|0.30" data-country="🇨🇦 Canada">🇨🇦 Canada (2.9% + $0.30)</option>
+            <option value="1.75|0.30" data-country="🇦🇺 Australia">🇦🇺 Australia (1.75% + $0.30)</option>
+            <option value="3.6|0.15" data-country="🇲🇽 Mexico">🇲🇽 Mexico (3.6% + $0.15)</option>
+            <option value="3.6|0.30" data-country="🇪🇨 Ecuador">🇪🇨 Ecuador (3.6% + $0.30)</option>
+            <option value="3.6|0.30" data-country="🇨🇴 Colombia">🇨🇴 Colombia (3.6% + $0.30)</option>
+            <option value="3.6|0.30" data-country="🇦🇷 Argentina">🇦🇷 Argentina (3.6% + $0.30)</option>
+            <option value="3.6|0.30" data-country="🇨🇱 Chile">🇨🇱 Chile (3.6% + $0.30)</option>
+            <option value="3.6|0.30" data-country="🇵🇪 Peru">🇵🇪 Peru (3.6% + $0.30)</option>
+            <option value="3.99|0.10" data-country="🇧🇷 Brazil">🇧🇷 Brazil (3.99% + $0.10)</option>
+            <option value="3.4|0.50" data-country="🇸🇬 Singapore">🇸🇬 Singapore (3.4% + $0.50)</option>
+            <option value="3.6|0.00" data-country="🇯🇵 Japan">🇯🇵 Japan (3.6% + $0.00)</option>
+            <option value="2.0|0.20" data-country="🇮🇳 India">🇮🇳 India (2.0% + $0.20)</option>
+            <option value="custom">{% if lang == 'en' %}✏️ Custom Rate (% and $ Fixed)...{% else %}✏️ Tarifa Personalizada (% y $ Fijo)...{% endif %}</option>
           </select>
 
-          <label for="p2Select">{% if lang == 'en' %}Compare Against (VS){% else %}Comparar Contra (VS){% endif %}</label>
+          <!-- Casillas para ingresar una tarifa personalizada cuando se elige "Custom Rate" -->
+          <div class="custom-rate-box" id="customRateBox">
+            <div>
+              <label for="customPctInput">{% if lang == 'en' %}Custom Fee (%){% else %}Comisión (%){% endif %}</label>
+              <input type="number" id="customPctInput" value="2.5" min="0" max="99" step="0.01">
+            </div>
+            <div>
+              <label for="customFixedInput">{% if lang == 'en' %}Fixed Fee ($ USD){% else %}Tarifa Fija ($ USD){% endif %}</label>
+              <input type="number" id="customFixedInput" value="0.25" min="0" step="0.01">
+            </div>
+          </div>
+
+          <div class="label-row">
+            <label for="p2Select">{% if lang == 'en' %}Compare Against (VS){% else %}Comparar Contra (VS){% endif %}</label>
+            <button type="button" class="swap-btn" onclick="swapPlatforms()" title="{% if lang == 'en' %}Swap primary and secondary platforms{% else %}Intercambiar plataformas{% endif %}">
+              ⇅ {% if lang == 'en' %}Swap{% else %}Invertir{% endif %}
+            </button>
+          </div>
           <select id="p2Select">
             {% for key, p in all_platforms.items %}
               <option value="{{ key }}" {% if key == p2_key %}selected{% endif %}>{{ p.name }} ({{ p.percent_fee }}% + ${{ p.fixed_fee }})</option>
@@ -440,7 +490,17 @@
         <div class="card result-card rise" style="--d: 240ms;">
           <div class="result-box">
             <div class="result-row result-main">
-              <span><strong id="p1Name">{{ primary.name }}</strong> {% if lang == 'en' %}Net Payout:{% else %}Recibes Neto:{% endif %}</span>
+              <div class="result-main-head">
+                <span><strong id="p1Name">{{ primary.name }}</strong> {% if lang == 'en' %}Net Payout:{% else %}Recibes Neto:{% endif %}</span>
+                <div class="action-Group">
+                  <button type="button" class="copy-pill" id="copyNetBtn" onclick="copyValue('p1Net', 'copyNetBtn')">
+                    📋 {% if lang == 'en' %}Copy Net{% else %}Copiar Neto{% endif %}
+                  </button>
+                  <button type="button" class="copy-pill" id="shareCalcBtn" onclick="shareCalculation()">
+                    🔗 {% if lang == 'en' %}Share Link{% else %}Compartir{% endif %}
+                  </button>
+                </div>
+              </div>
               <span class="big-num" id="p1Net">$0.00</span>
             </div>
             <div class="split" aria-hidden="true"><i id="splitNet"></i></div>
@@ -454,7 +514,12 @@
             </div>
             <div class="result-row">
               <span>{% if lang == 'en' %}Invoice this to receive exact amount:{% else %}Factura esto para recibir el monto exacto:{% endif %}</span>
-              <span class="invoice-num" id="p1Reverse">$0.00</span>
+              <div class="invoice-wrap">
+                <span class="invoice-num" id="p1Reverse">$0.00</span>
+                <button type="button" class="copy-pill" id="copyRevBtn" onclick="copyValue('p1Reverse', 'copyRevBtn')">
+                  📋 {% if lang == 'en' %}Copy{% else %}Copiar{% endif %}
+                </button>
+              </div>
             </div>
           </div>
 
@@ -474,7 +539,7 @@
 
     <section class="container section">
       <div class="cols">
-        <!-- TABLA DE TRAMOS PRE-CALCULADA Y SINCRONIZADA EN TIEMPO REAL -->
+        <!-- TABLA DE TRAMOS PRE-CALCULADA Y SINCRONIZADA EN TIEMPO REAL (Haz clic en cualquier fila para cargarla) -->
         <div class="panel col-table rise-scroll">
           <div class="panel-head">
             <h2 id="tableTitle"><span id="tablePlatformName">{{ primary.name }}</span> {% if lang == 'en' %}Fee Schedule Table ($10 to $10,000){% else %}Tabla de Comisiones ($10 a $10,000 USD){% endif %}</h2>
@@ -492,7 +557,7 @@
               </thead>
               <tbody id="feeTableBody">
                 {% for row in fee_table %}
-                <tr>
+                <tr onclick="setAmt({{ row.amount }})" title="{% if lang == 'en' %}Click to load ${{ row.amount }} into calculator{% else %}Clic para calcular ${{ row.amount }}{% endif %}">
                   <td class="c-amt">${{ row.amount }}</td>
                   <td class="c-fee">-${{ row.fee }}</td>
                   <td class="c-net">${{ row.net }}</td>
@@ -526,15 +591,15 @@
                 <dt>{% if lang == 'en' %}Invoice to receive an exact net{% else %}Factura para recibir un neto exacto{% endif %}</dt>
                 <dd id="formulaReverse">({% if lang == 'en' %}amount{% else %}monto{% endif %} + ${{ primary.fixed_fee|floatformat:2 }}) ÷ (1 − {{ primary.percent_fee }}%)</dd>
               </div>
+              <div>
+                <dt>{% if lang == 'en' %}Official Rate Reference{% else %}Fuente Oficial de Tarifas{% endif %}</dt>
+                <dd><a href="{{ primary.affiliate_url }}" id="formulaSourceLink" target="_blank" rel="nofollow noopener" class="source-link">{{ primary.name }} {% if lang == 'en' %}Official Fee Schedule 2026{% else %}Tarifas Oficiales 2026{% endif %} ↗</a></dd>
+              </div>
             </dl>
           </div>
         </div>
       </div>
     </section>
-
-        <div class="container">
-      <div class="ad-slot">[ Google AdSense In-Article Ad - 300x250 / Responsive ]</div>
-    </div>
 
     <!-- PREGUNTAS FRECUENTES (FAQ) -->
     <section class="container faq-section">
@@ -576,9 +641,9 @@
       <div class="footer-row">
         <div>© 2026 FeePilot Global. Built for High-Performance Financial Transparency.</div>
         <nav class="footer-links">
-          <a href="/legal/about/">About & Methodology</a>
-          <a href="/legal/privacy/">Privacy Policy</a>
-          <a href="/legal/terms/">Terms of Service</a>
+          <a href="/legal/about/?lang={{ lang }}">{% if lang == 'en' %}About & Methodology{% else %}Acerca de y Metodología{% endif %}</a>
+          <a href="/legal/privacy/?lang={{ lang }}">{% if lang == 'en' %}Privacy Policy{% else %}Política de Privacidad{% endif %}</a>
+          <a href="/legal/terms/?lang={{ lang }}">{% if lang == 'en' %}Terms of Service{% else %}Términos de Servicio{% endif %}</a>
           <a href="/sitemap.xml">Sitemap (650+ URLs)</a>
         </nav>
       </div>
@@ -591,7 +656,12 @@
     const LANG = "{{ lang }}";
     const TIERS = [10, 25, 50, 100, 250, 500, 1000, 2500, 5000, 10000];
 
-    // Redondeo financiero exacto a 2 decimales (centavos)
+    // Pasarelas de procesamiento de tarjetas donde las tasas varían por país (EE. UU., UE, LatAm, etc.)
+    const CARD_GATEWAYS = new Set([
+      'stripe', 'paypal', 'square', 'shopify', 'braintree', 'adyen',
+      'checkout', 'authorize', 'worldpay', '2checkout', 'mollie', 'razorpay', 'mercadopago'
+    ]);
+
     function roundCents(num) {
       return Math.round((num + Number.EPSILON) * 100) / 100;
     }
@@ -625,16 +695,93 @@
     const amountInput = document.getElementById('amountInput');
     const p1Select = document.getElementById('p1Select');
     const countrySelect = document.getElementById('countrySelect');
+    const customRateBox = document.getElementById('customRateBox');
+    const customPctInput = document.getElementById('customPctInput');
+    const customFixedInput = document.getElementById('customFixedInput');
     const p2Select = document.getElementById('p2Select');
     const intlCheck = document.getElementById('intlCheck');
+
+    // Actualiza las etiquetas del selector de país según si la plataforma es Pasarela de Tarjetas o Marketplace Global
+    function refreshCountryOptions() {
+      const key = p1Select.value;
+      const p = PLATFORMS[key];
+      const isCardGateway = CARD_GATEWAYS.has(key);
+
+      countrySelect.querySelectorAll('option[data-country]').forEach(opt => {
+        const countryName = opt.getAttribute('data-country');
+        if (isCardGateway) {
+          const [pct, fix] = opt.value.split('|');
+          opt.textContent = `${countryName} (${pct}% + $${parseFloat(fix).toFixed(2)})`;
+        } else {
+          opt.textContent = `${countryName} — ${p.name} Global (${p.percent_fee}% + $${p.fixed_fee.toFixed(2)})`;
+        }
+      });
+    }
 
     function setAmt(val) {
       amountInput.value = val;
       updateUI();
     }
 
+    function swapPlatforms() {
+      const temp = p1Select.value;
+      p1Select.value = p2Select.value;
+      p2Select.value = temp;
+      if (countrySelect.value !== 'custom') {
+        countrySelect.value = 'default';
+      }
+      refreshCountryOptions();
+      updateUI();
+    }
+
+    // Copiar valores al portapapeles con confirmación visual
+    function copyValue(elementId, btnId) {
+      const el = document.getElementById(elementId);
+      const btn = document.getElementById(btnId);
+      if (!el || !btn) return;
+      const cleanVal = el.textContent.replace(/[^0-9.]/g, '');
+      navigator.clipboard.writeText(cleanVal).then(() => {
+        const orig = btn.innerHTML;
+        btn.innerHTML = LANG === 'en' ? '✓ Copied!' : '✓ ¡Copiado!';
+        setTimeout(() => { btn.innerHTML = orig; }, 1600);
+      });
+    }
+
+    // Generar enlace real con parámetros para compartir simulación
+    function shareCalculation() {
+      const btn = document.getElementById('shareCalcBtn');
+      const url = new URL(window.location.href);
+      url.searchParams.set('amount', amountInput.value);
+      url.searchParams.set('p1', p1Select.value);
+      url.searchParams.set('p2', p2Select.value);
+      url.searchParams.set('region', countrySelect.value);
+      url.searchParams.set('intl', intlCheck.checked ? '1' : '0');
+      if (countrySelect.value === 'custom') {
+        url.searchParams.set('cpct', customPctInput.value);
+        url.searchParams.set('cfix', customFixedInput.value);
+      }
+      window.history.replaceState({}, '', url.toString());
+      navigator.clipboard.writeText(url.toString()).then(() => {
+        const orig = btn.innerHTML;
+        btn.innerHTML = LANG === 'en' ? '✓ Link Copied!' : '✓ ¡Enlace Copiado!';
+        setTimeout(() => { btn.innerHTML = orig; }, 1800);
+      });
+    }
+
     p1Select.addEventListener('change', () => {
-      countrySelect.value = 'default';
+      if (countrySelect.value !== 'custom') {
+        countrySelect.value = 'default';
+      }
+      refreshCountryOptions();
+      updateUI();
+    });
+
+    countrySelect.addEventListener('change', () => {
+      if (countrySelect.value === 'custom') {
+        customRateBox.classList.add('active');
+      } else {
+        customRateBox.classList.remove('active');
+      }
       updateUI();
     });
 
@@ -642,12 +789,17 @@
       const p = PLATFORMS[key];
       let basePct = p.percent_fee;
       let fixedFee = p.fixed_fee;
-      const isCustomRegion = customCountryVal && customCountryVal !== 'default';
+      let rateMode = 'verified';
 
-      if (isCustomRegion) {
+      if (customCountryVal === 'custom') {
+        basePct = Math.max(0, parseFloat(customPctInput.value) || 0);
+        fixedFee = Math.max(0, parseFloat(customFixedInput.value) || 0);
+        rateMode = 'custom';
+      } else if (customCountryVal && customCountryVal !== 'default' && CARD_GATEWAYS.has(key)) {
         const parts = customCountryVal.split('|');
         basePct = parseFloat(parts[0]);
         fixedFee = parseFloat(parts[1]);
+        rateMode = 'regional';
       }
 
       const activePctNum = roundCents(basePct + (isIntl ? p.intl_extra_percent : 0));
@@ -658,6 +810,7 @@
       const reverse = (amount > 0 && pct < 1) ? roundCents((amount + fixedFee) / (1 - pct)) : 0;
 
       return {
+        key,
         name: p.name,
         category: p.category,
         fee,
@@ -667,7 +820,7 @@
         activePctNum,
         fixedFee,
         intlExtra: p.intl_extra_percent,
-        isCustomRegion
+        rateMode
       };
     }
 
@@ -683,7 +836,7 @@
       document.getElementById('p1Fee').textContent = `-$${r1.fee.toFixed(2)}`;
       document.getElementById('p1Reverse').textContent = `$${r1.reverse.toFixed(2)}`;
 
-      // 2. Actualiza subtítulo del checkbox internacional y el indicador superior de tarifa verificada/estimada
+      // 2. Actualiza subtítulo internacional y encabezado de tarifa
       const intlSmall = document.getElementById('intlSmallText');
       if (intlSmall) {
         intlSmall.textContent = LANG === 'en'
@@ -696,8 +849,10 @@
       if (heroFig) heroFig.textContent = `${r1.activePctNum}% + $${r1.fixedFee.toFixed(2)}`;
       if (heroCat) heroCat.textContent = r1.category;
       if (heroLbl) {
-        if (r1.isCustomRegion) {
-          heroLbl.textContent = LANG === 'en' ? 'Regional estimate (2026)' : 'Estimación regional (2026)';
+        if (r1.rateMode === 'custom') {
+          heroLbl.textContent = LANG === 'en' ? 'Custom merchant rate' : 'Tarifa personalizada activa';
+        } else if (r1.rateMode === 'regional') {
+          heroLbl.textContent = LANG === 'en' ? 'Regional card rate (2026)' : 'Tarifa regional de tarjeta (2026)';
         } else {
           heroLbl.textContent = LANG === 'en' ? 'Verified 2026 standard rate' : 'Tarifa estándar verificada 2026';
         }
@@ -722,17 +877,46 @@
 
       document.getElementById('affiliateBtn').href = cheaper.url;
 
-      // 4. Sincroniza la caja de "La fórmula" con la tasa activa
+      // 4. Actualiza Ranking en Vivo Top 3 Plataformas más baratas para el monto ingresado
+      const top3Heading = document.getElementById('top3Heading');
+      const top3Container = document.getElementById('top3Container');
+      if (top3Heading && top3Container) {
+        top3Heading.textContent = LANG === 'en'
+          ? `⚡ Lowest-Fee Platforms for $${amount.toLocaleString('en-US')}:`
+          : `⚡ Plataformas más económicas para $${amount.toLocaleString('en-US')}:`;
+
+        const ranked = Object.keys(PLATFORMS)
+          .map(k => calcPlatform(amount, k, isIntl, 'default'))
+          .sort((a, b) => a.fee - b.fee)
+          .slice(0, 3);
+
+        top3Container.innerHTML = ranked.map((item, idx) => {
+          const medal = idx === 0 ? '🥇' : idx === 1 ? '🥈' : '🥉';
+          const titleTip = LANG === 'en' ? `Click to compare against ${item.name}` : `Clic para comparar contra ${item.name}`;
+          return `<button type="button" class="top3-badge" onclick="selectComparison('${item.key}')" title="${titleTip}">
+            ${medal} <b>${item.name}</b> ($${item.fee.toFixed(2)} fee)
+          </button>`;
+        }).join('');
+      }
+
+      // 5. Sincroniza la caja de "La fórmula" y enlace a fuente oficial
       const wordAmt = LANG === 'en' ? 'amount' : 'monto';
       const wordOf = LANG === 'en' ? 'of the amount' : 'del monto';
       const fFee = document.getElementById('formulaFee');
       const fIntl = document.getElementById('formulaIntl');
       const fRev = document.getElementById('formulaReverse');
+      const fSrc = document.getElementById('formulaSourceLink');
       if (fFee) fFee.textContent = `${wordAmt} × ${r1.activePctNum}% + $${r1.fixedFee.toFixed(2)}`;
       if (fIntl) fIntl.textContent = `+${r1.intlExtra}% ${wordOf}`;
       if (fRev) fRev.textContent = `(${wordAmt} + $${r1.fixedFee.toFixed(2)}) ÷ (1 − ${r1.activePctNum}%)`;
+      if (fSrc) {
+        fSrc.href = r1.url;
+        fSrc.textContent = LANG === 'en'
+          ? `${r1.name} Official Fee Schedule 2026 ↗`
+          : `Tarifas Oficiales de ${r1.name} 2026 ↗`;
+      }
 
-      // 5. Sincroniza en vivo la Tabla de Comisiones ($10 a $10,000) para que nunca muestre datos desfasados
+      // 6. Sincroniza en vivo la Tabla de Comisiones ($10 a $10,000) y hace cada fila interactiva
       const tbody = document.getElementById('feeTableBody');
       const tName1 = document.getElementById('tablePlatformName');
       const tName2 = document.getElementById('thPlatformName');
@@ -740,14 +924,15 @@
       if (tName1) tName1.textContent = r1.name;
       if (tName2) tName2.textContent = r1.name;
       if (tMeta) {
-        tMeta.textContent = r1.isCustomRegion
-          ? (LANG === 'en' ? `Regional est. (${r1.activePctNum}% + $${r1.fixedFee.toFixed(2)})` : `Est. regional (${r1.activePctNum}% + $${r1.fixedFee.toFixed(2)})`)
+        tMeta.textContent = r1.rateMode !== 'verified'
+          ? (LANG === 'en' ? `Active rate (${r1.activePctNum}% + $${r1.fixedFee.toFixed(2)})` : `Tasa activa (${r1.activePctNum}% + $${r1.fixedFee.toFixed(2)})`)
           : (LANG === 'en' ? `Verified rate (${r1.activePctNum}% + $${r1.fixedFee.toFixed(2)})` : `Tarifa verificada (${r1.activePctNum}% + $${r1.fixedFee.toFixed(2)})`);
       }
       if (tbody) {
+        const rowTip = LANG === 'en' ? 'Click to load this amount' : 'Clic para calcular este monto';
         tbody.innerHTML = TIERS.map(t => {
           const rowCalc = calcPlatform(t, p1Select.value, isIntl, countrySelect.value);
-          return `<tr>
+          return `<tr onclick="setAmt(${t})" title="${rowTip}">
             <td class="c-amt">$${t}</td>
             <td class="c-fee">-$${rowCalc.fee.toFixed(2)}</td>
             <td class="c-net">$${rowCalc.net.toFixed(2)}</td>
@@ -757,6 +942,27 @@
       }
     }
 
+    function selectComparison(platformKey) {
+      if (p1Select.value === platformKey) return;
+      p2Select.value = platformKey;
+      updateUI();
+    }
+
+    // Carga parámetros desde la URL si el usuario abrió un enlace compartido
+    (function loadSharedParams() {
+      const params = new URLSearchParams(window.location.search);
+      if (params.has('amount')) amountInput.value = parseFloat(params.get('amount')) || 1000;
+      if (params.has('p1') && PLATFORMS[params.get('p1')]) p1Select.value = params.get('p1');
+      if (params.has('p2') && PLATFORMS[params.get('p2')]) p2Select.value = params.get('p2');
+      if (params.has('intl')) intlCheck.checked = params.get('intl') === '1';
+      if (params.has('cpct')) customPctInput.value = parseFloat(params.get('cpct')) || 0;
+      if (params.has('cfix')) customFixedInput.value = parseFloat(params.get('cfix')) || 0;
+      if (params.has('region')) {
+        countrySelect.value = params.get('region');
+        if (countrySelect.value === 'custom') customRateBox.classList.add('active');
+      }
+    })();
+
     // Filtro de búsqueda instantáneo
     document.getElementById('searchFilter').addEventListener('input', (e) => {
       const q = e.target.value.toLowerCase();
@@ -765,7 +971,10 @@
       });
     });
 
-    [amountInput, p1Select, countrySelect, p2Select, intlCheck].forEach(el => el.addEventListener('input', updateUI));
+    [amountInput, p1Select, countrySelect, customPctInput, customFixedInput, p2Select, intlCheck].forEach(el => {
+      if (el) el.addEventListener('input', updateUI);
+    });
+    refreshCountryOptions();
     updateUI();
   </script>
 

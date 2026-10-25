@@ -20,6 +20,7 @@
         document.documentElement.setAttribute('data-theme', 'dark');
       }
     })();
+    
   </script>
 
   <style>
@@ -340,6 +341,17 @@
       syncThemeBtn();
     }
     syncThemeBtn();
+    (function syncLegalLang() {
+      const params = new URLSearchParams(window.location.search);
+      const lang = params.get('lang') === 'es' ? 'es' : 'en';
+      document.querySelectorAll('a[href="/en/stripe-fee-calculator/"]').forEach(a => {
+        a.href = `/${lang}/stripe-fee-calculator/`;
+        if (a.classList.contains('back-pill') && lang === 'es') a.textContent = '← Calculadora';
+      });
+      document.querySelectorAll('.legal-tabs a[href^="/legal/"], .footer-links a[href^="/legal/"]').forEach(a => {
+        a.href = `${a.getAttribute('href').split('?')[0]}?lang=${lang}`;
+      });
+    })();
   </script>
 </body>
 </html>
