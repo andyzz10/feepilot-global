@@ -137,3 +137,7 @@ def robots_txt(request):
         f"Sitemap: {host}/sitemap.xml",
     ]
     return HttpResponse("\n".join(lines), content_type="text/plain")
+
+def ads_txt(request):
+    linea_ads = "google.com, pub-8913212577365986, DIRECT, f08c47fec0942fa0"
+    return HttpResponse(linea_ads, content_type="text/plain")
