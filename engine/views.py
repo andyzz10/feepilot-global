@@ -7,9 +7,19 @@ from django.http import Http404, HttpResponse
 DATA_PATH = Path(__file__).resolve().parent / 'data' / 'platforms.json'
 TIER_AMOUNTS = [10, 25, 50, 100, 250, 500, 1000, 2500, 5000, 10000]
 
+# Indexación: False = solo se indexan las 25 páginas principales (x2 idiomas = 50 URLs).
+# Las páginas "A vs B" siguen funcionando para los visitantes, pero llevan noindex y salen del sitemap.
+# Para volver a indexarlas todas, cambia esto a True.
+INDEX_COMPARISONS = False
+
 def load_data():
     with open(DATA_PATH, 'r', encoding='utf-8') as f:
         return json.load(f)['platforms']
+
+def load_meta():
+    """Fecha de revisión y recuento de tarifas verificadas (viene de seed_platforms.py)."""
+    with open(DATA_PATH, 'r', encoding='utf-8') as f:
+        return json.load(f).get('meta', {})
 
 def compute_row(amount, p):
     pct = p['percent_fee'] / 100.0
@@ -85,6 +95,8 @@ def calculator_view(request, lang='en', slug='stripe'):
         'platforms_json': json.dumps(platforms),
         'all_platforms': platforms,
         'related_comparisons': related_comparisons[:16],
+        'meta': load_meta(),
+        'noindex': is_comparison and not INDEX_COMPARISONS,
     }
     return render(request, 'calculator.html', context)
 
@@ -92,41 +104,50 @@ def legal_view(request, page='privacy'):
     pages = {
         'privacy': (
             'Privacy Policy - FeePilot',
-            'We respect your privacy. All fee calculations on FeePilot happen locally in your browser. We do not store financial transactions or personal banking data. Third-party vendors, including Google AdSense, use cookies to serve ads based on prior visits to this or other websites. Users may opt out of personalized advertising by visiting Google Ads Settings.'
+            'Fee calculations run locally in your browser: the amounts you type are not sent to our servers. '
+            'We do use Google Analytics 4 and Microsoft Clarity to understand how the site is used (the amount field is masked in Clarity session recordings), '
+            'and advertising partners such as Google AdSense may use cookies to serve ads based on prior visits to this or other websites. '
+            'You can opt out of personalized advertising in Google Ads Settings.'
         ),
         'terms': (
             'Terms of Service & Disclaimer - FeePilot',
-            'FeePilot provides financial and payment processing fee estimates for informational and educational purposes only. While we update our platform database regularly, actual fees may vary depending on your country, merchant tier, or currency conversion rates.'
+            'FeePilot provides payment-processing fee estimates for informational and educational purposes only. '
+            'Rates change often and depend on your country, plan, card type and currency, so always confirm the final fee in your own merchant dashboard.'
         ),
         'about': (
             'About FeePilot Global',
-            'FeePilot is an independent financial technology utility built for freelancers, e-commerce merchants, and SaaS founders worldwide to transparently compare payment processing costs and maximize net revenue.'
+            'FeePilot is an independent fee-comparison utility for freelancers, e-commerce merchants and SaaS founders. '
+            'Each rate is labelled as checked against an official source (with the month) or as an estimate, so you can see how much to trust it.'
         )
     }
     if page not in pages:
         raise Http404()
     title, body = pages[page]
-    return render(request, 'legal.html', {'title': title, 'body': body})
+    # `content` es la variable que usa legal.html; `body` se conserva por compatibilidad
+    return render(request, 'legal.html', {'title': title, 'body': body, 'content': body, 'meta': load_meta()})
 
 def ads_txt(request):
-    """Archivo obligatorio para verificar tu cuenta de Google AdSense"""
-    content = "google.com, pub-0000000000000000, DIRECT, f08c47fec0942fa0"
-    return HttpResponse(content, content_type="text/plain")
+    """Archivo ads.txt de Google AdSense (tu ID de editor)"""
+    linea_ads = "google.com, pub-8913212577365986, DIRECT, f08c47fec0942fa0"
+    return HttpResponse(linea_ads, content_type="text/plain")
 
 def sitemap_xml(request):
     platforms = load_data()
     host = request.build_absolute_uri('/')[:-1]
+    lastmod = load_meta().get('last_reviewed')
     urls = []
 
     for lang in ['en', 'es']:
         for key in platforms.keys():
             urls.append(f"{host}/{lang}/{key}-fee-calculator/")
-        for k1, k2 in combinations(platforms.keys(), 2):
-            urls.append(f"{host}/{lang}/{k1}-vs-{k2}-fees/")
+        if INDEX_COMPARISONS:
+            for k1, k2 in combinations(platforms.keys(), 2):
+                urls.append(f"{host}/{lang}/{k1}-vs-{k2}-fees/")
 
     xml = ['<?xml version="1.0" encoding="UTF-8"?>', '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
     for u in urls:
-        xml.append(f"  <url><loc>{u}</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>")
+        mod = f"<lastmod>{lastmod}</lastmod>" if lastmod else ""
+        xml.append(f"  <url><loc>{u}</loc>{mod}<changefreq>weekly</changefreq><priority>0.8</priority></url>")
     xml.append('</urlset>')
     return HttpResponse("\n".join(xml), content_type="application/xml")
 def robots_txt(request):
@@ -137,7 +158,3 @@ def robots_txt(request):
         f"Sitemap: {host}/sitemap.xml",
     ]
     return HttpResponse("\n".join(lines), content_type="text/plain")
-
-def ads_txt(request):
-    linea_ads = "google.com, pub-8913212577365986, DIRECT, f08c47fec0942fa0"
-    return HttpResponse(linea_ads, content_type="text/plain")

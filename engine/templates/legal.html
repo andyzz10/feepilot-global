@@ -153,7 +153,7 @@
         c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
         t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
         y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-    })(window, document, "script", "clarity", "z342ths296");
+    })(window, document, "clarity", "script", "z342ths296");
   </script>
 </head>
 <body>
@@ -180,14 +180,14 @@
   <main class="container">
     <section class="hero">
       <div class="hero-copy">
-        <div class="eyebrow"><i></i> Official Documentation · 2026 Edition</div>
+        <div class="eyebrow"><i></i> Independent estimator · 2026</div>
         <h1>{{ title }}</h1>
         <p class="subtitle">{{ content }}</p>
       </div>
       <div class="hero-meta">
-        <p class="meta-tag">Compliance Status</p>
-        <p class="meta-val">Verified · 2026</p>
-        <p class="meta-tag">GDPR / CCPA & AdSense Ready</p>
+        <p class="meta-tag">Rates last reviewed</p>
+        <p class="meta-val">{{ meta.review_month|default:"Oct 2026" }}</p>
+        <p class="meta-tag">{{ meta.verified_count|default:"4" }} of {{ meta.total_count|default:"25" }} platforms checked against official sources</p>
       </div>
     </section>
 
@@ -196,7 +196,7 @@
       <a href="/legal/about/" class="tab-pill {% if 'about' in request.path %}active{% endif %}">About FeePilot</a>
       <a href="/legal/privacy/" class="tab-pill {% if 'privacy' in request.path %}active{% endif %}">Privacy Policy</a>
       <a href="/legal/terms/" class="tab-pill {% if 'terms' in request.path %}active{% endif %}">Terms of Service</a>
-      <a href="/sitemap.xml" class="tab-pill">Sitemap (650+ URLs) ↗</a>
+      <a href="/sitemap.xml" class="tab-pill">Sitemap (50+ URLs) ↗</a>
     </nav>
 
     <section class="legal-grid">
@@ -209,7 +209,7 @@
             <h2>100% Client-Side Financial Calculations</h2>
             <p>At FeePilot Global, your financial privacy is engineered into our architecture. Every fee simulation, reverse invoice calculation, and cross-border comparison is executed locally inside your browser using JavaScript.</p>
             <ul class="doc-list">
-              <li><span>🔒 <b>Zero Transaction Storage:</b> The dollar amounts and percentages you enter are never transmitted to, stored in, or logged by our database servers.</span></li>
+              <li><span>🔒 <b>No Transaction Storage:</b> The dollar amounts and percentages you enter are calculated in your browser and are not sent to, stored in, or logged by our own servers. Analytics tools (see Section 03) run in the same page; the main amount field is masked in Microsoft Clarity session recordings.</span></li>
               <li><span>🛡️ <b>No Account Required:</b> You can access all 650+ calculators and side-by-side comparisons anonymously without registering an email or password.</span></li>
             </ul>
           </article>
@@ -224,7 +224,7 @@
           <article class="doc-card">
             <span class="doc-num">SECTION 03</span>
             <h2>Analytics & User Experience Telemetry</h2>
-            <p>To continuously improve our calculators and regional fee accuracy, we use aggregated, non-personally identifiable telemetry through <strong>Google Analytics 4 (GA4)</strong> and <strong>Microsoft Clarity</strong>. These tools help us understand page load performance, device compatibility, and general interaction patterns without identifying individual users.</p>
+            <p>To continuously improve our calculators and regional fee accuracy, we use analytics through <strong>Google Analytics 4 (GA4)</strong> and <strong>Microsoft Clarity</strong>. These tools use cookies or similar identifiers to measure traffic, page performance, device compatibility, and general interaction patterns. Microsoft Clarity may record anonymised page interactions (clicks, scrolling) to help us find usability problems; the amount field is masked. If you are in the European Economic Area, the United Kingdom or another region that requires consent for analytics and advertising cookies, you should be asked for it before they are set.</p>
           </article>
 
         {% elif 'terms' in request.path %}
@@ -263,9 +263,9 @@
           <article class="doc-card">
             <span class="doc-num">METHODOLOGY</span>
             <h2>How Our 650+ Calculators Work</h2>
-            <p>Our programmatic financial engine cross-references official 2026 merchant fee schedules across payment gateways, freelance marketplaces, creator platforms, and international money transfer services.</p>
+            <p>Each platform's rate comes from its published pricing. Rates that were checked against an official source carry a "checked" label with the month; all other rates are shown as <strong>estimates</strong> and should be confirmed on the platform's own site before you rely on them. Where a platform has several plans or regions (for example Square Free vs Plus, or Stripe in the US, UK and EEA), you can pick the one that applies to you.</p>
             <ul class="doc-list">
-              <li><span>🌍 <b>Multi-Region Precision:</b> Adjusts automatically for US, European Union (SEPA), UK, LatAm, APAC, and international cross-border cards.</span></li>
+              <li><span>🌍 <b>Plans, Regions & Surcharges:</b> Rates for the plans and regions we have checked can be selected individually. International-card and currency-conversion surcharges are added separately, because platforms charge them separately. Anything else can be modelled with the custom-rate option.</span></li>
               <li><span>⚡ <b>Reverse Fee Formula:</b> Calculates the exact gross amount you must invoice a client (`(Amount + Fixed Fee) ÷ (1 − Fee %)`) so that you receive 100% of your target net payout without absorbing the fee.</span></li>
             </ul>
           </article>
@@ -278,23 +278,23 @@
       <aside class="side-col">
         <div class="trust-card">
           <h3>FeePilot Audit & Contact</h3>
-          <p>Engineered for mathematical accuracy, verifiable rate schedules, and zero input tracking.</p>
+          <p>Every rate shows whether it was checked against an official source or is an estimate. Analytics are disclosed in the Privacy Policy.</p>
           <div class="trust-kv">
             <div class="trust-row">
-              <span>Last Rate Audit</span>
-              <span>October 2026</span>
+              <span>Last Rate Review</span>
+              <span>{{ meta.review_month|default:"Oct 2026" }}</span>
             </div>
             <div class="trust-row">
               <span>Indexed Calculators</span>
               <span>650+ URLs</span>
             </div>
             <div class="trust-row">
-              <span>Input Masking</span>
-              <span>Clarity Protected</span>
+              <span>Checked vs Estimated</span>
+              <span>{{ meta.verified_count|default:"4" }} checked · {{ meta.total_count|default:"25" }} total</span>
             </div>
             <div class="trust-row">
               <span>Editorial Contact</span>
-              <span>support@feepilotglobal.com</span>
+              <span>supportfeepilotglobal@gmail.com</span>
             </div>
           </div>
           <a href="/en/stripe-fee-calculator/" class="cta-btn">
@@ -313,7 +313,7 @@
           <a href="/legal/about/">About</a>
           <a href="/legal/privacy/">Privacy Policy</a>
           <a href="/legal/terms/">Terms of Service</a>
-          <a href="/sitemap.xml">Sitemap (650+ URLs)</a>
+          <a href="/sitemap.xml">Sitemap (50+ URLs)</a>
         </nav>
       </div>
       <div class="wordmark" aria-hidden="true">Fee<span>Pilot</span> Global</div>

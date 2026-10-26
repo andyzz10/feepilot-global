@@ -8,6 +8,7 @@
   <title>{{ title }}</title>
   <meta name="description" content="{{ desc }}">
   <link rel="canonical" href="{{ request.build_absolute_uri }}">
+  {% if noindex %}<meta name="robots" content="noindex, follow">{% endif %}
   {% if is_comparison %}
   <link rel="alternate" hreflang="en" href="{{ request.scheme }}://{{ request.get_host }}/en/{{ slug }}-fees/">
   <link rel="alternate" hreflang="es" href="{{ request.scheme }}://{{ request.get_host }}/es/{{ slug }}-fees/">
@@ -303,6 +304,13 @@
     .wordmark { margin-top: clamp(40px, 6vw, 72px); padding-bottom: .04em; white-space: nowrap; user-select: none; font-size: clamp(2.25rem, 10.5vw, 9.5rem); font-size: 11.6cqw; font-weight: 700; letter-spacing: -0.06em; line-height: .92; color: var(--dark-ink); }
     .wordmark span { color: var(--accent); }
 
+    .rate-note { margin: -14px 0 22px; font-size: .8125rem; line-height: 1.45; color: var(--ink-2); }
+    .rate-note:empty { display: none; }
+    label.checkbox-row + label.checkbox-row { margin-top: 10px; }
+    .aff-note { margin-top: 10px; font-size: .75rem; line-height: 1.4; color: var(--dark-muted); text-align: center; }
+    .kv dd.note { font-size: .875rem; font-weight: 400; line-height: 1.5; color: var(--ink); }
+    .est-tag { font-size: .75rem; font-weight: 500; color: var(--ink-2); }
+
     /* ───────────── Motion ───────────── */
     @keyframes rise { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: none; } }
     @media (prefers-reduced-motion: no-preference) {
@@ -346,6 +354,14 @@
       .quick-btns { flex-wrap: wrap; }
       .q-btn { flex: 1 1 auto; padding: 11px 12px; }
     }
+    @media (max-width: 480px) {
+      .theme-toggle #themeLabel { display: none; }
+      .brand { font-size: 1rem; }
+      .lang-switch a { padding: 7px 10px; }
+      .theme-toggle { padding-inline: 10px; }
+      .nav-actions { gap: 8px; }
+      .panel-head { flex-wrap: wrap; row-gap: 4px; }
+    }
   </style>
 
   <!-- Google Analytics 4 (GA4) -->
@@ -363,7 +379,7 @@
         c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
         t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
         y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-    })(window, document, "script", "clarity", "z342ths296");
+    })(window, document, "clarity", "script", "z342ths296");
   </script>
 </head>
 <body>
@@ -400,7 +416,7 @@
         <p class="subtitle rise" style="--d: 90ms;">{{ desc }}</p>
       </div>
       <div class="hero-rate rise" style="--d: 180ms;">
-        <p class="rate-label" id="heroRateLabel">{% if lang == 'en' %}Verified 2026 standard rate{% else %}Tarifa estándar verificada 2026{% endif %}</p>
+        <p class="rate-label" id="heroRateLabel">{% if primary.confidence == 'verified' %}{% if lang == 'en' %}Standard rate · checked {{ primary.checked }}{% else %}Tarifa estándar · revisada {{ primary.checked }}{% endif %}{% else %}{% if lang == 'en' %}Estimated rate · confirm on the official site{% else %}Tarifa estimada · confirma en el sitio oficial{% endif %}{% endif %}</p>
         <p class="rate-figure" id="heroRateFigure">{{ primary.percent_fee }}% + ${{ primary.fixed_fee|floatformat:2 }}</p>
         <p class="rate-cat" id="heroRateCat">{{ primary.category }}</p>
       </div>
@@ -410,7 +426,7 @@
     <div class="container">
       <div class="top3-bar">
         <span class="top3-title" id="top3Heading">
-          ⚡ {% if lang == 'en' %}Lowest-Fee Options for $1,000:{% else %}Opciones más económicas para $1,000:{% endif %}
+          ⚡ {% if lang == 'en' %}Lowest-Fee Checked Platforms for $1,000:{% else %}Plataformas verificadas más económicas para $1,000:{% endif %}
         </span>
         <div class="top3-badges" id="top3Container"></div>
       </div>
@@ -437,27 +453,12 @@
             {% endfor %}
           </select>
 
-          <label for="countrySelect" id="countrySelectLabel">{% if lang == 'en' %}Account Country / Merchant Region{% else %}País de la Cuenta / Región Comercial{% endif %}</label>
+          <label for="countrySelect" id="countrySelectLabel">{% if lang == 'en' %}Plan / Region{% else %}Plan / Región{% endif %}</label>
           <select id="countrySelect">
-            <option value="default" selected>{% if lang == 'en' %}🌐 Official Platform Default (Verified){% else %}🌐 Estándar Oficial de la Plataforma (Verificado){% endif %}</option>
-            <option value="2.9|0.30" data-country="🇺🇸 United States">🇺🇸 United States (2.9% + $0.30)</option>
-            <option value="1.5|0.25" data-country="🇪🇸 Spain / España">🇪🇸 Spain / España (1.5% + $0.25)</option>
-            <option value="1.5|0.25" data-country="🇪🇺 European Union">🇪🇺 European Union / Eurozone (1.5% + $0.25)</option>
-            <option value="1.5|0.25" data-country="🇬🇧 United Kingdom">🇬🇧 United Kingdom (1.5% + $0.25)</option>
-            <option value="2.9|0.30" data-country="🇨🇦 Canada">🇨🇦 Canada (2.9% + $0.30)</option>
-            <option value="1.75|0.30" data-country="🇦🇺 Australia">🇦🇺 Australia (1.75% + $0.30)</option>
-            <option value="3.6|0.15" data-country="🇲🇽 Mexico">🇲🇽 Mexico (3.6% + $0.15)</option>
-            <option value="3.6|0.30" data-country="🇪🇨 Ecuador">🇪🇨 Ecuador (3.6% + $0.30)</option>
-            <option value="3.6|0.30" data-country="🇨🇴 Colombia">🇨🇴 Colombia (3.6% + $0.30)</option>
-            <option value="3.6|0.30" data-country="🇦🇷 Argentina">🇦🇷 Argentina (3.6% + $0.30)</option>
-            <option value="3.6|0.30" data-country="🇨🇱 Chile">🇨🇱 Chile (3.6% + $0.30)</option>
-            <option value="3.6|0.30" data-country="🇵🇪 Peru">🇵🇪 Peru (3.6% + $0.30)</option>
-            <option value="3.99|0.10" data-country="🇧🇷 Brazil">🇧🇷 Brazil (3.99% + $0.10)</option>
-            <option value="3.4|0.50" data-country="🇸🇬 Singapore">🇸🇬 Singapore (3.4% + $0.50)</option>
-            <option value="3.6|0.00" data-country="🇯🇵 Japan">🇯🇵 Japan (3.6% + $0.00)</option>
-            <option value="2.0|0.20" data-country="🇮🇳 India">🇮🇳 India (2.0% + $0.20)</option>
+            <option value="default" selected>{% if lang == 'en' %}Standard published rate{% else %}Tarifa estándar publicada{% endif %}</option>
             <option value="custom">{% if lang == 'en' %}✏️ Custom Rate (% and $ Fixed)...{% else %}✏️ Tarifa Personalizada (% y $ Fijo)...{% endif %}</option>
           </select>
+          <p class="rate-note" id="rateNote"></p>
 
           <!-- Casillas para ingresar una tarifa personalizada cuando se elige "Custom Rate" -->
           <div class="custom-rate-box" id="customRateBox">
@@ -485,7 +486,12 @@
 
           <label class="checkbox-row">
             <input type="checkbox" id="intlCheck">
-            <span>{% if lang == 'en' %}International Card / Cross-Border (+FX Fee){% else %}Pago Internacional / Cambio de Divisa{% endif %}<small id="intlSmallText">{% if lang == 'en' %}Adds +{{ primary.intl_extra_percent }}% to the fee{% else %}Suma +{{ primary.intl_extra_percent }}% a la comisión{% endif %}</small></span>
+            <span>{% if lang == 'en' %}International Card (cross-border){% else %}Tarjeta Internacional (transfronteriza){% endif %}<small id="intlSmallText">{% if lang == 'en' %}Adds +{{ primary.intl_extra_percent }}% to the fee{% else %}Suma +{{ primary.intl_extra_percent }}% a la comisión{% endif %}</small></span>
+          </label>
+
+          <label class="checkbox-row">
+            <input type="checkbox" id="fxCheck">
+            <span>{% if lang == 'en' %}Currency Conversion Required{% else %}Requiere Conversión de Divisa{% endif %}<small id="fxSmallText">{% if primary.fx_extra_percent %}{% if lang == 'en' %}Adds +{{ primary.fx_extra_percent }}% to the fee{% else %}Suma +{{ primary.fx_extra_percent }}% a la comisión{% endif %}{% else %}{% if lang == 'en' %}No separate conversion fee on record{% else %}Sin cargo de conversión separado registrado{% endif %}{% endif %}</small></span>
           </label>
         </div>
 
@@ -534,6 +540,7 @@
             <a href="#" id="affiliateBtn" target="_blank" rel="nofollow sponsored" class="cta-btn">
               {% if lang == 'en' %}Open Official Account & Save{% else %}Abrir Cuenta Oficial y Ahorrar{% endif %} →
             </a>
+            <p class="aff-note">{% if lang == 'en' %}Affiliate link: we may earn a commission at no extra cost to you.{% else %}Enlace de afiliado: podemos recibir una comisión sin costo adicional para ti.{% endif %}</p>
           </div>
         </div>
       </div>
@@ -545,7 +552,7 @@
         <div class="panel col-table rise-scroll">
           <div class="panel-head">
             <h2 id="tableTitle"><span id="tablePlatformName">{{ primary.name }}</span> {% if lang == 'en' %}Fee Schedule Table ($10 to $10,000){% else %}Tabla de Comisiones ($10 a $10,000 USD){% endif %}</h2>
-            <span class="meta" id="tableMetaRate">{% if lang == 'en' %}Verified 2026 rate, USD{% else %}Tarifa verificada 2026, USD{% endif %}</span>
+            <span class="meta" id="tableMetaRate">{% if lang == 'en' %}Standard rate, USD{% else %}Tarifa estándar, USD{% endif %}</span>
           </div>
           <div class="table-wrap">
             <table>
@@ -579,23 +586,31 @@
           </div>
 
           <div class="panel formula rise-scroll">
-            <h2>{% if lang == 'en' %}The formula (Verified 2026){% else %}La fórmula (Verificada 2026){% endif %}</h2>
+            <h2>{% if lang == 'en' %}The formula{% else %}La fórmula{% endif %}</h2>
             <dl class="kv">
               <div>
                 <dt>{% if lang == 'en' %}Fee{% else %}Comisión{% endif %}</dt>
                 <dd id="formulaFee">{% if lang == 'en' %}amount{% else %}monto{% endif %} × {{ primary.percent_fee }}% + ${{ primary.fixed_fee|floatformat:2 }}</dd>
               </div>
               <div>
-                <dt>{% if lang == 'en' %}International add-on{% else %}Recargo internacional{% endif %}</dt>
+                <dt>{% if lang == 'en' %}International card add-on{% else %}Recargo por tarjeta internacional{% endif %}</dt>
                 <dd id="formulaIntl">+{{ primary.intl_extra_percent }}% {% if lang == 'en' %}of the amount{% else %}del monto{% endif %}</dd>
+              </div>
+              <div>
+                <dt>{% if lang == 'en' %}Currency conversion add-on{% else %}Recargo por conversión de divisa{% endif %}</dt>
+                <dd id="formulaFx">{% if primary.fx_extra_percent %}+{{ primary.fx_extra_percent }}% {% if lang == 'en' %}of the amount{% else %}del monto{% endif %}{% else %}{% if lang == 'en' %}No separate fee on record{% else %}Sin cargo separado registrado{% endif %}{% endif %}</dd>
               </div>
               <div>
                 <dt>{% if lang == 'en' %}Invoice to receive an exact net{% else %}Factura para recibir un neto exacto{% endif %}</dt>
                 <dd id="formulaReverse">({% if lang == 'en' %}amount{% else %}monto{% endif %} + ${{ primary.fixed_fee|floatformat:2 }}) ÷ (1 − {{ primary.percent_fee }}%)</dd>
               </div>
               <div>
-                <dt>{% if lang == 'en' %}Official Rate Reference{% else %}Fuente Oficial de Tarifas{% endif %}</dt>
-                <dd><a href="{{ primary.affiliate_url }}" id="formulaSourceLink" target="_blank" rel="nofollow noopener" class="source-link">{{ primary.name }} {% if lang == 'en' %}Official Fee Schedule 2026{% else %}Tarifas Oficiales 2026{% endif %} ↗</a></dd>
+                <dt>{% if lang == 'en' %}Source{% else %}Fuente{% endif %}</dt>
+                <dd><a href="{{ primary.source_url }}" id="formulaSourceLink" target="_blank" rel="nofollow noopener" class="source-link">{% if primary.confidence == 'verified' %}{% if lang == 'en' %}Official pricing page ↗{% else %}Página oficial de precios ↗{% endif %}{% else %}{% if lang == 'en' %}Official site: confirm the rate ↗{% else %}Sitio oficial: confirma la tarifa ↗{% endif %}{% endif %}</a></dd>
+              </div>
+              <div>
+                <dt>{% if lang == 'en' %}About this rate{% else %}Sobre esta tarifa{% endif %}</dt>
+                <dd class="note" id="formulaNote">{% if lang == 'en' %}{{ primary.rate_note.en }}{% else %}{{ primary.rate_note.es }}{% endif %}</dd>
               </div>
             </dl>
           </div>
@@ -657,12 +672,8 @@
     const PLATFORMS = {{ platforms_json|safe }};
     const LANG = "{{ lang }}";
     const TIERS = [10, 25, 50, 100, 250, 500, 1000, 2500, 5000, 10000];
-
-    // Pasarelas de procesamiento de tarjetas donde las tasas varían por país (EE. UU., UE, LatAm, etc.)
-    const CARD_GATEWAYS = new Set([
-      'stripe', 'paypal', 'square', 'shopify', 'braintree', 'adyen',
-      'checkout', 'authorize', 'worldpay', '2checkout', 'mollie', 'razorpay', 'mercadopago'
-    ]);
+    // true = el ranking Top 3 solo usa plataformas con tarifa verificada (ver seed_platforms.py). Ponlo en false para incluir estimaciones (se marcan como "est.").
+    const ONLY_VERIFIED_TOP3 = true;
 
     function roundCents(num) {
       return Math.round((num + Number.EPSILON) * 100) / 100;
@@ -702,22 +713,47 @@
     const customFixedInput = document.getElementById('customFixedInput');
     const p2Select = document.getElementById('p2Select');
     const intlCheck = document.getElementById('intlCheck');
+    const fxCheck = document.getElementById('fxCheck');
 
-    // Actualiza las etiquetas del selector de país según si la plataforma es Pasarela de Tarjetas o Marketplace Global
-    function refreshCountryOptions() {
+    const MONTHS = {
+      en: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
+      es: ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic']
+    };
+    // "2026-10" -> "Oct 2026"
+    function fmtChecked(c) {
+      if (!c) return '';
+      const parts = String(c).split('-');
+      const m = parseInt(parts[1], 10);
+      return (MONTHS[LANG][m - 1] || parts[1]) + ' ' + parts[0];
+    }
+    const SYMBOLS = { USD: '$', GBP: '£', EUR: '€' };
+    function money(v, cur) { return (SYMBOLS[cur] || '$') + Number(v).toFixed(2); }
+
+    // Reconstruye el selector "Plan / Región" con las tarifas propias de la plataforma elegida.
+    // La primera opción de la ficha es la tarifa por defecto (value="default"); no hay países inventados.
+    function refreshCountryOptions(preferred) {
       const key = p1Select.value;
       const p = PLATFORMS[key];
-      const isCardGateway = CARD_GATEWAYS.has(key);
+      const opts = p.rate_options || [];
+      const want = preferred !== undefined ? preferred : countrySelect.value;
 
-      countrySelect.querySelectorAll('option[data-country]').forEach(opt => {
-        const countryName = opt.getAttribute('data-country');
-        if (isCardGateway) {
-          const [pct, fix] = opt.value.split('|');
-          opt.textContent = `${countryName} (${pct}% + $${parseFloat(fix).toFixed(2)})`;
-        } else {
-          opt.textContent = `${countryName} — ${p.name} Global (${p.percent_fee}% + $${p.fixed_fee.toFixed(2)})`;
-        }
-      });
+      countrySelect.innerHTML = '';
+      const add = (value, text) => {
+        const o = document.createElement('option');
+        o.value = value; o.textContent = text; countrySelect.appendChild(o);
+      };
+      if (opts.length) {
+        const first = opts[0];
+        add('default', `${LANG === 'en' ? first.label_en : first.label_es} (${first.percent_fee}% + ${money(first.fixed_fee, first.currency)})`);
+        opts.slice(1).forEach(o => add(o.id, `${LANG === 'en' ? o.label_en : o.label_es} (${o.percent_fee}% + ${money(o.fixed_fee, o.currency)})`));
+      } else {
+        add('default', `${LANG === 'en' ? 'Standard published rate' : 'Tarifa estándar publicada'} (${p.percent_fee}% + ${money(p.fixed_fee, 'USD')})`);
+      }
+      add('custom', LANG === 'en' ? '✏️ Custom Rate (% and $ Fixed)...' : '✏️ Tarifa Personalizada (% y $ Fijo)...');
+
+      const valid = Array.from(countrySelect.options).some(o => o.value === want);
+      countrySelect.value = valid ? want : 'default';
+      customRateBox.classList.toggle('active', countrySelect.value === 'custom');
     }
 
     function setAmt(val) {
@@ -729,10 +765,7 @@
       const temp = p1Select.value;
       p1Select.value = p2Select.value;
       p2Select.value = temp;
-      if (countrySelect.value !== 'custom') {
-        countrySelect.value = 'default';
-      }
-      refreshCountryOptions();
+      refreshCountryOptions(countrySelect.value === 'custom' ? 'custom' : 'default');
       updateUI();
     }
 
@@ -758,6 +791,7 @@
       url.searchParams.set('p2', p2Select.value);
       url.searchParams.set('region', countrySelect.value);
       url.searchParams.set('intl', intlCheck.checked ? '1' : '0');
+      url.searchParams.set('fx', fxCheck.checked ? '1' : '0');
       if (countrySelect.value === 'custom') {
         url.searchParams.set('cpct', customPctInput.value);
         url.searchParams.set('cfix', customFixedInput.value);
@@ -771,40 +805,38 @@
     }
 
     p1Select.addEventListener('change', () => {
-      if (countrySelect.value !== 'custom') {
-        countrySelect.value = 'default';
-      }
-      refreshCountryOptions();
+      refreshCountryOptions(countrySelect.value === 'custom' ? 'custom' : 'default');
       updateUI();
     });
 
     countrySelect.addEventListener('change', () => {
-      if (countrySelect.value === 'custom') {
-        customRateBox.classList.add('active');
-      } else {
-        customRateBox.classList.remove('active');
-      }
+      customRateBox.classList.toggle('active', countrySelect.value === 'custom');
       updateUI();
     });
 
-    function calcPlatform(amount, key, isIntl, customCountryVal) {
+    // Calcula una plataforma. Los recargos se suman por separado:
+    //   tarifa base (plan/región) + tarjeta internacional (intl) + conversión de divisa (fx)
+    function calcPlatform(amount, key, isIntl, isFx, regionVal) {
       const p = PLATFORMS[key];
       let basePct = p.percent_fee;
       let fixedFee = p.fixed_fee;
-      let rateMode = 'verified';
+      let currency = 'USD';
+      let rateMode = 'standard';
 
-      if (customCountryVal === 'custom') {
+      if (regionVal === 'custom') {
         basePct = Math.max(0, parseFloat(customPctInput.value) || 0);
         fixedFee = Math.max(0, parseFloat(customFixedInput.value) || 0);
         rateMode = 'custom';
-      } else if (customCountryVal && customCountryVal !== 'default' && CARD_GATEWAYS.has(key)) {
-        const parts = customCountryVal.split('|');
-        basePct = parseFloat(parts[0]);
-        fixedFee = parseFloat(parts[1]);
-        rateMode = 'regional';
+      } else if (regionVal && regionVal !== 'default') {
+        const o = (p.rate_options || []).find(x => x.id === regionVal);
+        if (o) { basePct = o.percent_fee; fixedFee = o.fixed_fee; currency = o.currency; rateMode = 'regional'; }
+      } else if ((p.rate_options || []).length) {
+        currency = p.rate_options[0].currency;
       }
 
-      const activePctNum = roundCents(basePct + (isIntl ? p.intl_extra_percent : 0));
+      const intlExtra = p.intl_extra_percent || 0;
+      const fxExtra = p.fx_extra_percent || 0;
+      const activePctNum = roundCents(basePct + (isIntl ? intlExtra : 0) + (isFx ? fxExtra : 0));
       const pct = activePctNum / 100;
       const rawFee = amount > 0 ? (amount * pct) + fixedFee : 0;
       const fee = roundCents(rawFee);
@@ -819,9 +851,14 @@
         net,
         reverse,
         url: p.affiliate_url,
+        source: p.source_url || p.affiliate_url,
+        confidence: p.confidence,
+        checked: p.checked,
         activePctNum,
         fixedFee,
-        intlExtra: p.intl_extra_percent,
+        currency,
+        intlExtra,
+        fxExtra,
         rateMode
       };
     }
@@ -829,8 +866,11 @@
     function updateUI() {
       const amount = Math.max(0, parseFloat(amountInput.value) || 0);
       const isIntl = intlCheck.checked;
-      const r1 = calcPlatform(amount, p1Select.value, isIntl, countrySelect.value);
-      const r2 = calcPlatform(amount, p2Select.value, isIntl, 'default');
+      const isFx = fxCheck.checked;
+      const r1 = calcPlatform(amount, p1Select.value, isIntl, isFx, countrySelect.value);
+      const r2 = calcPlatform(amount, p2Select.value, isIntl, isFx, 'default');
+      const p1 = PLATFORMS[p1Select.value];
+      const isVerified = r1.confidence === 'verified';
 
       // 1. Actualiza panel principal de resultados
       document.getElementById('p1Name').textContent = r1.name;
@@ -838,26 +878,49 @@
       document.getElementById('p1Fee').textContent = `-$${r1.fee.toFixed(2)}`;
       document.getElementById('p1Reverse').textContent = `$${r1.reverse.toFixed(2)}`;
 
-      // 2. Actualiza subtítulo internacional y encabezado de tarifa
+      // 2. Subtítulos de recargos y encabezado de tarifa (honesto: verificada vs estimada)
       const intlSmall = document.getElementById('intlSmallText');
       if (intlSmall) {
         intlSmall.textContent = LANG === 'en'
           ? `Adds +${r1.intlExtra}% to the fee`
           : `Suma +${r1.intlExtra}% a la comisión`;
       }
+      const fxSmall = document.getElementById('fxSmallText');
+      if (fxSmall) {
+        fxSmall.textContent = r1.fxExtra
+          ? (LANG === 'en' ? `Adds +${r1.fxExtra}% to the fee` : `Suma +${r1.fxExtra}% a la comisión`)
+          : (LANG === 'en' ? 'No separate conversion fee on record' : 'Sin cargo de conversión separado registrado');
+      }
       const heroFig = document.getElementById('heroRateFigure');
       const heroLbl = document.getElementById('heroRateLabel');
       const heroCat = document.getElementById('heroRateCat');
-      if (heroFig) heroFig.textContent = `${r1.activePctNum}% + $${r1.fixedFee.toFixed(2)}`;
+      if (heroFig) heroFig.textContent = `${r1.activePctNum}% + ${money(r1.fixedFee, r1.currency)}`;
       if (heroCat) heroCat.textContent = r1.category;
       if (heroLbl) {
         if (r1.rateMode === 'custom') {
           heroLbl.textContent = LANG === 'en' ? 'Custom merchant rate' : 'Tarifa personalizada activa';
+        } else if (!isVerified) {
+          heroLbl.textContent = LANG === 'en' ? 'Estimated rate · confirm on the official site' : 'Tarifa estimada · confirma en el sitio oficial';
         } else if (r1.rateMode === 'regional') {
-          heroLbl.textContent = LANG === 'en' ? 'Regional card rate (2026)' : 'Tarifa regional de tarjeta (2026)';
+          heroLbl.textContent = LANG === 'en' ? `Selected plan/region rate · checked ${fmtChecked(r1.checked)}` : `Tarifa del plan/región elegido · revisada ${fmtChecked(r1.checked)}`;
         } else {
-          heroLbl.textContent = LANG === 'en' ? 'Verified 2026 standard rate' : 'Tarifa estándar verificada 2026';
+          heroLbl.textContent = LANG === 'en' ? `Standard rate · checked ${fmtChecked(r1.checked)}` : `Tarifa estándar · revisada ${fmtChecked(r1.checked)}`;
         }
+      }
+      const rateNote = document.getElementById('rateNote');
+      if (rateNote) {
+        const bits = [];
+        if (r1.rateMode !== 'custom') {
+          bits.push(isVerified
+            ? (LANG === 'en' ? `Checked ${fmtChecked(r1.checked)} against the official pricing source.` : `Revisada en ${fmtChecked(r1.checked)} con la fuente oficial de precios.`)
+            : (LANG === 'en' ? 'Estimated rate: confirm it on the official site.' : 'Tarifa estimada: confírmala en el sitio oficial.'));
+          if (r1.currency !== 'USD') {
+            bits.push(LANG === 'en'
+              ? `The fixed fee is in ${r1.currency}; the calculator treats it as a ${r1.currency}-denominated amount (no FX applied).`
+              : `El cargo fijo está en ${r1.currency}; la calculadora lo trata como un monto en ${r1.currency} (sin conversión).`);
+          }
+        }
+        rateNote.textContent = bits.join(' ');
       }
 
       // 3. Actualiza comparativa VS
@@ -868,14 +931,18 @@
       if (r1.fee === r2.fee) {
         document.getElementById('vsDiff').textContent = LANG === 'en' ? 'Identical Fees' : 'Misma Comisión';
       } else {
-        document.getElementById('vsDiff').textContent = LANG === 'en' 
-          ? `${cheaper.name} saves you $${diff}` 
+        document.getElementById('vsDiff').textContent = LANG === 'en'
+          ? `${cheaper.name} saves you $${diff}`
           : `${cheaper.name} te ahorra $${diff}`;
       }
 
-      document.getElementById('vsExplain').textContent = LANG === 'en'
+      const anyEstimate = r1.confidence !== 'verified' || r2.confidence !== 'verified';
+      const estNote = anyEstimate
+        ? (LANG === 'en' ? ' This comparison includes at least one estimated rate.' : ' Esta comparación incluye al menos una tarifa estimada.')
+        : '';
+      document.getElementById('vsExplain').textContent = (LANG === 'en'
         ? `On a $${amount.toFixed(2)} transaction, ${r2.name} nets you $${r2.net.toFixed(2)}.`
-        : `En un cobro de $${amount.toFixed(2)}, con ${r2.name} recibes $${r2.net.toFixed(2)} netos.`;
+        : `En un cobro de $${amount.toFixed(2)}, con ${r2.name} recibes $${r2.net.toFixed(2)} netos.`) + estNote;
 
       document.getElementById('affiliateBtn').href = cheaper.url;
 
@@ -884,39 +951,46 @@
       const top3Container = document.getElementById('top3Container');
       if (top3Heading && top3Container) {
         top3Heading.textContent = LANG === 'en'
-          ? `⚡ Lowest-Fee Platforms for $${amount.toLocaleString('en-US')}:`
-          : `⚡ Plataformas más económicas para $${amount.toLocaleString('en-US')}:`;
+          ? `⚡ Lowest-Fee ${ONLY_VERIFIED_TOP3 ? 'Checked ' : ''}Platforms for $${amount.toLocaleString('en-US')}:`
+          : `⚡ Plataformas ${ONLY_VERIFIED_TOP3 ? 'verificadas ' : ''}más económicas para $${amount.toLocaleString('en-US')}:`;
 
         const ranked = Object.keys(PLATFORMS)
-          .map(k => calcPlatform(amount, k, isIntl, 'default'))
+          .map(k => calcPlatform(amount, k, isIntl, isFx, 'default'))
+          .filter(r => !ONLY_VERIFIED_TOP3 || r.confidence === 'verified')
           .sort((a, b) => a.fee - b.fee)
           .slice(0, 3);
 
         top3Container.innerHTML = ranked.map((item, idx) => {
           const medal = idx === 0 ? '🥇' : idx === 1 ? '🥈' : '🥉';
           const titleTip = LANG === 'en' ? `Click to compare against ${item.name}` : `Clic para comparar contra ${item.name}`;
+          const est = item.confidence !== 'verified' ? ` <span class="est-tag">· ${LANG === 'en' ? 'est.' : 'est.'}</span>` : '';
           return `<button type="button" class="top3-badge" onclick="selectComparison('${item.key}')" title="${titleTip}">
-            ${medal} <b>${item.name}</b> ($${item.fee.toFixed(2)} fee)
+            ${medal} <b>${item.name}</b> ($${item.fee.toFixed(2)} fee)${est}
           </button>`;
         }).join('');
       }
 
-      // 5. Sincroniza la caja de "La fórmula" y enlace a fuente oficial
+      // 5. Sincroniza la caja de "La fórmula", fuente y nota de la tarifa
       const wordAmt = LANG === 'en' ? 'amount' : 'monto';
       const wordOf = LANG === 'en' ? 'of the amount' : 'del monto';
       const fFee = document.getElementById('formulaFee');
       const fIntl = document.getElementById('formulaIntl');
+      const fFx = document.getElementById('formulaFx');
       const fRev = document.getElementById('formulaReverse');
       const fSrc = document.getElementById('formulaSourceLink');
-      if (fFee) fFee.textContent = `${wordAmt} × ${r1.activePctNum}% + $${r1.fixedFee.toFixed(2)}`;
+      const fNote = document.getElementById('formulaNote');
+      const baseOnly = roundCents(r1.activePctNum - (isIntl ? r1.intlExtra : 0) - (isFx ? r1.fxExtra : 0));
+      if (fFee) fFee.textContent = `${wordAmt} × ${baseOnly}% + ${money(r1.fixedFee, r1.currency)}`;
       if (fIntl) fIntl.textContent = `+${r1.intlExtra}% ${wordOf}`;
-      if (fRev) fRev.textContent = `(${wordAmt} + $${r1.fixedFee.toFixed(2)}) ÷ (1 − ${r1.activePctNum}%)`;
+      if (fFx) fFx.textContent = r1.fxExtra ? `+${r1.fxExtra}% ${wordOf}` : (LANG === 'en' ? 'No separate fee on record' : 'Sin cargo separado registrado');
+      if (fRev) fRev.textContent = `(${wordAmt} + ${money(r1.fixedFee, r1.currency)}) ÷ (1 − ${r1.activePctNum}%)`;
       if (fSrc) {
-        fSrc.href = r1.url;
-        fSrc.textContent = LANG === 'en'
-          ? `${r1.name} Official Fee Schedule 2026 ↗`
-          : `Tarifas Oficiales de ${r1.name} 2026 ↗`;
+        fSrc.href = r1.source;
+        fSrc.textContent = isVerified
+          ? (LANG === 'en' ? 'Official pricing page ↗' : 'Página oficial de precios ↗')
+          : (LANG === 'en' ? 'Official site: confirm the rate ↗' : 'Sitio oficial: confirma la tarifa ↗');
       }
+      if (fNote && p1.rate_note) fNote.textContent = LANG === 'en' ? p1.rate_note.en : p1.rate_note.es;
 
       // 6. Sincroniza en vivo la Tabla de Comisiones ($10 a $10,000) y hace cada fila interactiva
       const tbody = document.getElementById('feeTableBody');
@@ -926,14 +1000,17 @@
       if (tName1) tName1.textContent = r1.name;
       if (tName2) tName2.textContent = r1.name;
       if (tMeta) {
-        tMeta.textContent = r1.rateMode !== 'verified'
-          ? (LANG === 'en' ? `Active rate (${r1.activePctNum}% + $${r1.fixedFee.toFixed(2)})` : `Tasa activa (${r1.activePctNum}% + $${r1.fixedFee.toFixed(2)})`)
-          : (LANG === 'en' ? `Verified rate (${r1.activePctNum}% + $${r1.fixedFee.toFixed(2)})` : `Tarifa verificada (${r1.activePctNum}% + $${r1.fixedFee.toFixed(2)})`);
+        const rate = `${r1.activePctNum}% + ${money(r1.fixedFee, r1.currency)}`;
+        tMeta.textContent = !isVerified && r1.rateMode !== 'custom'
+          ? (LANG === 'en' ? `Estimated rate (${rate})` : `Tarifa estimada (${rate})`)
+          : (r1.rateMode === 'custom' || isIntl || isFx || r1.rateMode === 'regional')
+            ? (LANG === 'en' ? `Active rate (${rate})` : `Tasa activa (${rate})`)
+            : (LANG === 'en' ? `Standard rate (${rate})` : `Tarifa estándar (${rate})`);
       }
       if (tbody) {
         const rowTip = LANG === 'en' ? 'Click to load this amount' : 'Clic para calcular este monto';
         tbody.innerHTML = TIERS.map(t => {
-          const rowCalc = calcPlatform(t, p1Select.value, isIntl, countrySelect.value);
+          const rowCalc = calcPlatform(t, p1Select.value, isIntl, isFx, countrySelect.value);
           return `<tr onclick="setAmt(${t})" title="${rowTip}">
             <td class="c-amt">$${t}</td>
             <td class="c-fee">-$${rowCalc.fee.toFixed(2)}</td>
@@ -957,12 +1034,10 @@
       if (params.has('p1') && PLATFORMS[params.get('p1')]) p1Select.value = params.get('p1');
       if (params.has('p2') && PLATFORMS[params.get('p2')]) p2Select.value = params.get('p2');
       if (params.has('intl')) intlCheck.checked = params.get('intl') === '1';
+      if (params.has('fx')) fxCheck.checked = params.get('fx') === '1';
       if (params.has('cpct')) customPctInput.value = parseFloat(params.get('cpct')) || 0;
       if (params.has('cfix')) customFixedInput.value = parseFloat(params.get('cfix')) || 0;
-      if (params.has('region')) {
-        countrySelect.value = params.get('region');
-        if (countrySelect.value === 'custom') customRateBox.classList.add('active');
-      }
+      refreshCountryOptions(params.has('region') ? params.get('region') : 'default');
     })();
 
     // Filtro de búsqueda instantáneo
@@ -973,7 +1048,7 @@
       });
     });
 
-    [amountInput, p1Select, countrySelect, customPctInput, customFixedInput, p2Select, intlCheck].forEach(el => {
+    [amountInput, p1Select, countrySelect, customPctInput, customFixedInput, p2Select, intlCheck, fxCheck].forEach(el => {
       if (el) el.addEventListener('input', updateUI);
     });
     refreshCountryOptions();
