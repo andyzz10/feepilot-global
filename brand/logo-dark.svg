@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 32" width="192" height="32" role="img" aria-label="FeePilot Global">
+  <rect x="0.5" y="0.5" width="31" height="31" rx="9" fill="#0A1A0F" stroke="#2A4733"/>
+  <path d="M25.18 13.54A9.5 9.5 0 1 1 18.46 6.82" fill="none" stroke="#9FE870" stroke-width="2.4" stroke-linecap="round"/>
+  <path d="M12 20 23 9M17.5 9H23v5.5" fill="none" stroke="#F3F7F0" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="74" y="5.5" width="54" height="21" rx="5" fill="#9FE870"/>
+  <g font-family="Geist, Inter, system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="19" letter-spacing="-0.6">
+    <text x="40" y="22.5" font-weight="700" fill="#F3F7F0" textLength="32" lengthAdjust="spacingAndGlyphs">Fee</text>
+    <text x="78" y="22.5" font-weight="700" fill="#0A1A0F" textLength="46" lengthAdjust="spacingAndGlyphs">Pilot</text>
+    <text x="134" y="22.5" font-weight="500" fill="#A8B9AC" textLength="56" lengthAdjust="spacingAndGlyphs">Global</text>
+  </g>
+</svg>

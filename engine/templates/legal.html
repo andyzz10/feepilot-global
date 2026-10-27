@@ -12,7 +12,7 @@
   <link rel="alternate" hreflang="es" href="{{ site_url }}{{ es_path }}">
   <link rel="alternate" hreflang="x-default" href="{{ site_url }}{{ en_path }}">
   <meta name="theme-color" content="#F4F6F1">
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%239FE870'/%3E%3Ctext x='50%25' y='54%25' dominant-baseline='middle' text-anchor='middle' font-family='system-ui,sans-serif' font-weight='800' font-size='34' letter-spacing='-2' fill='%230A1A0F'%3EFP%3C/text%3E%3C/svg%3E">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22%3E%3Crect x=%220.5%22 y=%220.5%22 width=%2231%22 height=%2231%22 rx=%229%22 fill=%22%230A1A0F%22 stroke=%22%232A4733%22/%3E%3Cpath d=%22M25.18 13.54A9.5 9.5 0 1 1 18.46 6.82%22 fill=%22none%22 stroke=%22%239FE870%22 stroke-width=%222.4%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M12 20 23 9M17.5 9H23v5.5%22 fill=%22none%22 stroke=%22%23F3F7F0%22 stroke-width=%222.4%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -69,8 +69,16 @@
     /* ───────────── Header ───────────── */
     header.site-header { position: sticky; top: 0; z-index: 20; background: var(--ground); border-bottom: 1px solid var(--line); transition: background-color .2s, border-color .2s; }
     .nav { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 64px; }
-    .brand { font-weight: 700; font-size: 1.25rem; letter-spacing: -0.03em; white-space: nowrap; }
-    .brand span { background: var(--accent); color: #0A1A0F; padding: 0 .2em; margin-inline: .04em; border-radius: 4px; display: inline-block; line-height: 1.15; }
+    .brand { display: inline-flex; align-items: center; gap: 10px; font-weight: 700; font-size: 1.2rem; letter-spacing: -0.03em; white-space: nowrap; }
+    .brand-mark { flex: none; display: block; border-radius: 9px; transition: transform .2s ease; }
+    .brand:hover .brand-mark { transform: rotate(-6deg) scale(1.04); }
+    .brand-text { display: inline-flex; align-items: center; }
+    .brand-pilot { background: var(--accent); color: #0A1A0F; padding: 0 .2em; margin-inline: .04em; border-radius: 4px; line-height: 1.15; }
+    .brand-global { font-weight: 500; color: var(--ink-2); letter-spacing: -0.02em; white-space: pre; }
+    .footer-brand { display: inline-flex; align-items: center; gap: 12px; }
+    .footer-brand .brand-mark { width: 26px; height: 26px; }
+    @media (max-width: 400px) { .brand-global { display: none; } }
+    @media (prefers-reduced-motion: reduce) { .brand-mark { transition: none; } }
     .crumb { flex: 1; min-width: 0; display: flex; align-items: center; gap: 10px; color: var(--ink-2); font-size: .9375rem; }
     .crumb-now { color: var(--ink); font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .nav-actions { display: flex; align-items: center; gap: 10px; }
@@ -181,7 +189,7 @@
 
   <header class="site-header">
     <div class="container nav">
-      <a href="/{{ lang }}/stripe-fee-calculator/" class="brand">Fee<span>Pilot</span> Global</a>
+      <a href="/{{ lang }}/stripe-fee-calculator/" class="brand" aria-label="FeePilot Global"><svg class="brand-mark" width="30" height="30" viewBox="0 0 32 32" aria-hidden="true" focusable="false"><rect x="0.5" y="0.5" width="31" height="31" rx="9" fill="#0A1A0F" stroke="#2A4733"/><path d="M25.18 13.54A9.5 9.5 0 1 1 18.46 6.82" fill="none" stroke="#9FE870" stroke-width="2.4" stroke-linecap="round"/><path d="M12 20 23 9M17.5 9H23v5.5" fill="none" stroke="#F3F7F0" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="brand-text">Fee<span class="brand-pilot">Pilot</span><span class="brand-global"> Global</span></span></a>
       <nav class="crumb" aria-label="Breadcrumb">
         <span aria-hidden="true">/</span>
         <span>{% if lang == 'es' %}Legal y transparencia{% else %}Legal & Transparency{% endif %}</span>
@@ -212,7 +220,7 @@
       <div class="hero-meta">
         <p class="meta-tag">{% if lang == 'es' %}Tarifas revisadas por última vez{% else %}Rates last reviewed{% endif %}</p>
         <p class="meta-val">{% if lang == 'es' %}{{ meta.review_month_es }}{% else %}{{ meta.review_month }}{% endif %}</p>
-        <p class="meta-tag">{% if lang == 'es' %}{{ meta.verified_count }} de {{ meta.total_count }} plataformas contrastadas con fuentes oficiales{% else %}{{ meta.verified_count }} of {{ meta.total_count }} platforms checked against official sources{% endif %}</p>
+        <p class="meta-tag">{% if lang == 'es' %}{{ meta.checked_count }} de {{ meta.total_count }} tarifas comprobadas; el resto son estimaciones{% else %}{{ meta.checked_count }} of {{ meta.total_count }} rates checked; the rest are estimates{% endif %}</p>
       </div>
     </section>
 
@@ -323,13 +331,13 @@
             <span class="doc-num">{% if lang == 'es' %}METODOLOGÍA{% else %}METHODOLOGY{% endif %}</span>
             <h2>{% if lang == 'es' %}Cómo funcionan nuestras {{ meta.total_count }} calculadoras{% else %}How Our {{ meta.total_count }} Calculators Work{% endif %}</h2>
             {% if lang == 'es' %}
-            <p>La tarifa de cada plataforma sale de sus precios publicados. Las tarifas contrastadas con una fuente oficial llevan la etiqueta "revisada" con el mes; todas las demás se muestran como <strong>estimaciones</strong> y debes confirmarlas en el sitio de la plataforma antes de fiarte de ellas. Cuando una plataforma tiene varios planes o regiones (por ejemplo, Square Free frente a Plus, o Stripe en EE. UU., Reino Unido y el EEE), puedes elegir el que te corresponde.</p>
+            <p>La tarifa de cada plataforma sale de sus precios publicados. Cada tarifa se etiqueta como <strong>verificada</strong> (comprobada en la página oficial de precios), <strong>contrastada</strong> (coincide en varias fuentes independientes, sin abrir la página oficial) o <strong>estimación</strong> (sin verificar). Confirma cualquier tarifa en el sitio de la plataforma antes de fiarte de ella. Cuando una plataforma tiene varios planes o regiones (por ejemplo, Square Free frente a Plus, o Stripe en EE. UU., Reino Unido y el EEE), puedes elegir el que te corresponde.</p>
             <ul class="doc-list">
               <li><span>🌍 <b>Planes, regiones y recargos:</b> Las tarifas de los planes y regiones que hemos revisado se pueden elegir por separado. Los recargos por tarjeta internacional y por conversión de divisa se suman aparte, porque las plataformas los cobran por separado. Cualquier otro caso se puede modelar con la opción de tarifa personalizada.</span></li>
               <li><span>⚡ <b>Fórmula inversa:</b> Calcula el monto bruto exacto que debes facturar (`(Monto + Cargo fijo) ÷ (1 − % de comisión)`) para recibir el neto que buscas sin absorber la comisión.</span></li>
             </ul>
             {% else %}
-            <p>Each platform's rate comes from its published pricing. Rates that were checked against an official source carry a "checked" label with the month; all other rates are shown as <strong>estimates</strong> and should be confirmed on the platform's own site before you rely on them. Where a platform has several plans or regions (for example Square Free vs Plus, or Stripe in the US, UK and EEA), you can pick the one that applies to you.</p>
+            <p>Each platform's rate comes from its published pricing. Rates are labelled <strong>verified</strong> (checked on the provider's official pricing page), <strong>cross-checked</strong> (consistent across several independent sources, official page not opened directly) or <strong>estimates</strong> (not verified). Confirm any rate on the platform's own site before you rely on it. Where a platform has several plans or regions (for example Square Free vs Plus, or Stripe in the US, UK and EEA), you can pick the one that applies to you.</p>
             <ul class="doc-list">
               <li><span>🌍 <b>Plans, Regions & Surcharges:</b> Rates for the plans and regions we have checked can be selected individually. International-card and currency-conversion surcharges are added separately, because platforms charge them separately. Anything else can be modelled with the custom-rate option.</span></li>
               <li><span>⚡ <b>Reverse Fee Formula:</b> Calculates the exact gross amount you must invoice a client (`(Amount + Fixed Fee) ÷ (1 − Fee %)`) so that you receive your target net payout without absorbing the fee.</span></li>
@@ -354,12 +362,12 @@
               <span>{{ meta.indexed_urls }} URLs</span>
             </div>
             <div class="trust-row">
-              <span>{% if lang == 'es' %}Revisadas / estimadas{% else %}Checked vs Estimated{% endif %}</span>
-              <span>{% if lang == 'es' %}{{ meta.verified_count }} revisadas · {{ meta.total_count }} en total{% else %}{{ meta.verified_count }} checked · {{ meta.total_count }} total{% endif %}</span>
+              <span>{% if lang == 'es' %}Verificación{% else %}Verification{% endif %}</span>
+              <span>{% if lang == 'es' %}{{ meta.verified_count }} oficial · {{ meta.crosschecked_count }} contrastadas · {{ meta.estimate_count }} estimadas{% else %}{{ meta.verified_count }} official · {{ meta.crosschecked_count }} cross-checked · {{ meta.estimate_count }} estimates{% endif %}</span>
             </div>
             <div class="trust-row">
               <span>{% if lang == 'es' %}Contacto editorial{% else %}Editorial Contact{% endif %}</span>
-              <span>supportfeepilotglobal@gmail.com</span>
+              <span>support@feepilotglobal.com</span>
             </div>
           </div>
           <a href="/{{ lang }}/stripe-fee-calculator/" class="cta-btn">
@@ -373,7 +381,7 @@
   <footer class="site-footer">
     <div class="container">
       <div class="footer-row">
-        <div>© 2026 FeePilot Global. {% if lang == 'es' %}Creado para la transparencia financiera.{% else %}Built for High-Performance Financial Transparency.{% endif %}</div>
+        <div class="footer-brand"><svg class="brand-mark" width="30" height="30" viewBox="0 0 32 32" aria-hidden="true" focusable="false"><rect x="0.5" y="0.5" width="31" height="31" rx="9" fill="#0A1A0F" stroke="#2A4733"/><path d="M25.18 13.54A9.5 9.5 0 1 1 18.46 6.82" fill="none" stroke="#9FE870" stroke-width="2.4" stroke-linecap="round"/><path d="M12 20 23 9M17.5 9H23v5.5" fill="none" stroke="#F3F7F0" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg><span>© 2026 FeePilot Global. {% if lang == 'es' %}Creado para la transparencia financiera.{% else %}Built for High-Performance Financial Transparency.{% endif %}</span></div>
         <nav class="footer-links">
           <a href="{{ prefix }}/legal/about/">{% if lang == 'es' %}Acerca de{% else %}About{% endif %}</a>
           <a href="{{ prefix }}/legal/privacy/">{% if lang == 'es' %}Política de privacidad{% else %}Privacy Policy{% endif %}</a>

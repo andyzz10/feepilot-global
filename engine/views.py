@@ -1,4 +1,5 @@
 import json
+from decimal import Decimal, ROUND_HALF_UP
 from pathlib import Path
 from itertools import combinations
 from django.shortcuts import render, redirect
@@ -23,6 +24,7 @@ def load_meta():
     with open(DATA_PATH, 'r', encoding='utf-8') as f:
         meta = json.load(f).get('meta', {})
     total = meta.get('total_count', 0)
+    meta['checked_count'] = meta.get('verified_count', 0) + meta.get('crosschecked_count', 0)
     pairs = total * (total - 1) // 2
     meta['indexed_urls'] = 2 * total + (2 * pairs if INDEX_COMPARISONS else 0)
     try:
@@ -32,12 +34,54 @@ def load_meta():
         meta['review_month_es'] = meta.get('review_month', '')
     return meta
 
+def r2(x):
+    """Redondeo a centavos 'half up': igual que Math.round del JavaScript de la calculadora."""
+    return Decimal(str(x)).quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
+
+def calc_amounts(amount, pct, fixed):
+    """Misma fórmula que calcPlatform() en calculator.html: comisión, neto y monto a facturar."""
+    p = Decimal(str(pct)) / 100
+    amt, fx = Decimal(str(amount)), Decimal(str(fixed))
+    fee = r2(amt * p + fx)
+    net = r2(max(Decimal(0), amt - fee))
+    reverse = r2((amt + fx) / (1 - p)) if p < 1 else amt
+    return fee, net, reverse
+
 def compute_row(amount, p):
-    pct = p['percent_fee'] / 100.0
-    fee = round((amount * pct) + p['fixed_fee'], 2)
-    net = round(max(0, amount - fee), 2)
-    reverse = round((amount + p['fixed_fee']) / (1.0 - pct), 2) if pct < 1 else amount
+    fee, net, reverse = calc_amounts(amount, p['percent_fee'], p['fixed_fee'])
     return {'amount': amount, 'fee': f"{fee:.2f}", 'net': f"{net:.2f}", 'reverse': f"{reverse:.2f}"}
+
+CURRENCY_SYMBOLS = {'USD': '$', 'GBP': '£', 'EUR': '€'}
+
+def build_info(p, lang, amount=1000):
+    """Datos para las secciones informativas: ejemplo resuelto, planes/regiones y limitaciones."""
+    base, intl, fx = Decimal(str(p['percent_fee'])), Decimal(str(p['intl_extra_percent'])), Decimal(str(p.get('fx_extra_percent', 0)))
+    fixed = p['fixed_fee']
+    scenarios = [('standard', base)]
+    if intl:
+        scenarios.append(('intl', base + intl))
+    if fx:
+        scenarios.append(('intl_fx', base + intl + fx))
+    rows = []
+    for kind, pct in scenarios:
+        fee, net, reverse = calc_amounts(amount, pct, fixed)
+        rows.append({'kind': kind, 'pct': f"{pct.normalize():f}", 'fee': f"{fee:.2f}", 'net': f"{net:.2f}", 'reverse': f"{reverse:,.2f}"})
+    options = []
+    for o in p.get('rate_options', []):
+        fee, net, _ = calc_amounts(amount, o['percent_fee'], o['fixed_fee'])
+        options.append({
+            'label': o['label_' + lang], 'pct': o['percent_fee'], 'fixed': f"{o['fixed_fee']:.2f}",
+            'symbol': CURRENCY_SYMBOLS.get(o['currency'], '$'), 'currency': o['currency'],
+            'fee': f"{fee:.2f}", 'net': f"{net:.2f}",
+        })
+    return {
+        'name': p['name'], 'category': p['category'], 'pct': p['percent_fee'], 'fixed': f"{fixed:.2f}",
+        'intl': p['intl_extra_percent'], 'fx': p.get('fx_extra_percent', 0),
+        'confidence': p['confidence'], 'checked': p.get('checked'), 'source_url': p['source_url'],
+        'note': p['rate_note'][lang], 'limits': p.get('limits', {}).get(lang, []),
+        'how': p.get('category_how', {}).get(lang, ''),
+        'amount': amount, 'amount_fmt': f"{amount:,}", 'rows': rows, 'options': options,
+    }
 
 def calculator_view(request, lang='en', slug='stripe'):
     platforms = load_data()
@@ -108,6 +152,7 @@ def calculator_view(request, lang='en', slug='stripe'):
         'related_comparisons': related_comparisons[:16],
         'meta': load_meta(),
         'noindex': is_comparison and not INDEX_COMPARISONS,
+        'info_platforms': [build_info(primary, lang)] + ([build_info(secondary, lang)] if is_comparison else []),
     }
     return render(request, 'calculator.html', context)
 

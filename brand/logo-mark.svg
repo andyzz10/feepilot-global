@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" role="img" aria-label="FeePilot Global">
+  <rect x="0.5" y="0.5" width="31" height="31" rx="9" fill="#0A1A0F" stroke="#2A4733"/>
+  <!-- anillo "global" abierto: el hueco es la comisión que sale del total -->
+  <path d="M25.18 13.54A9.5 9.5 0 1 1 18.46 6.82" fill="none" stroke="#9FE870" stroke-width="2.4" stroke-linecap="round"/>
+  <!-- flecha "pilot": el neto que sigue su rumbo -->
+  <path d="M12 20 23 9M17.5 9H23v5.5" fill="none" stroke="#F3F7F0" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

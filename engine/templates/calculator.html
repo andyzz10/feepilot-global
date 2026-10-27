@@ -8,6 +8,7 @@
   <title>{{ title }}</title>
   <meta name="description" content="{{ desc }}">
   <link rel="canonical" href="{{ request.build_absolute_uri }}">
+  {% if noindex %}<meta name="robots" content="noindex, follow">{% endif %}
   {% if is_comparison %}
   <link rel="alternate" hreflang="en" href="{{ request.scheme }}://{{ request.get_host }}/en/{{ slug }}-fees/">
   <link rel="alternate" hreflang="es" href="{{ request.scheme }}://{{ request.get_host }}/es/{{ slug }}-fees/">
@@ -18,7 +19,8 @@
   <link rel="alternate" hreflang="x-default" href="{{ request.scheme }}://{{ request.get_host }}/en/{{ slug }}-fee-calculator/">
   {% endif %}
   <meta name="theme-color" content="#F4F6F1">
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%239FE870'/%3E%3Ctext x='50%25' y='54%25' dominant-baseline='middle' text-anchor='middle' font-family='system-ui,sans-serif' font-weight='800' font-size='34' letter-spacing='-2' fill='%230A1A0F'%3EFP%3C/text%3E%3C/svg%3E">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22%3E%3Crect x=%220.5%22 y=%220.5%22 width=%2231%22 height=%2231%22 rx=%229%22 fill=%22%230A1A0F%22 stroke=%22%232A4733%22/%3E%3Cpath d=%22M25.18 13.54A9.5 9.5 0 1 1 18.46 6.82%22 fill=%22none%22 stroke=%22%239FE870%22 stroke-width=%222.4%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M12 20 23 9M17.5 9H23v5.5%22 fill=%22none%22 stroke=%22%23F3F7F0%22 stroke-width=%222.4%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3C/svg%3E">
+  <script>document.documentElement.classList.add("js");</script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -115,8 +117,14 @@
     /* ───────────── Header ───────────── */
     header.site-header { position: sticky; top: 0; z-index: 20; background: var(--ground); border-bottom: 1px solid var(--line); transition: background-color .2s, border-color .2s; }
     .nav { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 64px; }
-    .brand { font-weight: 700; font-size: 1.25rem; letter-spacing: -0.03em; white-space: nowrap; }
-    .brand span { background: var(--accent); color: #0A1A0F; padding: 0 .2em; margin-inline: .04em; border-radius: 4px; display: inline-block; line-height: 1.15; }
+    .brand { display: inline-flex; align-items: center; gap: 10px; font-weight: 700; font-size: 1.2rem; letter-spacing: -0.03em; white-space: nowrap; }
+    .brand-mark { flex: none; display: block; border-radius: 9px; transition: transform .2s var(--ease); }
+    .brand:hover .brand-mark { transform: rotate(-6deg) scale(1.04); }
+    .brand-text { display: inline-flex; align-items: center; }
+    .brand-pilot { background: var(--accent); color: #0A1A0F; padding: 0 .2em; margin-inline: .04em; border-radius: 4px; line-height: 1.15; }
+    .brand-global { font-weight: 500; color: var(--ink-2); letter-spacing: -0.02em; white-space: pre; }
+    .footer-brand { display: inline-flex; align-items: center; gap: 12px; }
+    .footer-brand .brand-mark { width: 26px; height: 26px; }
     .crumb { flex: 1; min-width: 0; display: flex; align-items: center; gap: 10px; color: var(--ink-2); font-size: .9375rem; }
     .crumb-now { color: var(--ink); font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .nav-actions { display: flex; align-items: center; gap: 10px; }
@@ -310,6 +318,83 @@
     .kv dd.note { font-size: .875rem; font-weight: 400; line-height: 1.5; color: var(--ink); }
     .est-tag { font-size: .75rem; font-weight: 500; color: var(--ink-2); }
 
+
+    /* ───────────── Información complementaria: navegación + acordeones ───────────── */
+    .info { scroll-margin-top: 80px; }
+    .info-title { margin-bottom: 20px; }
+    .info-layout { display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: var(--gap); align-items: start; }
+    .sec-nav { position: sticky; top: 84px; }
+    .sec-nav-toggle { display: none; }
+    .sec-nav-list { list-style: none; display: flex; flex-direction: column; gap: 2px; border-left: 1px solid var(--line); }
+    .sec-nav-list a { display: block; padding: 8px 14px; margin-left: -1px; border-left: 2px solid transparent; font-size: .9375rem; font-weight: 500; color: var(--ink-2); transition: color .15s, border-color .15s, background-color .15s; }
+    .sec-nav-list a:hover { color: var(--ink); background: var(--tone); }
+    .sec-nav-list a.is-active { color: var(--ink); border-left-color: var(--accent); font-weight: 600; }
+    .acc-list { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+    .acc { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); scroll-margin-top: 84px; transition: border-color .15s; }
+    .acc[open] { border-color: var(--field-line); }
+    .acc > summary { display: flex; align-items: center; gap: 12px; padding: 16px var(--cp); cursor: pointer; list-style: none; border-radius: var(--r); user-select: none; }
+    .acc > summary::-webkit-details-marker { display: none; }
+    .acc > summary:hover { background: var(--tone); }
+    .acc > summary:focus-visible { outline: 2px solid var(--ink); outline-offset: -2px; }
+    .acc-ico { display: inline-flex; flex: none; width: 32px; height: 32px; align-items: center; justify-content: center; border-radius: 8px; background: var(--tone); color: var(--ink); }
+    .acc-title { flex: 1; font-size: 1.0625rem; font-weight: 600; letter-spacing: -0.01em; }
+    .acc-chev { flex: none; width: 10px; height: 10px; margin-right: 4px; border-right: 2px solid var(--ink-2); border-bottom: 2px solid var(--ink-2); transform: rotate(45deg) translateY(-2px); transition: transform .25s var(--ease); }
+    .acc[open] > summary .acc-chev { transform: rotate(225deg) translateY(-2px); }
+    .acc-body { padding: 4px var(--cp) var(--cp); border-top: 1px solid var(--line); animation: accIn .25s var(--ease); }
+    .acc-body > :first-child { margin-top: 18px; }
+    .acc-body p { line-height: 1.65; margin-top: 12px; max-width: 72ch; }
+    .acc-body p:first-child { margin-top: 18px; }
+    .acc-sub { font-size: 1rem; font-weight: 600; letter-spacing: -0.01em; margin: 24px 0 8px; }
+    .acc-body > .acc-sub:first-child { margin-top: 18px; }
+    .acc-hint { font-size: .875rem; color: var(--ink-2); }
+    .acc-steps { font-variant-numeric: tabular-nums; background: var(--tone); border-radius: var(--r); padding: 12px 16px; line-height: 1.7 !important; }
+    .acc-platform .status { display: inline-block; margin-left: 6px; max-width: 100%; }
+    @media (max-width: 640px) { .acc-platform .status { display: table; margin: 8px 0 0; border-radius: 10px; } }
+    .acc-list-plain { margin: 12px 0 0 1.1rem; line-height: 1.65; }
+    .acc-list-plain li { margin-top: 6px; }
+    .acc-body a:not(.source-link) { text-decoration: underline; text-underline-offset: 3px; }
+    .source-link { font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
+    .status { font-size: .75rem; font-weight: 600; padding: 3px 8px; border-radius: 999px; border: 1px solid var(--field-line); color: var(--ink-2); vertical-align: 1px; line-height: 1.5; }
+    .status-verified { background: rgba(159, 232, 112, .3); border-color: transparent; color: var(--ink); }
+    .status-cross-checked { background: var(--tone); color: var(--ink); }
+    .table-scroll, .acc-body .table-wrap { overflow-x: auto; margin: 10px 0 0; border: 1px solid var(--line); border-radius: var(--r); }
+    .acc-body .table-wrap { margin-inline: 0; margin-bottom: 0; display: block; }
+    .mini-table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+    .mini-table th, .mini-table td { padding: 10px 14px; text-align: right; border-bottom: 1px solid var(--line); font-size: .9375rem; height: auto; }
+    .mini-table th:first-child, .mini-table td:first-child { text-align: left; white-space: normal; min-width: 150px; }
+    .mini-table th { background: var(--tone); font-size: .8125rem; font-weight: 600; line-height: 1.25; }
+    .mini-table tbody tr:last-child td { border-bottom: 0; }
+    .acc-body .table-head { margin: 24px 0 0; }
+    .acc-body .table-head .acc-sub { margin: 0; }
+    .acc-body .faq-list { border-top: 0; }
+    .acc-body .faq-item { display: block; padding: 18px 0; }
+    .acc-body .faq-item:first-child { padding-top: 6px; }
+    .acc-body .faq-item:last-child { border-bottom: 0; padding-bottom: 0; }
+    .acc-body .faq-q { font-size: 1.0625rem; margin-bottom: 6px; }
+    .acc-body .faq-a { font-size: 1rem; max-width: 70ch; }
+    @keyframes accIn { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
+    @media (max-width: 960px) {
+      .info-layout { grid-template-columns: 1fr; }
+      .sec-nav { position: sticky; top: 64px; z-index: 15; margin: 0 calc(-1 * var(--gutter)); padding: 8px var(--gutter); background: var(--ground); border-bottom: 1px solid var(--line); }
+      .js .sec-nav-toggle { display: inline-flex; align-items: center; gap: 10px; min-height: 44px; padding: 0 16px; border: 1px solid var(--field-line); border-radius: 999px; background: var(--surface); font-weight: 600; cursor: pointer; transition: background-color .15s, border-color .15s, transform .15s; }
+      .js .sec-nav-toggle:hover { border-color: var(--ink); }
+      .js .sec-nav-toggle:active { transform: scale(.97); }
+      .js .sec-nav-toggle:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+      .js .sec-nav-list { display: none; margin-top: 8px; border: 1px solid var(--line); border-radius: var(--r); background: var(--surface); padding: 6px; }
+      .js .sec-nav.open .sec-nav-list { display: flex; animation: accIn .2s var(--ease); }
+      .sec-nav-list { border-left: 0; flex-direction: column; margin-top: 8px; }
+      .sec-nav-list a { padding: 12px 14px; border-left: 0; border-radius: 6px; min-height: 44px; display: flex; align-items: center; }
+      .sec-nav-list a.is-active { background: var(--tone); }
+    }
+    @media (max-width: 640px) {
+      .acc > summary { padding: 14px 16px; }
+      .acc-body { padding-inline: 16px; }
+      .acc-title { font-size: 1rem; }
+      .mini-table th, .mini-table td { padding: 9px 10px; font-size: .875rem; }
+    }
+    @media (max-width: 400px) { .brand-global { display: none; } }
+    @media (prefers-reduced-motion: reduce) { .acc-body, .js .sec-nav.open .sec-nav-list { animation: none; } .acc-chev, .brand-mark { transition: none; } }
+
     /* ───────────── Motion ───────────── */
     @keyframes rise { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: none; } }
     @media (prefers-reduced-motion: no-preference) {
@@ -385,7 +470,7 @@
 
   <header class="site-header">
     <div class="container nav">
-      <a href="/{{ lang }}/stripe-fee-calculator/" class="brand">Fee<span>Pilot</span> Global</a>
+      <a href="/{{ lang }}/stripe-fee-calculator/" class="brand" aria-label="FeePilot Global"><svg class="brand-mark" width="30" height="30" viewBox="0 0 32 32" aria-hidden="true" focusable="false"><rect x="0.5" y="0.5" width="31" height="31" rx="9" fill="#0A1A0F" stroke="#2A4733"/><path d="M25.18 13.54A9.5 9.5 0 1 1 18.46 6.82" fill="none" stroke="#9FE870" stroke-width="2.4" stroke-linecap="round"/><path d="M12 20 23 9M17.5 9H23v5.5" fill="none" stroke="#F3F7F0" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="brand-text">Fee<span class="brand-pilot">Pilot</span><span class="brand-global"> Global</span></span></a>
       <nav class="crumb" aria-label="Breadcrumb">
         <span aria-hidden="true">/</span>
         <span class="crumb-now">{{ primary.name }}{% if is_comparison %} vs {{ secondary.name }}{% endif %}</span>
@@ -415,7 +500,7 @@
         <p class="subtitle rise" style="--d: 90ms;">{{ desc }}</p>
       </div>
       <div class="hero-rate rise" style="--d: 180ms;">
-        <p class="rate-label" id="heroRateLabel">{% if primary.confidence == 'verified' %}{% if lang == 'en' %}Standard rate · checked {{ primary.checked }}{% else %}Tarifa estándar · revisada {{ primary.checked }}{% endif %}{% else %}{% if lang == 'en' %}Estimated rate · confirm on the official site{% else %}Tarifa estimada · confirma en el sitio oficial{% endif %}{% endif %}</p>
+        <p class="rate-label" id="heroRateLabel">{% if primary.confidence == 'verified' %}{% if lang == 'en' %}Standard rate · checked {{ primary.checked }}{% else %}Tarifa estándar · revisada {{ primary.checked }}{% endif %}{% elif primary.confidence == 'cross-checked' %}{% if lang == 'en' %}Standard rate · cross-checked {{ primary.checked }}{% else %}Tarifa estándar · contrastada {{ primary.checked }}{% endif %}{% else %}{% if lang == 'en' %}Estimated rate · confirm on the official site{% else %}Tarifa estimada · confirma en el sitio oficial{% endif %}{% endif %}</p>
         <p class="rate-figure" id="heroRateFigure">{{ primary.percent_fee }}% + ${{ primary.fixed_fee|floatformat:2 }}</p>
         <p class="rate-cat" id="heroRateCat">{{ primary.category }}</p>
       </div>
@@ -485,7 +570,7 @@
 
           <label class="checkbox-row">
             <input type="checkbox" id="intlCheck">
-            <span>{% if lang == 'en' %}International Card (cross-border){% else %}Tarjeta Internacional (transfronteriza){% endif %}<small id="intlSmallText">{% if lang == 'en' %}Adds +{{ primary.intl_extra_percent }}% to the fee{% else %}Suma +{{ primary.intl_extra_percent }}% a la comisión{% endif %}</small></span>
+            <span>{% if lang == 'en' %}International Card (cross-border){% else %}Tarjeta Internacional (transfronteriza){% endif %}<small id="intlSmallText">{% if primary.intl_extra_percent %}{% if lang == 'en' %}Adds +{{ primary.intl_extra_percent }}% to the fee{% else %}Suma +{{ primary.intl_extra_percent }}% a la comisión{% endif %}{% else %}{% if lang == 'en' %}No international surcharge on record{% else %}Sin recargo internacional registrado{% endif %}{% endif %}</small></span>
           </label>
 
           <label class="checkbox-row">
@@ -545,90 +630,207 @@
       </div>
     </section>
 
-    <section class="container section">
-      <div class="cols">
-        <!-- TABLA DE TRAMOS PRE-CALCULADA Y SINCRONIZADA EN TIEMPO REAL (Haz clic en cualquier fila para cargarla) -->
-        <div class="panel col-table rise-scroll">
-          <div class="panel-head">
-            <h2 id="tableTitle"><span id="tablePlatformName">{{ primary.name }}</span> {% if lang == 'en' %}Fee Schedule Table ($10 to $10,000){% else %}Tabla de Comisiones ($10 a $10,000 USD){% endif %}</h2>
-            <span class="meta" id="tableMetaRate">{% if lang == 'en' %}Standard rate, USD{% else %}Tarifa estándar, USD{% endif %}</span>
-          </div>
-          <div class="table-wrap">
-            <table>
-              <thead>
-                <tr>
-                  <th>{% if lang == 'en' %}Invoice Amount{% else %}Monto Cobrado{% endif %}</th>
-                  <th><span id="thPlatformName">{{ primary.name }}</span> {% if lang == 'en' %}Fee{% else %}Comisión{% endif %}</th>
-                  <th>{% if lang == 'en' %}You Receive (Net){% else %}Recibes Neto{% endif %}</th>
-                  <th>{% if lang == 'en' %}Ask For (Zero Fee Loss){% else %}Cobrar para no perder{% endif %}</th>
-                </tr>
-              </thead>
-              <tbody id="feeTableBody">
-                {% for row in fee_table %}
-                <tr onclick="setAmt({{ row.amount }})" title="{% if lang == 'en' %}Click to load ${{ row.amount }} into calculator{% else %}Clic para calcular ${{ row.amount }}{% endif %}">
-                  <td class="c-amt">${{ row.amount }}</td>
-                  <td class="c-fee">-${{ row.fee }}</td>
-                  <td class="c-net">${{ row.net }}</td>
-                  <td class="c-ask">${{ row.reverse }}</td>
-                </tr>
+    <!-- INFORMACIÓN COMPLEMENTARIA: la calculadora va primero; aquí van las explicaciones, organizadas en secciones -->
+    <section class="container section info" id="info" aria-labelledby="infoTitle">
+      <h2 class="info-title" id="infoTitle">{% if lang == 'en' %}About this calculator{% else %}Sobre esta calculadora{% endif %}</h2>
+      <div class="info-layout">
+        <nav class="sec-nav" id="secNav" aria-label="{% if lang == 'en' %}On this page{% else %}En esta página{% endif %}">
+          <button type="button" class="sec-nav-toggle" id="secNavToggle" aria-expanded="false" aria-controls="secNavList">
+            <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><path d="M2.5 5h13M2.5 9h13M2.5 13h13" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+            <span>{% if lang == 'en' %}Sections{% else %}Secciones{% endif %}</span>
+          </button>
+          <ul class="sec-nav-list" id="secNavList">
+            <li><a href="#how">{% if lang == 'en' %}How it works{% else %}Cómo funciona{% endif %}</a></li>
+            <li><a href="#formula">{% if lang == 'en' %}Formula & example{% else %}Fórmula y ejemplo{% endif %}</a></li>
+            <li><a href="#rates">{% if lang == 'en' %}Rates & conditions{% else %}Tarifas y condiciones{% endif %}</a></li>
+            <li><a href="#faq">{% if lang == 'en' %}FAQ{% else %}Preguntas frecuentes{% endif %}</a></li>
+            <li><a href="#sources">{% if lang == 'en' %}Sources & methodology{% else %}Fuentes y metodología{% endif %}</a></li>
+          </ul>
+        </nav>
+
+        <div class="acc-list">
+
+          <!-- 1 · Cómo funciona -->
+          <details class="acc" id="how" open>
+            <summary><span class="acc-ico" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="9" r="6.5"/><path d="M9 8.2v4M9 5.8v.1"/></svg></span><span class="acc-title">{% if lang == 'en' %}How it works{% else %}Cómo funciona{% endif %}</span><span class="acc-chev" aria-hidden="true"></span></summary>
+            <div class="acc-body">
+              <p>{% if lang == 'en' %}Enter an amount and pick a platform. The calculator applies the platform's rate to show the fee, what you receive, and how much to invoice if you want to receive an exact net amount. Tick the surcharge boxes to add international-card or currency-conversion costs, or choose a plan or region when the platform offers them.{% else %}Escribe un monto y elige una plataforma. La calculadora aplica la tarifa de la plataforma para mostrar la comisión, lo que recibes y cuánto debes facturar si quieres recibir un neto exacto. Marca las casillas de recargo para añadir tarjeta internacional o conversión de divisa, o elige un plan o región cuando la plataforma los ofrece.{% endif %}</p>
+              {% for ip in info_platforms %}
+              <p class="acc-platform">
+                <strong>{{ ip.name }}{% if ip.how %}:{% endif %}</strong> {{ ip.how }}
+                <span class="status status-{{ ip.confidence }}">{% if ip.confidence == 'verified' %}{% if lang == 'en' %}Verified on the official page · {{ meta.review_month }}{% else %}Verificada en la página oficial · {{ meta.review_month_es }}{% endif %}{% elif ip.confidence == 'cross-checked' %}{% if lang == 'en' %}Cross-checked with independent sources · {{ meta.review_month }}{% else %}Contrastada con fuentes independientes · {{ meta.review_month_es }}{% endif %}{% else %}{% if lang == 'en' %}Estimate · not verified{% else %}Estimación · sin verificar{% endif %}{% endif %}</span>
+              </p>
+              {% endfor %}
+            </div>
+          </details>
+
+          <!-- 2 · Fórmula y ejemplo -->
+          <details class="acc" id="formula" open>
+            <summary><span class="acc-ico" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h10M4 14h10M6 4l6 10"/></svg></span><span class="acc-title">{% if lang == 'en' %}Formula & example{% else %}Fórmula y ejemplo{% endif %}</span><span class="acc-chev" aria-hidden="true"></span></summary>
+            <div class="acc-body">
+              <h3 class="acc-sub">{% if lang == 'en' %}The formula used by the calculator{% else %}La fórmula que usa la calculadora{% endif %}</h3>
+              <dl class="kv">
+                <div>
+                  <dt>{% if lang == 'en' %}Fee{% else %}Comisión{% endif %}</dt>
+                  <dd id="formulaFee">{% if lang == 'en' %}amount{% else %}monto{% endif %} × {{ primary.percent_fee }}% + ${{ primary.fixed_fee|floatformat:2 }}</dd>
+                </div>
+                <div>
+                  <dt>{% if lang == 'en' %}International card add-on{% else %}Recargo por tarjeta internacional{% endif %}</dt>
+                  <dd id="formulaIntl">+{{ primary.intl_extra_percent }}% {% if lang == 'en' %}of the amount{% else %}del monto{% endif %}</dd>
+                </div>
+                <div>
+                  <dt>{% if lang == 'en' %}Currency conversion add-on{% else %}Recargo por conversión de divisa{% endif %}</dt>
+                  <dd id="formulaFx">{% if primary.fx_extra_percent %}+{{ primary.fx_extra_percent }}% {% if lang == 'en' %}of the amount{% else %}del monto{% endif %}{% else %}{% if lang == 'en' %}No separate fee on record{% else %}Sin cargo separado registrado{% endif %}{% endif %}</dd>
+                </div>
+                <div>
+                  <dt>{% if lang == 'en' %}Net you receive{% else %}Neto que recibes{% endif %}</dt>
+                  <dd>{% if lang == 'en' %}amount − fee{% else %}monto − comisión{% endif %}</dd>
+                </div>
+                <div>
+                  <dt>{% if lang == 'en' %}Invoice to receive an exact net{% else %}Factura para recibir un neto exacto{% endif %}</dt>
+                  <dd id="formulaReverse">({% if lang == 'en' %}amount{% else %}monto{% endif %} + ${{ primary.fixed_fee|floatformat:2 }}) ÷ (1 − {{ primary.percent_fee }}%)</dd>
+                </div>
+              </dl>
+              <p class="acc-hint">{% if lang == 'en' %}Fees are rounded to the cent. When a surcharge is ticked, its percentage is added to the base percentage before the fee is calculated.{% else %}Las comisiones se redondean al centavo. Al marcar un recargo, su porcentaje se suma al porcentaje base antes de calcular la comisión.{% endif %}</p>
+
+              {% for ip in info_platforms %}
+              <h3 class="acc-sub">{% if lang == 'en' %}Worked example: ${{ ip.amount_fmt }} on {{ ip.name }}{% else %}Ejemplo resuelto: ${{ ip.amount_fmt }} en {{ ip.name }}{% endif %}</h3>
+              <p class="acc-steps">{{ ip.amount_fmt }} × {{ ip.rows.0.pct }}% + ${{ ip.fixed }} = <strong>${{ ip.rows.0.fee }}</strong> &nbsp;→&nbsp; {{ ip.amount_fmt }} − {{ ip.rows.0.fee }} = <strong>${{ ip.rows.0.net }}</strong> {% if lang == 'en' %}for you{% else %}para ti{% endif %}</p>
+              <div class="table-scroll">
+                <table class="mini-table">
+                  <thead>
+                    <tr>
+                      <th>{% if lang == 'en' %}Scenario{% else %}Escenario{% endif %}</th>
+                      <th>{% if lang == 'en' %}Rate{% else %}Tarifa{% endif %}</th>
+                      <th>{% if lang == 'en' %}Fee{% else %}Comisión{% endif %}</th>
+                      <th>{% if lang == 'en' %}You keep{% else %}Recibes{% endif %}</th>
+                      <th>{% if lang == 'en' %}Invoice for a ${{ ip.amount_fmt }} net{% else %}Facturar para ${{ ip.amount_fmt }} netos{% endif %}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for r in ip.rows %}
+                    <tr>
+                      <td>{% if r.kind == 'standard' %}{% if lang == 'en' %}Standard rate{% else %}Tarifa estándar{% endif %}{% elif r.kind == 'intl' %}{% if lang == 'en' %}+ International card{% else %}+ Tarjeta internacional{% endif %}{% else %}{% if lang == 'en' %}+ International card + currency conversion{% else %}+ Tarjeta internacional + conversión de divisa{% endif %}{% endif %}</td>
+                      <td>{{ r.pct }}% + ${{ ip.fixed }}</td>
+                      <td>${{ r.fee }}</td>
+                      <td class="c-net">${{ r.net }}</td>
+                      <td>${{ r.reverse }}</td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+              {% endfor %}
+
+              <!-- TABLA DE TRAMOS PRE-CALCULADA Y SINCRONIZADA EN TIEMPO REAL (Haz clic en cualquier fila para cargarla) -->
+              <div class="panel-head table-head">
+                <h3 class="acc-sub" id="tableTitle"><span id="tablePlatformName">{{ primary.name }}</span> {% if lang == 'en' %}Fee Schedule Table ($10 to $10,000){% else %}Tabla de Comisiones ($10 a $10,000 USD){% endif %}</h3>
+                <span class="meta" id="tableMetaRate">{% if lang == 'en' %}Standard rate, USD{% else %}Tarifa estándar, USD{% endif %}</span>
+              </div>
+              <div class="table-wrap">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>{% if lang == 'en' %}Invoice Amount{% else %}Monto Cobrado{% endif %}</th>
+                      <th><span id="thPlatformName">{{ primary.name }}</span> {% if lang == 'en' %}Fee{% else %}Comisión{% endif %}</th>
+                      <th>{% if lang == 'en' %}You Receive (Net){% else %}Recibes Neto{% endif %}</th>
+                      <th>{% if lang == 'en' %}Ask For (Zero Fee Loss){% else %}Cobrar para no perder{% endif %}</th>
+                    </tr>
+                  </thead>
+                  <tbody id="feeTableBody">
+                    {% for row in fee_table %}
+                    <tr onclick="setAmt({{ row.amount }})" title="{% if lang == 'en' %}Click to load ${{ row.amount }} into calculator{% else %}Clic para calcular ${{ row.amount }}{% endif %}">
+                      <td class="c-amt">${{ row.amount }}</td>
+                      <td class="c-fee">-${{ row.fee }}</td>
+                      <td class="c-net">${{ row.net }}</td>
+                      <td class="c-ask">${{ row.reverse }}</td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </details>
+
+          <!-- 3 · Tarifas y condiciones -->
+          <details class="acc" id="rates">
+            <summary><span class="acc-ico" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5h12M3 9h12M3 13h7"/></svg></span><span class="acc-title">{% if lang == 'en' %}Rates & conditions{% else %}Tarifas y condiciones{% endif %}</span><span class="acc-chev" aria-hidden="true"></span></summary>
+            <div class="acc-body">
+              {% for ip in info_platforms %}
+              <h3 class="acc-sub">{{ ip.name }}</h3>
+              <p {% if forloop.first %}id="formulaNote"{% endif %}>{{ ip.note }}</p>
+              {% if ip.options %}
+              <div class="table-scroll">
+                <table class="mini-table">
+                  <thead>
+                    <tr>
+                      <th>{% if lang == 'en' %}Plan / region{% else %}Plan / región{% endif %}</th>
+                      <th>{% if lang == 'en' %}Rate{% else %}Tarifa{% endif %}</th>
+                      <th>{% if lang == 'en' %}Fee on ${{ ip.amount_fmt }}{% else %}Comisión sobre ${{ ip.amount_fmt }}{% endif %}</th>
+                      <th>{% if lang == 'en' %}You keep{% else %}Recibes{% endif %}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for o in ip.options %}
+                    <tr>
+                      <td>{{ o.label }}</td>
+                      <td>{{ o.pct }}% + {{ o.symbol }}{{ o.fixed }}</td>
+                      <td>{{ o.symbol }}{{ o.fee }}</td>
+                      <td class="c-net">{{ o.symbol }}{{ o.net }}</td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+              {% endif %}
+              <ul class="acc-list-plain">
+                <li>{% if lang == 'en' %}International card: +{{ ip.intl }}%{% else %}Tarjeta internacional: +{{ ip.intl }}%{% endif %}{% if ip.confidence == 'estimate' %} <span class="est-tag">({% if lang == 'en' %}estimate{% else %}estimación{% endif %})</span>{% endif %}</li>
+                <li>{% if ip.fx %}{% if lang == 'en' %}Currency conversion: +{{ ip.fx }}%{% else %}Conversión de divisa: +{{ ip.fx }}%{% endif %}{% else %}{% if lang == 'en' %}Currency conversion: no separate fee on record{% else %}Conversión de divisa: sin cargo separado registrado{% endif %}{% endif %}</li>
+                {% for l in ip.limits %}<li>{{ l }}</li>{% endfor %}
+              </ul>
+              {% endfor %}
+            </div>
+          </details>
+
+          <!-- 4 · Preguntas frecuentes (las mismas que usa el JSON-LD) -->
+          <details class="acc" id="faq">
+            <summary><span class="acc-ico" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4.5h12v7H9l-3.5 3v-3H3z"/></svg></span><span class="acc-title">{% if lang == 'en' %}Frequently Asked Questions{% else %}Preguntas Frecuentes{% endif %}</span><span class="acc-chev" aria-hidden="true"></span></summary>
+            <div class="acc-body">
+              <div class="faq-list">
+                {% for f in faqs %}
+                <div class="faq-item">
+                  <h3 class="faq-q">{{ f.q }}</h3>
+                  <div class="faq-a">{{ f.a }}</div>
+                </div>
                 {% endfor %}
-              </tbody>
-            </table>
-          </div>
+              </div>
+            </div>
+          </details>
+
+          <!-- 5 · Fuentes y metodología -->
+          <details class="acc" id="sources">
+            <summary><span class="acc-ico" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7.5 10.5l3-3M6.2 8.3 4.9 9.6a2.4 2.4 0 0 0 3.5 3.5l1.3-1.3M11.8 9.7l1.3-1.3a2.4 2.4 0 0 0-3.5-3.5L8.3 6.2"/></svg></span><span class="acc-title">{% if lang == 'en' %}Sources & methodology{% else %}Fuentes y metodología{% endif %}</span><span class="acc-chev" aria-hidden="true"></span></summary>
+            <div class="acc-body">
+              <ul class="acc-list-plain">
+                {% for ip in info_platforms %}
+                <li><strong>{{ ip.name }}:</strong>
+                  <a href="{{ ip.source_url }}" {% if forloop.first %}id="formulaSourceLink"{% endif %} target="_blank" rel="nofollow noopener" class="source-link">{% if ip.confidence == 'verified' %}{% if lang == 'en' %}Official pricing page ↗{% else %}Página oficial de precios ↗{% endif %}{% elif ip.confidence == 'cross-checked' %}{% if lang == 'en' %}Provider's pricing page ↗ (not opened directly){% else %}Página de precios del proveedor ↗ (no se abrió directamente){% endif %}{% else %}{% if lang == 'en' %}Provider's site ↗ (rate not verified){% else %}Sitio del proveedor ↗ (tarifa sin verificar){% endif %}{% endif %}</a>
+                </li>
+                {% endfor %}
+              </ul>
+              <h3 class="acc-sub">{% if lang == 'en' %}How rates are labelled{% else %}Cómo se etiquetan las tarifas{% endif %}</h3>
+              <ul class="acc-list-plain">
+                <li>{% if lang == 'en' %}<strong>Verified:</strong> checked on the provider's official pricing page.{% else %}<strong>Verificada:</strong> comprobada en la página oficial de precios del proveedor.{% endif %}</li>
+                <li>{% if lang == 'en' %}<strong>Cross-checked:</strong> consistent across several independent 2026 sources; the official page is linked but was not opened directly.{% else %}<strong>Contrastada:</strong> coincide en varias fuentes independientes de 2026; la página oficial está enlazada pero no se abrió directamente.{% endif %}</li>
+                <li>{% if lang == 'en' %}<strong>Estimate:</strong> approximate and not verified. Confirm it on the provider's site before relying on it.{% else %}<strong>Estimación:</strong> aproximada y sin verificar. Confírmala en el sitio del proveedor antes de fiarte de ella.{% endif %}</li>
+              </ul>
+              <h3 class="acc-sub">{% if lang == 'en' %}What the results do not include{% else %}Qué no incluyen los resultados{% endif %}</h3>
+              <p>{% if lang == 'en' %}Monthly plan fees, taxes, dispute and chargeback fees, payout fees and exchange-rate margins are not modelled, except the currency-conversion surcharge when you tick it. Real fees depend on your country, plan, card type and account terms, so use the result as an estimate and confirm it in your own dashboard.{% else %}No se modelan cuotas mensuales de plan, impuestos, comisiones por disputas o contracargos, comisiones de retiro ni márgenes del tipo de cambio, salvo el recargo por conversión de divisa cuando lo marcas. Las comisiones reales dependen de tu país, plan, tipo de tarjeta y condiciones de cuenta, así que usa el resultado como estimación y confírmalo en tu propio panel.{% endif %}</p>
+              <p class="acc-hint">{% if lang == 'en' %}Last reviewed {{ meta.review_month }}: {{ meta.verified_count }} verified, {{ meta.crosschecked_count }} cross-checked and {{ meta.estimate_count }} estimated of {{ meta.total_count }} platforms. Found a wrong rate? Write to <a href="mailto:support@feepilotglobal.com">support@feepilotglobal.com</a>.{% else %}Última revisión {{ meta.review_month_es }}: {{ meta.verified_count }} verificada, {{ meta.crosschecked_count }} contrastadas y {{ meta.estimate_count }} estimadas de {{ meta.total_count }} plataformas. ¿Ves una tarifa incorrecta? Escribe a <a href="mailto:support@feepilotglobal.com">support@feepilotglobal.com</a>.{% endif %} <a href="{% if lang == 'es' %}/es{% endif %}/legal/about/">{% if lang == 'en' %}About & methodology →{% else %}Acerca de y metodología →{% endif %}</a></p>
+            </div>
+          </details>
+
         </div>
-
-        <div class="col-side">
-          <!-- BLOQUE DE CONTENIDO RICO PARA APROBACIÓN DE ADSENSE Y SEO -->
-          <div class="panel guide rise-scroll">
-            <h2>{% if lang == 'en' %}How {{ primary.name }} Fees Work in 2026{% else %}Cómo funcionan las comisiones de {{ primary.name }} en 2026{% endif %}</h2>
-            <p>{{ guide }}</p>
-          </div>
-
-          <div class="panel formula rise-scroll">
-            <h2>{% if lang == 'en' %}The formula{% else %}La fórmula{% endif %}</h2>
-            <dl class="kv">
-              <div>
-                <dt>{% if lang == 'en' %}Fee{% else %}Comisión{% endif %}</dt>
-                <dd id="formulaFee">{% if lang == 'en' %}amount{% else %}monto{% endif %} × {{ primary.percent_fee }}% + ${{ primary.fixed_fee|floatformat:2 }}</dd>
-              </div>
-              <div>
-                <dt>{% if lang == 'en' %}International card add-on{% else %}Recargo por tarjeta internacional{% endif %}</dt>
-                <dd id="formulaIntl">+{{ primary.intl_extra_percent }}% {% if lang == 'en' %}of the amount{% else %}del monto{% endif %}</dd>
-              </div>
-              <div>
-                <dt>{% if lang == 'en' %}Currency conversion add-on{% else %}Recargo por conversión de divisa{% endif %}</dt>
-                <dd id="formulaFx">{% if primary.fx_extra_percent %}+{{ primary.fx_extra_percent }}% {% if lang == 'en' %}of the amount{% else %}del monto{% endif %}{% else %}{% if lang == 'en' %}No separate fee on record{% else %}Sin cargo separado registrado{% endif %}{% endif %}</dd>
-              </div>
-              <div>
-                <dt>{% if lang == 'en' %}Invoice to receive an exact net{% else %}Factura para recibir un neto exacto{% endif %}</dt>
-                <dd id="formulaReverse">({% if lang == 'en' %}amount{% else %}monto{% endif %} + ${{ primary.fixed_fee|floatformat:2 }}) ÷ (1 − {{ primary.percent_fee }}%)</dd>
-              </div>
-              <div>
-                <dt>{% if lang == 'en' %}Source{% else %}Fuente{% endif %}</dt>
-                <dd><a href="{{ primary.source_url }}" id="formulaSourceLink" target="_blank" rel="nofollow noopener" class="source-link">{% if primary.confidence == 'verified' %}{% if lang == 'en' %}Official pricing page ↗{% else %}Página oficial de precios ↗{% endif %}{% else %}{% if lang == 'en' %}Official site: confirm the rate ↗{% else %}Sitio oficial: confirma la tarifa ↗{% endif %}{% endif %}</a></dd>
-              </div>
-              <div>
-                <dt>{% if lang == 'en' %}About this rate{% else %}Sobre esta tarifa{% endif %}</dt>
-                <dd class="note" id="formulaNote">{% if lang == 'en' %}{{ primary.rate_note.en }}{% else %}{{ primary.rate_note.es }}{% endif %}</dd>
-              </div>
-            </dl>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- PREGUNTAS FRECUENTES (FAQ) -->
-    <section class="container faq-section">
-      <div class="section-head rise-scroll">
-        <h2>{% if lang == 'en' %}Frequently Asked Questions{% else %}Preguntas Frecuentes{% endif %}</h2>
-      </div>
-      <div class="faq-list">
-        {% for f in faqs %}
-          <div class="faq-item rise-scroll">
-            <h3 class="faq-q">{{ f.q }}</h3>
-            <div class="faq-a">{{ f.a }}</div>
-          </div>
-        {% endfor %}
       </div>
     </section>
 
@@ -655,7 +857,7 @@
   <footer class="site-footer">
     <div class="container">
       <div class="footer-row">
-        <div>© 2026 FeePilot Global. Built for High-Performance Financial Transparency.</div>
+        <div class="footer-brand"><svg class="brand-mark" width="30" height="30" viewBox="0 0 32 32" aria-hidden="true" focusable="false"><rect x="0.5" y="0.5" width="31" height="31" rx="9" fill="#0A1A0F" stroke="#2A4733"/><path d="M25.18 13.54A9.5 9.5 0 1 1 18.46 6.82" fill="none" stroke="#9FE870" stroke-width="2.4" stroke-linecap="round"/><path d="M12 20 23 9M17.5 9H23v5.5" fill="none" stroke="#F3F7F0" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg><span>© 2026 FeePilot Global. {% if lang == 'en' %}Built for High-Performance Financial Transparency.{% else %}Creado para la transparencia financiera.{% endif %}</span></div>
         <nav class="footer-links">
           <a href="{% if lang == 'es' %}/es{% endif %}/legal/about/">{% if lang == 'en' %}About & Methodology{% else %}Acerca de y Metodología{% endif %}</a>
           <a href="{% if lang == 'es' %}/es{% endif %}/legal/privacy/">{% if lang == 'en' %}Privacy Policy{% else %}Política de Privacidad{% endif %}</a>
@@ -671,11 +873,13 @@
     const PLATFORMS = {{ platforms_json|safe }};
     const LANG = "{{ lang }}";
     const TIERS = [10, 25, 50, 100, 250, 500, 1000, 2500, 5000, 10000];
-    // true = el ranking Top 3 solo usa plataformas con tarifa verificada (ver seed_platforms.py). Ponlo en false para incluir estimaciones (se marcan como "est.").
+    // true = el ranking Top 3 solo usa plataformas con tarifa comprobada (verificada o contrastada; ver seed_platforms.py). Ponlo en false para incluir estimaciones (se marcan como "est.").
     const ONLY_VERIFIED_TOP3 = true;
 
+    // Redondea a centavos "half up". La tolerancia de 1e-7 corrige el error binario de coma flotante
+    // (p. ej. 250 × 13.25% + 0.30 = 33.425 se guarda como 33.42499999… y salía 33.42 en lugar de 33.43).
     function roundCents(num) {
-      return Math.round((num + Number.EPSILON) * 100) / 100;
+      return Math.round(num * 100 + 1e-7) / 100;
     }
 
     // Lógica de Modo Oscuro / Claro
@@ -869,7 +1073,10 @@
       const r1 = calcPlatform(amount, p1Select.value, isIntl, isFx, countrySelect.value);
       const r2 = calcPlatform(amount, p2Select.value, isIntl, isFx, 'default');
       const p1 = PLATFORMS[p1Select.value];
-      const isVerified = r1.confidence === 'verified';
+      const lvl = r1.confidence;                       // 'verified' | 'cross-checked' | 'estimate'
+      const isVerified = lvl !== 'estimate';           // true cuando la tarifa fue comprobada (oficial o contrastada)
+      const wordEn = lvl === 'verified' ? 'checked' : 'cross-checked';
+      const wordEs = lvl === 'verified' ? 'revisada' : 'contrastada';
 
       // 1. Actualiza panel principal de resultados
       document.getElementById('p1Name').textContent = r1.name;
@@ -880,9 +1087,9 @@
       // 2. Subtítulos de recargos y encabezado de tarifa (honesto: verificada vs estimada)
       const intlSmall = document.getElementById('intlSmallText');
       if (intlSmall) {
-        intlSmall.textContent = LANG === 'en'
-          ? `Adds +${r1.intlExtra}% to the fee`
-          : `Suma +${r1.intlExtra}% a la comisión`;
+        intlSmall.textContent = r1.intlExtra
+          ? (LANG === 'en' ? `Adds +${r1.intlExtra}% to the fee` : `Suma +${r1.intlExtra}% a la comisión`)
+          : (LANG === 'en' ? 'No international surcharge on record' : 'Sin recargo internacional registrado');
       }
       const fxSmall = document.getElementById('fxSmallText');
       if (fxSmall) {
@@ -901,18 +1108,20 @@
         } else if (!isVerified) {
           heroLbl.textContent = LANG === 'en' ? 'Estimated rate · confirm on the official site' : 'Tarifa estimada · confirma en el sitio oficial';
         } else if (r1.rateMode === 'regional') {
-          heroLbl.textContent = LANG === 'en' ? `Selected plan/region rate · checked ${fmtChecked(r1.checked)}` : `Tarifa del plan/región elegido · revisada ${fmtChecked(r1.checked)}`;
+          heroLbl.textContent = LANG === 'en' ? `Selected plan/region rate · ${wordEn} ${fmtChecked(r1.checked)}` : `Tarifa del plan/región elegido · ${wordEs} ${fmtChecked(r1.checked)}`;
         } else {
-          heroLbl.textContent = LANG === 'en' ? `Standard rate · checked ${fmtChecked(r1.checked)}` : `Tarifa estándar · revisada ${fmtChecked(r1.checked)}`;
+          heroLbl.textContent = LANG === 'en' ? `Standard rate · ${wordEn} ${fmtChecked(r1.checked)}` : `Tarifa estándar · ${wordEs} ${fmtChecked(r1.checked)}`;
         }
       }
       const rateNote = document.getElementById('rateNote');
       if (rateNote) {
         const bits = [];
         if (r1.rateMode !== 'custom') {
-          bits.push(isVerified
-            ? (LANG === 'en' ? `Checked ${fmtChecked(r1.checked)} against the official pricing source.` : `Revisada en ${fmtChecked(r1.checked)} con la fuente oficial de precios.`)
-            : (LANG === 'en' ? 'Estimated rate: confirm it on the official site.' : 'Tarifa estimada: confírmala en el sitio oficial.'));
+          bits.push(lvl === 'verified'
+            ? (LANG === 'en' ? `Checked ${fmtChecked(r1.checked)} on the official pricing page.` : `Revisada en ${fmtChecked(r1.checked)} en la página oficial de precios.`)
+            : lvl === 'cross-checked'
+              ? (LANG === 'en' ? `Cross-checked ${fmtChecked(r1.checked)} with independent sources; confirm on the official page.` : `Contrastada en ${fmtChecked(r1.checked)} con fuentes independientes; confírmala en la página oficial.`)
+              : (LANG === 'en' ? 'Estimated rate: confirm it on the official site.' : 'Tarifa estimada: confírmala en el sitio oficial.'));
           if (r1.currency !== 'USD') {
             bits.push(LANG === 'en'
               ? `The fixed fee is in ${r1.currency}; the calculator treats it as a ${r1.currency}-denominated amount (no FX applied).`
@@ -935,7 +1144,7 @@
           : `${cheaper.name} te ahorra $${diff}`;
       }
 
-      const anyEstimate = r1.confidence !== 'verified' || r2.confidence !== 'verified';
+      const anyEstimate = r1.confidence === 'estimate' || r2.confidence === 'estimate';
       const estNote = anyEstimate
         ? (LANG === 'en' ? ' This comparison includes at least one estimated rate.' : ' Esta comparación incluye al menos una tarifa estimada.')
         : '';
@@ -955,14 +1164,14 @@
 
         const ranked = Object.keys(PLATFORMS)
           .map(k => calcPlatform(amount, k, isIntl, isFx, 'default'))
-          .filter(r => !ONLY_VERIFIED_TOP3 || r.confidence === 'verified')
+          .filter(r => !ONLY_VERIFIED_TOP3 || r.confidence !== 'estimate')
           .sort((a, b) => a.fee - b.fee)
           .slice(0, 3);
 
         top3Container.innerHTML = ranked.map((item, idx) => {
           const medal = idx === 0 ? '🥇' : idx === 1 ? '🥈' : '🥉';
           const titleTip = LANG === 'en' ? `Click to compare against ${item.name}` : `Clic para comparar contra ${item.name}`;
-          const est = item.confidence !== 'verified' ? ` <span class="est-tag">· ${LANG === 'en' ? 'est.' : 'est.'}</span>` : '';
+          const est = item.confidence === 'estimate' ? ` <span class="est-tag">· ${LANG === 'en' ? 'est.' : 'est.'}</span>` : '';
           return `<button type="button" class="top3-badge" onclick="selectComparison('${item.key}')" title="${titleTip}">
             ${medal} <b>${item.name}</b> ($${item.fee.toFixed(2)} fee)${est}
           </button>`;
@@ -985,9 +1194,11 @@
       if (fRev) fRev.textContent = `(${wordAmt} + ${money(r1.fixedFee, r1.currency)}) ÷ (1 − ${r1.activePctNum}%)`;
       if (fSrc) {
         fSrc.href = r1.source;
-        fSrc.textContent = isVerified
+        fSrc.textContent = lvl === 'verified'
           ? (LANG === 'en' ? 'Official pricing page ↗' : 'Página oficial de precios ↗')
-          : (LANG === 'en' ? 'Official site: confirm the rate ↗' : 'Sitio oficial: confirma la tarifa ↗');
+          : lvl === 'cross-checked'
+            ? (LANG === 'en' ? "Provider's pricing page ↗ (not opened directly)" : 'Página de precios del proveedor ↗ (no se abrió directamente)')
+            : (LANG === 'en' ? "Provider's site ↗ (rate not verified)" : 'Sitio del proveedor ↗ (tarifa sin verificar)');
       }
       if (fNote && p1.rate_note) fNote.textContent = LANG === 'en' ? p1.rate_note.en : p1.rate_note.es;
 
@@ -1077,6 +1288,50 @@
       mo.observe(fee, { childList: true, characterData: true, subtree: true });
       amt.addEventListener('input', sync);
       sync();
+    })();
+  </script>
+
+  <!-- Navegación de secciones y acordeones: mejora progresiva (sin JavaScript todo el contenido sigue en el HTML) -->
+  <script>
+    (function () {
+      var nav = document.getElementById('secNav'), tgl = document.getElementById('secNavToggle'), list = document.getElementById('secNavList');
+      if (!nav || !tgl || !list) return;
+      var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+      function setOpen(o) { nav.classList.toggle('open', o); tgl.setAttribute('aria-expanded', o ? 'true' : 'false'); }
+      tgl.addEventListener('click', function () { setOpen(!nav.classList.contains('open')); });
+      document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && nav.classList.contains('open')) { setOpen(false); tgl.focus(); } });
+      document.addEventListener('click', function (e) { if (nav.classList.contains('open') && !nav.contains(e.target)) setOpen(false); });
+      function openFor(hash, scroll) {
+        if (!hash || hash.length < 2) return;
+        var el = document.getElementById(decodeURIComponent(hash.slice(1)));
+        if (!el) return;
+        if (el.tagName === 'DETAILS') el.open = true;
+        if (scroll) el.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+      }
+      list.addEventListener('click', function (e) {
+        var a = e.target.closest('a'); if (!a) return;
+        e.preventDefault();
+        var h = a.getAttribute('href');
+        history.replaceState(null, '', h);
+        openFor(h, true);
+        setOpen(false);
+        var t = document.getElementById(h.slice(1)), sm = t && t.querySelector('summary');
+        if (sm) sm.focus({ preventScroll: true });
+      });
+      window.addEventListener('hashchange', function () { openFor(location.hash, true); });
+      if (location.hash) openFor(location.hash, false);
+      if ('IntersectionObserver' in window) {
+        var links = {};
+        list.querySelectorAll('a').forEach(function (a) { links[a.getAttribute('href').slice(1)] = a; });
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (en) {
+            if (!en.isIntersecting) return;
+            Object.keys(links).forEach(function (k) { links[k].classList.remove('is-active'); links[k].removeAttribute('aria-current'); });
+            var a = links[en.target.id]; if (a) { a.classList.add('is-active'); a.setAttribute('aria-current', 'true'); }
+          });
+        }, { rootMargin: '-25% 0px -65% 0px' });
+        Object.keys(links).forEach(function (id) { var el = document.getElementById(id); if (el) io.observe(el); });
+      }
     })();
   </script>
 </body>
