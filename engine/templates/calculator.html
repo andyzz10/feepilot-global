@@ -657,10 +657,10 @@
       <div class="footer-row">
         <div>© 2026 FeePilot Global. Built for High-Performance Financial Transparency.</div>
         <nav class="footer-links">
-          <a href="/legal/about/?lang={{ lang }}">{% if lang == 'en' %}About & Methodology{% else %}Acerca de y Metodología{% endif %}</a>
-          <a href="/legal/privacy/?lang={{ lang }}">{% if lang == 'en' %}Privacy Policy{% else %}Política de Privacidad{% endif %}</a>
-          <a href="/legal/terms/?lang={{ lang }}">{% if lang == 'en' %}Terms of Service{% else %}Términos de Servicio{% endif %}</a>
-          <a href="/sitemap.xml">Sitemap (50+ URLs)</a>
+          <a href="{% if lang == 'es' %}/es{% endif %}/legal/about/">{% if lang == 'en' %}About & Methodology{% else %}Acerca de y Metodología{% endif %}</a>
+          <a href="{% if lang == 'es' %}/es{% endif %}/legal/privacy/">{% if lang == 'en' %}Privacy Policy{% else %}Política de Privacidad{% endif %}</a>
+          <a href="{% if lang == 'es' %}/es{% endif %}/legal/terms/">{% if lang == 'en' %}Terms of Service{% else %}Términos de Servicio{% endif %}</a>
+          <a href="/sitemap.xml">Sitemap ({{ meta.indexed_urls }} URLs)</a>
         </nav>
       </div>
       <div class="wordmark" aria-hidden="true">Fee<span>Pilot</span> Global</div>

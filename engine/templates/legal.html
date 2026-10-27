@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ lang }}">
 <head>
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8913212577365986"
      crossorigin="anonymous"></script>
@@ -7,7 +7,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{{ title }} | FeePilot Global</title>
   <meta name="description" content="{{ content }}">
-  <link rel="canonical" href="{{ request.build_absolute_uri }}">
+  <link rel="canonical" href="{{ site_url }}{{ self_path }}">
+  <link rel="alternate" hreflang="en" href="{{ site_url }}{{ en_path }}">
+  <link rel="alternate" hreflang="es" href="{{ site_url }}{{ es_path }}">
+  <link rel="alternate" hreflang="x-default" href="{{ site_url }}{{ en_path }}">
   <meta name="theme-color" content="#F4F6F1">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%239FE870'/%3E%3Ctext x='50%25' y='54%25' dominant-baseline='middle' text-anchor='middle' font-family='system-ui,sans-serif' font-weight='800' font-size='34' letter-spacing='-2' fill='%230A1A0F'%3EFP%3C/text%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -128,6 +131,11 @@
     .wordmark { margin-top: clamp(40px, 6vw, 72px); padding-bottom: .04em; white-space: nowrap; user-select: none; font-size: clamp(2.25rem, 10.5vw, 9.5rem); font-size: 11.6cqw; font-weight: 700; letter-spacing: -0.06em; line-height: .92; color: var(--dark-ink); }
     .wordmark span { color: var(--accent); }
 
+    .lang-switch { display: inline-flex; gap: 2px; padding: 3px; border: 1px solid var(--ink); border-radius: 999px; }
+    .lang-switch a { font-size: .8125rem; font-weight: 600; letter-spacing: .01em; padding: 6px 14px; border-radius: 999px; transition: background-color .15s, color .15s, transform .15s; }
+    .lang-switch a:hover { background: var(--tone); }
+    .lang-switch a:active { transform: scale(.96); }
+    .lang-switch a.active { background: var(--ink); color: var(--ground); }
     @media (max-width: 960px) {
       .hero-copy, .hero-meta, .doc-col, .side-col { grid-column: 1 / -1; }
       .hero-meta { justify-self: start; text-align: left; }
@@ -135,6 +143,19 @@
     }
     @media (max-width: 640px) {
       .crumb { display: none; }
+      .back-pill { display: none; }
+      .nav-actions { gap: 8px; }
+      .brand { font-size: 1.1rem; }
+    }
+    @media (max-width: 400px) {
+      .theme-toggle #themeLabel { display: none; }
+      .lang-switch a { padding: 6px 11px; }
+    }
+    @media (max-width: 340px) {
+      .brand { font-size: 1rem; }
+      .theme-toggle { padding: 0 9px; }
+      .lang-switch a { padding: 6px 9px; }
+      .trust-row { flex-wrap: wrap; gap: 2px 12px; }
     }
   </style>
 
@@ -160,19 +181,23 @@
 
   <header class="site-header">
     <div class="container nav">
-      <a href="/en/stripe-fee-calculator/" class="brand">Fee<span>Pilot</span> Global</a>
+      <a href="/{{ lang }}/stripe-fee-calculator/" class="brand">Fee<span>Pilot</span> Global</a>
       <nav class="crumb" aria-label="Breadcrumb">
         <span aria-hidden="true">/</span>
-        <span>Legal & Transparency</span>
+        <span>{% if lang == 'es' %}Legal y transparencia{% else %}Legal & Transparency{% endif %}</span>
         <span aria-hidden="true">/</span>
         <span class="crumb-now">{{ title }}</span>
       </nav>
       <div class="nav-actions">
-        <button type="button" class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Dark Mode">
+        <button type="button" class="theme-toggle" onclick="toggleTheme()" aria-label="{% if lang == 'es' %}Cambiar modo oscuro{% else %}Toggle Dark Mode{% endif %}">
           <span id="themeIcon">🌙</span>
-          <span id="themeLabel">Dark</span>
+          <span id="themeLabel">{% if lang == 'es' %}Oscuro{% else %}Dark{% endif %}</span>
         </button>
-        <a href="/en/stripe-fee-calculator/" class="back-pill">← Calculator</a>
+        <div class="lang-switch">
+          <a href="{{ en_path }}" hreflang="en" class="{% if lang == 'en' %}active{% endif %}">EN</a>
+          <a href="{{ es_path }}" hreflang="es" class="{% if lang == 'es' %}active{% endif %}">ES</a>
+        </div>
+        <a href="/{{ lang }}/stripe-fee-calculator/" class="back-pill">{% if lang == 'es' %}← Calculadora{% else %}← Calculator{% endif %}</a>
       </div>
     </div>
   </header>
@@ -180,125 +205,165 @@
   <main class="container">
     <section class="hero">
       <div class="hero-copy">
-        <div class="eyebrow"><i></i> Independent estimator · 2026</div>
+        <div class="eyebrow"><i></i> {% if lang == 'es' %}Estimador independiente · 2026{% else %}Independent estimator · 2026{% endif %}</div>
         <h1>{{ title }}</h1>
         <p class="subtitle">{{ content }}</p>
       </div>
       <div class="hero-meta">
-        <p class="meta-tag">Rates last reviewed</p>
-        <p class="meta-val">{{ meta.review_month|default:"Oct 2026" }}</p>
-        <p class="meta-tag">{{ meta.verified_count|default:"4" }} of {{ meta.total_count|default:"25" }} platforms checked against official sources</p>
+        <p class="meta-tag">{% if lang == 'es' %}Tarifas revisadas por última vez{% else %}Rates last reviewed{% endif %}</p>
+        <p class="meta-val">{% if lang == 'es' %}{{ meta.review_month_es }}{% else %}{{ meta.review_month }}{% endif %}</p>
+        <p class="meta-tag">{% if lang == 'es' %}{{ meta.verified_count }} de {{ meta.total_count }} plataformas contrastadas con fuentes oficiales{% else %}{{ meta.verified_count }} of {{ meta.total_count }} platforms checked against official sources{% endif %}</p>
       </div>
     </section>
 
-    <!-- Pestañas de navegación para cambiar entre About, Privacy, Terms y Sitemap -->
-    <nav class="legal-tabs" aria-label="Legal Navigation">
-      <a href="/legal/about/" class="tab-pill {% if 'about' in request.path %}active{% endif %}">About FeePilot</a>
-      <a href="/legal/privacy/" class="tab-pill {% if 'privacy' in request.path %}active{% endif %}">Privacy Policy</a>
-      <a href="/legal/terms/" class="tab-pill {% if 'terms' in request.path %}active{% endif %}">Terms of Service</a>
-      <a href="/sitemap.xml" class="tab-pill">Sitemap (50+ URLs) ↗</a>
+    <nav class="legal-tabs" aria-label="{% if lang == 'es' %}Navegación legal{% else %}Legal Navigation{% endif %}">
+      <a href="{{ prefix }}/legal/about/" class="tab-pill {% if page == 'about' %}active{% endif %}">{% if lang == 'es' %}Acerca de FeePilot{% else %}About FeePilot{% endif %}</a>
+      <a href="{{ prefix }}/legal/privacy/" class="tab-pill {% if page == 'privacy' %}active{% endif %}">{% if lang == 'es' %}Política de privacidad{% else %}Privacy Policy{% endif %}</a>
+      <a href="{{ prefix }}/legal/terms/" class="tab-pill {% if page == 'terms' %}active{% endif %}">{% if lang == 'es' %}Términos del servicio{% else %}Terms of Service{% endif %}</a>
+      <a href="/sitemap.xml" class="tab-pill">Sitemap ({{ meta.indexed_urls }} URLs) ↗</a>
     </nav>
 
     <section class="legal-grid">
       <div class="doc-col">
 
-        {% if 'privacy' in request.path %}
-          <!-- CONTENIDO EXTENDIDO DE PRIVACY POLICY -->
+        {% if page == 'privacy' %}
           <article class="doc-card">
-            <span class="doc-num">SECTION 01</span>
-            <h2>100% Client-Side Financial Calculations</h2>
+            <span class="doc-num">{% if lang == 'es' %}SECCIÓN 01{% else %}SECTION 01{% endif %}</span>
+            <h2>{% if lang == 'es' %}Cálculos financieros 100% en tu navegador{% else %}100% Client-Side Financial Calculations{% endif %}</h2>
+            {% if lang == 'es' %}
+            <p>En FeePilot Global, tu privacidad financiera forma parte de la arquitectura. Cada simulación de comisiones, cálculo de factura inversa y comparación entre plataformas se ejecuta localmente en tu navegador con JavaScript.</p>
+            <ul class="doc-list">
+              <li><span>🔒 <b>Sin almacenamiento de transacciones:</b> Los montos y porcentajes que escribes se calculan en tu navegador y no se envían, almacenan ni registran en nuestros servidores. Las herramientas de analítica (véase la Sección 03) se ejecutan en la misma página; el campo del monto principal está enmascarado en las grabaciones de sesión de Microsoft Clarity.</span></li>
+              <li><span>🛡️ <b>No se requiere cuenta:</b> Puedes usar las {{ meta.total_count }} calculadoras y sus comparativas de forma anónima, sin registrar correo ni contraseña.</span></li>
+            </ul>
+            {% else %}
             <p>At FeePilot Global, your financial privacy is engineered into our architecture. Every fee simulation, reverse invoice calculation, and cross-border comparison is executed locally inside your browser using JavaScript.</p>
             <ul class="doc-list">
               <li><span>🔒 <b>No Transaction Storage:</b> The dollar amounts and percentages you enter are calculated in your browser and are not sent to, stored in, or logged by our own servers. Analytics tools (see Section 03) run in the same page; the main amount field is masked in Microsoft Clarity session recordings.</span></li>
-              <li><span>🛡️ <b>No Account Required:</b> You can access all 50+ calculators and side-by-side comparisons anonymously without registering an email or password.</span></li>
+              <li><span>🛡️ <b>No Account Required:</b> You can use all {{ meta.total_count }} calculators and their side-by-side comparisons anonymously, without registering an email or password.</span></li>
             </ul>
+            {% endif %}
           </article>
 
           <article class="doc-card">
-            <span class="doc-num">SECTION 02</span>
-            <h2>Cookies, Google AdSense & Advertising Partners</h2>
+            <span class="doc-num">{% if lang == 'es' %}SECCIÓN 02{% else %}SECTION 02{% endif %}</span>
+            <h2>{% if lang == 'es' %}Cookies, Google AdSense y socios publicitarios{% else %}Cookies, Google AdSense & Advertising Partners{% endif %}</h2>
+            {% if lang == 'es' %}
+            <p>Proveedores externos, incluido Google AdSense, usan cookies para mostrar anuncios según tus visitas anteriores a este sitio u otros sitios de Internet.</p>
+            <p>El uso de cookies publicitarias por parte de Google permite que Google y sus socios muestren anuncios relevantes según tu visita a FeePilot Global y a otros sitios. Puedes desactivar la publicidad personalizada en cualquier momento en <a href="https://myadcenter.google.com/" target="_blank" rel="noopener" style="text-decoration: underline; font-weight: 600;">Configuración de anuncios de Google</a>. También puedes gestionar o borrar las cookies desde los ajustes de tu navegador.</p>
+            {% else %}
             <p>Third-party vendors, including Google AdSense, use cookies to serve ads based on a user's prior visits to this website or other websites on the internet.</p>
-            <p>Google's use of advertising cookies enables it and its partners to serve relevant advertisements to users based on their visit to FeePilot Global and other sites on the Internet. Users may opt out of personalized advertising at any time by visiting <a href="https://myadcenter.google.com/" target="_blank" rel="noopener" style="text-decoration: underline; font-weight: 600;">Google Ads Settings</a>.</p>
+            <p>Google's use of advertising cookies enables it and its partners to serve relevant advertisements to users based on their visit to FeePilot Global and other sites on the Internet. Users may opt out of personalized advertising at any time by visiting <a href="https://myadcenter.google.com/" target="_blank" rel="noopener" style="text-decoration: underline; font-weight: 600;">Google Ads Settings</a>. You can also manage or delete cookies in your browser settings.</p>
+            {% endif %}
           </article>
 
           <article class="doc-card">
-            <span class="doc-num">SECTION 03</span>
-            <h2>Analytics & User Experience Telemetry</h2>
+            <span class="doc-num">{% if lang == 'es' %}SECCIÓN 03{% else %}SECTION 03{% endif %}</span>
+            <h2>{% if lang == 'es' %}Analítica y experiencia de uso{% else %}Analytics & User Experience Telemetry{% endif %}</h2>
+            {% if lang == 'es' %}
+            <p>Para mejorar nuestras calculadoras y la precisión de las tarifas, usamos analítica de <strong>Google Analytics 4 (GA4)</strong> y <strong>Microsoft Clarity</strong>. Estas herramientas usan cookies o identificadores similares para medir el tráfico, el rendimiento de las páginas, la compatibilidad de los dispositivos y los patrones generales de interacción. Microsoft Clarity puede registrar interacciones anonimizadas con la página (clics, desplazamiento) para ayudarnos a detectar problemas de uso; el campo del monto está enmascarado. Si te encuentras en el Espacio Económico Europeo, el Reino Unido u otra región que exija consentimiento para las cookies de analítica y publicidad, debería pedírtelo antes de instalarlas.</p>
+            {% else %}
             <p>To continuously improve our calculators and regional fee accuracy, we use analytics through <strong>Google Analytics 4 (GA4)</strong> and <strong>Microsoft Clarity</strong>. These tools use cookies or similar identifiers to measure traffic, page performance, device compatibility, and general interaction patterns. Microsoft Clarity may record anonymised page interactions (clicks, scrolling) to help us find usability problems; the amount field is masked. If you are in the European Economic Area, the United Kingdom or another region that requires consent for analytics and advertising cookies, you should be asked for it before they are set.</p>
+            {% endif %}
           </article>
 
-        {% elif 'terms' in request.path %}
-          <!-- CONTENIDO EXTENDIDO DE TERMS OF SERVICE -->
+        {% elif page == 'terms' %}
           <article class="doc-card">
-            <span class="doc-num">CLAUSE 01</span>
-            <h2>Informational Purpose & No Financial Advice</h2>
+            <span class="doc-num">{% if lang == 'es' %}CLÁUSULA 01{% else %}CLAUSE 01{% endif %}</span>
+            <h2>{% if lang == 'es' %}Finalidad informativa y ausencia de asesoría financiera{% else %}Informational Purpose & No Financial Advice{% endif %}</h2>
+            {% if lang == 'es' %}
+            <p>FeePilot Global ofrece calculadoras automáticas de comisiones, tablas de tarifas y comparativas de plataformas únicamente con fines informativos y de estimación educativa. Nada en este sitio constituye asesoría contable, fiscal, legal ni financiera certificada.</p>
+            <ul class="doc-list">
+              <li><span>📊 <b>Tarifas variables:</b> Los procesadores de pago (como Stripe, PayPal, Wise, Payoneer y Shopify) pueden modificar sus tarifas según el volumen del comercio, el país de constitución o las reglas de las redes de tarjetas.</span></li>
+              <li><span>✅ <b>Deber de verificación:</b> Confirma siempre la comisión final directamente en el panel oficial de tu plataforma antes de realizar operaciones comerciales.</span></li>
+            </ul>
+            {% else %}
             <p>FeePilot Global provides automated fee calculators, rate tables, and platform comparisons strictly for informational and educational estimation purposes. Nothing on this platform constitutes certified accounting, tax, legal, or financial advice.</p>
             <ul class="doc-list">
               <li><span>📊 <b>Dynamic Merchant Rates:</b> Payment processors (such as Stripe, PayPal, Wise, Payoneer, and Shopify) may adjust their fee structures based on merchant volume, country of incorporation, or card network rules.</span></li>
               <li><span>✅ <b>Verification Duty:</b> Users should always confirm final settlement fees directly within their official merchant dashboard prior to executing commercial transactions.</span></li>
             </ul>
+            {% endif %}
           </article>
 
           <article class="doc-card">
-            <span class="doc-num">CLAUSE 02</span>
-            <h2>Trademark & Platform Independence</h2>
+            <span class="doc-num">{% if lang == 'es' %}CLÁUSULA 02{% else %}CLAUSE 02{% endif %}</span>
+            <h2>{% if lang == 'es' %}Marcas e independencia de las plataformas{% else %}Trademark & Platform Independence{% endif %}</h2>
+            {% if lang == 'es' %}
+            <p>FeePilot Global es un comparador financiero independiente. Todos los nombres de productos, logotipos y marcas de terceros (incluidos Stripe, PayPal, Wise, Payoneer, Upwork, Fiverr, Shopify, Square, Deel y Gumroad) pertenecen a sus respectivos propietarios y se usan únicamente para identificarlos en la comparación.</p>
+            {% else %}
             <p>FeePilot Global is an independent financial comparison engine. All third-party product names, logos, and brands (including Stripe, PayPal, Wise, Payoneer, Upwork, Fiverr, Shopify, Square, Deel, and Gumroad) are property of their respective owners and are used strictly for comparative identification.</p>
+            {% endif %}
           </article>
 
           <article class="doc-card">
-            <span class="doc-num">CLAUSE 03</span>
-            <h2>Affiliate Disclosure & Monetization</h2>
-            <p>Some outbound links on FeePilot Global are referral or affiliate links. When you click to open an official account through our comparison banner, we may receive a referral commission at zero additional cost to you—and in many cases, unlocking fee discounts or free transfer credits for your account.</p>
+            <span class="doc-num">{% if lang == 'es' %}CLÁUSULA 03{% else %}CLAUSE 03{% endif %}</span>
+            <h2>{% if lang == 'es' %}Divulgación de afiliados y monetización{% else %}Affiliate Disclosure & Monetization{% endif %}</h2>
+            {% if lang == 'es' %}
+            <p>Algunos enlaces salientes de FeePilot Global son enlaces de referido o de afiliado. Si haces clic para abrir una cuenta oficial desde nuestro banner de comparación, podemos recibir una comisión de referido sin ningún costo adicional para ti; en algunos casos, el enlace puede incluso darte descuentos o créditos de transferencia. Los anuncios que se muestran en el sitio provienen de Google AdSense.</p>
+            {% else %}
+            <p>Some outbound links on FeePilot Global are referral or affiliate links. When you click to open an official account through our comparison banner, we may receive a referral commission at zero additional cost to you; in some cases the link may also unlock fee discounts or free transfer credits for your account. Ads shown on the site are served by Google AdSense.</p>
+            {% endif %}
           </article>
 
         {% else %}
-          <!-- CONTENIDO EXTENDIDO DE ABOUT US -->
           <article class="doc-card">
-            <span class="doc-num">OUR MISSION</span>
-            <h2>Bringing Radical Transparency to Payment Processing Fees</h2>
-            <p>Digital businesses, SaaS founders, e-commerce sellers, and global freelancers lose billions of dollars every year to hidden payment processing fees, cross-border FX markups, and fixed micro-transaction surcharges.</p>
-            <p>FeePilot Global was built in 2026 to give creators and merchants an instant, side-by-side mathematical engine to calculate exact net payouts and reverse-invoice amounts across 25+ global platforms.</p>
+            <span class="doc-num">{% if lang == 'es' %}NUESTRA MISIÓN{% else %}OUR MISSION{% endif %}</span>
+            <h2>{% if lang == 'es' %}Más transparencia en las comisiones de pago{% else %}Bringing Radical Transparency to Payment Processing Fees{% endif %}</h2>
+            {% if lang == 'es' %}
+            <p>Los negocios digitales, fundadores de SaaS, vendedores de comercio electrónico y freelancers de todo el mundo pierden mucho dinero cada año en comisiones de procesamiento poco claras, recargos por cambio de divisa y cargos fijos por transacción.</p>
+            <p>FeePilot Global nació en 2026 para ofrecer a creadores y comerciantes una herramienta de cálculo inmediata que compara el neto exacto y el monto a facturar entre más de {{ meta.total_count }} plataformas globales.</p>
+            {% else %}
+            <p>Digital businesses, SaaS founders, e-commerce sellers, and global freelancers lose a great deal of money every year to hidden payment processing fees, cross-border FX markups, and fixed micro-transaction surcharges.</p>
+            <p>FeePilot Global was built in 2026 to give creators and merchants an instant, side-by-side calculation engine to work out exact net payouts and reverse-invoice amounts across {{ meta.total_count }} global platforms.</p>
+            {% endif %}
           </article>
 
           <article class="doc-card">
-            <span class="doc-num">METHODOLOGY</span>
-            <h2>How Our 50+ Calculators Work</h2>
+            <span class="doc-num">{% if lang == 'es' %}METODOLOGÍA{% else %}METHODOLOGY{% endif %}</span>
+            <h2>{% if lang == 'es' %}Cómo funcionan nuestras {{ meta.total_count }} calculadoras{% else %}How Our {{ meta.total_count }} Calculators Work{% endif %}</h2>
+            {% if lang == 'es' %}
+            <p>La tarifa de cada plataforma sale de sus precios publicados. Las tarifas contrastadas con una fuente oficial llevan la etiqueta "revisada" con el mes; todas las demás se muestran como <strong>estimaciones</strong> y debes confirmarlas en el sitio de la plataforma antes de fiarte de ellas. Cuando una plataforma tiene varios planes o regiones (por ejemplo, Square Free frente a Plus, o Stripe en EE. UU., Reino Unido y el EEE), puedes elegir el que te corresponde.</p>
+            <ul class="doc-list">
+              <li><span>🌍 <b>Planes, regiones y recargos:</b> Las tarifas de los planes y regiones que hemos revisado se pueden elegir por separado. Los recargos por tarjeta internacional y por conversión de divisa se suman aparte, porque las plataformas los cobran por separado. Cualquier otro caso se puede modelar con la opción de tarifa personalizada.</span></li>
+              <li><span>⚡ <b>Fórmula inversa:</b> Calcula el monto bruto exacto que debes facturar (`(Monto + Cargo fijo) ÷ (1 − % de comisión)`) para recibir el neto que buscas sin absorber la comisión.</span></li>
+            </ul>
+            {% else %}
             <p>Each platform's rate comes from its published pricing. Rates that were checked against an official source carry a "checked" label with the month; all other rates are shown as <strong>estimates</strong> and should be confirmed on the platform's own site before you rely on them. Where a platform has several plans or regions (for example Square Free vs Plus, or Stripe in the US, UK and EEA), you can pick the one that applies to you.</p>
             <ul class="doc-list">
               <li><span>🌍 <b>Plans, Regions & Surcharges:</b> Rates for the plans and regions we have checked can be selected individually. International-card and currency-conversion surcharges are added separately, because platforms charge them separately. Anything else can be modelled with the custom-rate option.</span></li>
-              <li><span>⚡ <b>Reverse Fee Formula:</b> Calculates the exact gross amount you must invoice a client (`(Amount + Fixed Fee) ÷ (1 − Fee %)`) so that you receive 100% of your target net payout without absorbing the fee.</span></li>
+              <li><span>⚡ <b>Reverse Fee Formula:</b> Calculates the exact gross amount you must invoice a client (`(Amount + Fixed Fee) ÷ (1 − Fee %)`) so that you receive your target net payout without absorbing the fee.</span></li>
             </ul>
+            {% endif %}
           </article>
         {% endif %}
 
       </div>
 
-      <!-- Columna derecha oscura a juego con el panel de resultados de tu calculadora -->
-      <!-- Columna derecha oscura con Fuentes Verificadas y Contacto para AdSense -->
       <aside class="side-col">
         <div class="trust-card">
-          <h3>FeePilot Audit & Contact</h3>
-          <p>Every rate shows whether it was checked against an official source or is an estimate. Analytics are disclosed in the Privacy Policy.</p>
+          <h3>{% if lang == 'es' %}Auditoría y contacto de FeePilot{% else %}FeePilot Audit & Contact{% endif %}</h3>
+          <p>{% if lang == 'es' %}Cada tarifa indica si fue contrastada con una fuente oficial o si es una estimación. La analítica se explica en la Política de privacidad.{% else %}Every rate shows whether it was checked against an official source or is an estimate. Analytics are disclosed in the Privacy Policy.{% endif %}</p>
           <div class="trust-kv">
             <div class="trust-row">
-              <span>Last Rate Review</span>
-              <span>{{ meta.review_month|default:"Oct 2026" }}</span>
+              <span>{% if lang == 'es' %}Última revisión de tarifas{% else %}Last Rate Review{% endif %}</span>
+              <span>{% if lang == 'es' %}{{ meta.review_month_es }}{% else %}{{ meta.review_month }}{% endif %}</span>
             </div>
             <div class="trust-row">
-              <span>Indexed Calculators</span>
-              <span>50+ URLs</span>
+              <span>{% if lang == 'es' %}Páginas en el sitemap{% else %}Pages in Sitemap{% endif %}</span>
+              <span>{{ meta.indexed_urls }} URLs</span>
             </div>
             <div class="trust-row">
-              <span>Checked vs Estimated</span>
-              <span>{{ meta.verified_count|default:"4" }} checked · {{ meta.total_count|default:"25" }} total</span>
+              <span>{% if lang == 'es' %}Revisadas / estimadas{% else %}Checked vs Estimated{% endif %}</span>
+              <span>{% if lang == 'es' %}{{ meta.verified_count }} revisadas · {{ meta.total_count }} en total{% else %}{{ meta.verified_count }} checked · {{ meta.total_count }} total{% endif %}</span>
             </div>
             <div class="trust-row">
-              <span>Editorial Contact</span>
-              <span>supportfeepilotglobal@gmail.com</span>
+              <span>{% if lang == 'es' %}Contacto editorial{% else %}Editorial Contact{% endif %}</span>
+              <span>support@feepilotglobal.com</span>
             </div>
           </div>
-          <a href="/en/stripe-fee-calculator/" class="cta-btn">
-            Launch Live Calculator →
+          <a href="/{{ lang }}/stripe-fee-calculator/" class="cta-btn">
+            {% if lang == 'es' %}Abrir la calculadora →{% else %}Launch Live Calculator →{% endif %}
           </a>
         </div>
       </aside>
@@ -308,12 +373,12 @@
   <footer class="site-footer">
     <div class="container">
       <div class="footer-row">
-        <div>© 2026 FeePilot Global. Built for High-Performance Financial Transparency.</div>
+        <div>© 2026 FeePilot Global. {% if lang == 'es' %}Creado para la transparencia financiera.{% else %}Built for High-Performance Financial Transparency.{% endif %}</div>
         <nav class="footer-links">
-          <a href="/legal/about/">About</a>
-          <a href="/legal/privacy/">Privacy Policy</a>
-          <a href="/legal/terms/">Terms of Service</a>
-          <a href="/sitemap.xml">Sitemap (50+ URLs)</a>
+          <a href="{{ prefix }}/legal/about/">{% if lang == 'es' %}Acerca de{% else %}About{% endif %}</a>
+          <a href="{{ prefix }}/legal/privacy/">{% if lang == 'es' %}Política de privacidad{% else %}Privacy Policy{% endif %}</a>
+          <a href="{{ prefix }}/legal/terms/">{% if lang == 'es' %}Términos del servicio{% else %}Terms of Service{% endif %}</a>
+          <a href="/sitemap.xml">Sitemap ({{ meta.indexed_urls }} URLs)</a>
         </nav>
       </div>
       <div class="wordmark" aria-hidden="true">Fee<span>Pilot</span> Global</div>
@@ -327,7 +392,7 @@
       const label = document.getElementById('themeLabel');
       if (icon && label) {
         icon.textContent = isDark ? '☀️' : '🌙';
-        label.textContent = isDark ? 'Light' : 'Dark';
+        label.textContent = isDark ? ('{{ lang }}' === 'es' ? 'Claro' : 'Light') : ('{{ lang }}' === 'es' ? 'Oscuro' : 'Dark');
       }
     }
 
@@ -343,17 +408,6 @@
       syncThemeBtn();
     }
     syncThemeBtn();
-    (function syncLegalLang() {
-      const params = new URLSearchParams(window.location.search);
-      const lang = params.get('lang') === 'es' ? 'es' : 'en';
-      document.querySelectorAll('a[href="/en/stripe-fee-calculator/"]').forEach(a => {
-        a.href = `/${lang}/stripe-fee-calculator/`;
-        if (a.classList.contains('back-pill') && lang === 'es') a.textContent = '← Calculadora';
-      });
-      document.querySelectorAll('.legal-tabs a[href^="/legal/"], .footer-links a[href^="/legal/"]').forEach(a => {
-        a.href = `${a.getAttribute('href').split('?')[0]}?lang=${lang}`;
-      });
-    })();
   </script>
 </body>
 </html>

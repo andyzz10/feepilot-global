@@ -1,7 +1,7 @@
 import json
 from pathlib import Path
 from itertools import combinations
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import Http404, HttpResponse
 
 DATA_PATH = Path(__file__).resolve().parent / 'data' / 'platforms.json'
@@ -16,10 +16,21 @@ def load_data():
     with open(DATA_PATH, 'r', encoding='utf-8') as f:
         return json.load(f)['platforms']
 
+ES_MONTHS = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic']
+
 def load_meta():
-    """Fecha de revisión y recuento de tarifas verificadas (viene de seed_platforms.py)."""
+    """Fecha de revisión, recuentos y nº de URLs en el sitemap (viene de seed_platforms.py)."""
     with open(DATA_PATH, 'r', encoding='utf-8') as f:
-        return json.load(f).get('meta', {})
+        meta = json.load(f).get('meta', {})
+    total = meta.get('total_count', 0)
+    pairs = total * (total - 1) // 2
+    meta['indexed_urls'] = 2 * total + (2 * pairs if INDEX_COMPARISONS else 0)
+    try:
+        year, month, _ = meta.get('last_reviewed', '').split('-')
+        meta['review_month_es'] = f"{ES_MONTHS[int(month) - 1]} {year}"
+    except (ValueError, IndexError):
+        meta['review_month_es'] = meta.get('review_month', '')
+    return meta
 
 def compute_row(amount, p):
     pct = p['percent_fee'] / 100.0
@@ -100,31 +111,66 @@ def calculator_view(request, lang='en', slug='stripe'):
     }
     return render(request, 'calculator.html', context)
 
-def legal_view(request, page='privacy'):
-    pages = {
-        'privacy': (
-            'Privacy Policy - FeePilot',
-            'Fee calculations run locally in your browser: the amounts you type are not sent to our servers. '
-            'We do use Google Analytics 4 and Microsoft Clarity to understand how the site is used (the amount field is masked in Clarity session recordings), '
-            'and advertising partners such as Google AdSense may use cookies to serve ads based on prior visits to this or other websites. '
-            'You can opt out of personalized advertising in Google Ads Settings.'
-        ),
-        'terms': (
-            'Terms of Service & Disclaimer - FeePilot',
-            'FeePilot provides payment-processing fee estimates for informational and educational purposes only. '
-            'Rates change often and depend on your country, plan, card type and currency, so always confirm the final fee in your own merchant dashboard.'
-        ),
-        'about': (
-            'About FeePilot Global',
-            'FeePilot is an independent fee-comparison utility for freelancers, e-commerce merchants and SaaS founders. '
-            'Each rate is labelled as checked against an official source (with the month) or as an estimate, so you can see how much to trust it.'
-        )
-    }
-    if page not in pages:
+LEGAL_PAGES = {
+    'privacy': {
+        'en': ('Privacy Policy - FeePilot',
+               'Fee calculations run locally in your browser: the amounts you type are not sent to our servers. '
+               'We do use Google Analytics 4 and Microsoft Clarity to understand how the site is used (the amount field is masked in Clarity session recordings), '
+               'and advertising partners such as Google AdSense may use cookies to serve ads based on prior visits to this or other websites. '
+               'You can opt out of personalized advertising in Google Ads Settings.'),
+        'es': ('Política de privacidad - FeePilot',
+               'Los cálculos de comisiones se ejecutan en tu navegador: los montos que escribes no se envían a nuestros servidores. '
+               'Usamos Google Analytics 4 y Microsoft Clarity para entender cómo se usa el sitio (el campo del monto está enmascarado en las grabaciones de Clarity), '
+               'y socios publicitarios como Google AdSense pueden usar cookies para mostrar anuncios según visitas anteriores a este u otros sitios. '
+               'Puedes desactivar la publicidad personalizada en la Configuración de anuncios de Google.'),
+    },
+    'terms': {
+        'en': ('Terms of Service & Disclaimer - FeePilot',
+               'FeePilot provides payment-processing fee estimates for informational and educational purposes only. '
+               'Rates change often and depend on your country, plan, card type and currency, so always confirm the final fee in your own merchant dashboard.'),
+        'es': ('Términos del servicio y descargo de responsabilidad - FeePilot',
+               'FeePilot ofrece estimaciones de comisiones de procesamiento de pagos solo con fines informativos y educativos. '
+               'Las tarifas cambian con frecuencia y dependen de tu país, plan, tipo de tarjeta y moneda; confirma siempre la comisión final en el panel de tu plataforma.'),
+    },
+    'about': {
+        'en': ('About FeePilot Global',
+               'FeePilot is an independent fee-comparison utility for freelancers, e-commerce merchants and SaaS founders. '
+               'Each rate is labelled as checked against an official source (with the month) or as an estimate, so you can see how much to trust it.'),
+        'es': ('Acerca de FeePilot Global',
+               'FeePilot es una herramienta independiente para comparar comisiones, pensada para freelancers, comercios electrónicos y fundadores de SaaS. '
+               'Cada tarifa indica si fue contrastada con una fuente oficial (con el mes) o si es una estimación, para que sepas cuánto fiarte.'),
+    },
+}
+
+def legal_view(request, page='privacy', lang=None):
+    """Páginas legales renderizadas en el servidor en inglés (/legal/x/) y español (/es/legal/x/)."""
+    if page not in LEGAL_PAGES:
         raise Http404()
-    title, body = pages[page]
-    # `content` es la variable que usa legal.html; `body` se conserva por compatibilidad
-    return render(request, 'legal.html', {'title': title, 'body': body, 'content': body, 'meta': load_meta()})
+    if lang is None:
+        # Enlaces antiguos: /legal/privacy/?lang=es  ->  /es/legal/privacy/
+        if request.GET.get('lang') == 'es':
+            return redirect(f'/es/legal/{page}/', permanent=True)
+        lang = 'en'
+    if lang == 'en' and request.path.startswith('/en/'):
+        return redirect(f'/legal/{page}/', permanent=True)
+    if lang not in ('en', 'es'):
+        raise Http404()
+
+    title, body = LEGAL_PAGES[page][lang]
+    en_path, es_path = f'/legal/{page}/', f'/es/legal/{page}/'
+    return render(request, 'legal.html', {
+        'lang': lang,
+        'page': page,
+        'title': title,
+        'content': body,
+        'body': body,
+        'meta': load_meta(),
+        'prefix': '/es' if lang == 'es' else '',
+        'site_url': request.build_absolute_uri('/')[:-1],
+        'en_path': en_path,
+        'es_path': es_path,
+        'self_path': es_path if lang == 'es' else en_path,
+    })
 
 def ads_txt(request):
     """Archivo ads.txt de Google AdSense (tu ID de editor)"""
