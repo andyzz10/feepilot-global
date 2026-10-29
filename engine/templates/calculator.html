@@ -8,7 +8,6 @@
   <title>{{ title }}</title>
   <meta name="description" content="{{ desc }}">
   <link rel="canonical" href="{{ request.scheme }}://{{ request.get_host }}{{ request.path }}">
-  {% if noindex %}<meta name="robots" content="noindex, follow">{% endif %}
   {% if is_comparison %}
   <link rel="alternate" hreflang="en" href="{{ request.scheme }}://{{ request.get_host }}/en/{{ slug }}-fees/">
   <link rel="alternate" hreflang="es" href="{{ request.scheme }}://{{ request.get_host }}/es/{{ slug }}-fees/">
