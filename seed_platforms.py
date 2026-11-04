@@ -26,21 +26,21 @@ RAW_PLATFORMS = [
     ("lemonsqueezy", "Lemon Squeezy", "SaaS & Merchant of Record", 5.0, 0.50, 1.5, "https://lemonsqueezy.com"),
     ("paddle", "Paddle", "SaaS & Merchant of Record", 5.0, 0.50, 0.0, "https://paddle.com"),
     ("gumroad", "Gumroad", "Creator Economy", 10.0, 0.50, 0.0, "https://gumroad.com"),
-    ("patreon", "Patreon", "Creator Economy", 8.0, 0.30, 1.0, "https://patreon.com"),
+    ("patreon", "Patreon", "Creator Economy", 12.9, 0.30, 0.0, "https://patreon.com"),
     ("upwork", "Upwork", "Freelance Marketplace", 10.0, 0.00, 0.0, "https://upwork.com"),
     ("fiverr", "Fiverr", "Freelance Marketplace", 20.0, 0.00, 0.0, "https://fiverr.com"),
-    ("etsy", "Etsy Payments", "E-Commerce", 6.5, 0.25, 1.5, "https://etsy.com"),
-    ("ebay", "eBay Managed Payments", "E-Commerce", 13.25, 0.30, 1.65, "https://ebay.com"),
+    ("etsy", "Etsy", "E-Commerce", 9.5, 0.25, 0.0, "https://etsy.com"),
+    ("ebay", "eBay Managed Payments", "E-Commerce", 13.25, 0.40, 1.65, "https://ebay.com"),
     ("amazon", "Amazon Seller Referral", "E-Commerce", 15.0, 0.00, 0.0, "https://sell.amazon.com"),
-    ("tiktokshop", "TikTok Shop", "E-Commerce", 6.0, 0.30, 0.0, "https://seller.tiktok.com"),
+    ("tiktokshop", "TikTok Shop", "E-Commerce", 6.0, 0.00, 0.0, "https://seller.tiktok.com"),
     ("revolut", "Revolut Business", "Global Transfers", 1.0, 0.20, 0.5, "https://revolut.com"),
     ("mercury", "Mercury Wire & ACH", "Business Banking", 0.0, 0.00, 1.0, "https://mercury.com"),
     ("deel", "Deel Contractor", "Global Payroll & Freelance", 1.0, 0.00, 0.5, "https://deel.com"),
     ("skrill", "Skrill", "Payment Processor", 2.99, 0.00, 1.99, "https://skrill.com"),
     ("venmo", "Venmo Business", "Payment Processor", 1.9, 0.10, 0.0, "https://venmo.com"),
     ("cashapp", "Cash App Business", "Payment Processor", 2.75, 0.00, 0.0, "https://cash.app"),
-    ("kofi", "Ko-fi", "Creator Economy", 5.0, 0.30, 1.0, "https://ko-fi.com"),
-    ("substack", "Substack", "Creator Economy", 10.0, 0.30, 1.5, "https://substack.com"),
+    ("kofi", "Ko-fi", "Creator Economy", 7.9, 0.30, 0.0, "https://ko-fi.com"),
+    ("substack", "Substack", "Creator Economy", 12.9, 0.30, 0.0, "https://substack.com"),
     ("coinbase", "Coinbase Commerce", "Crypto Payments", 1.0, 0.00, 0.0, "https://commerce.coinbase.com"),
 ]
 
@@ -49,7 +49,7 @@ RAW_PLATFORMS = [
 # fx_extra_percent → recargo SEPARADO por conversión de divisa (distinto al de tarjeta internacional)
 # rate_options     → planes / regiones con tarifa propia (la primera = tarifa por defecto de la ficha)
 # limits / faqs    → texto específico de la plataforma (en/es); solo hechos comprobados
-CHECKED = {
+DETAILS = {
     "stripe": {
         "level": "cross-checked",
         "source_url": "https://stripe.com/pricing",
@@ -168,10 +168,287 @@ CHECKED = {
              "Sí. Para tarjetas estándar online en EE. UU., Basic es 2,9% + $0,30, Grow 2,7% + $0,30 y Advanced 2,5% + $0,30. Elige tu plan en el selector Plan / Región."),
         ],
     },
+    # ───────── Revisión de octubre de 2026: Patreon, Etsy, Gumroad (y eBay como estimación mejorada) ─────────
+    "patreon": {
+        "level": "verified",
+        "source_url": "https://support.patreon.com/hc/articles/11111747095181",
+        "fx_extra_percent": 2.5,
+        "rate_options": [
+            {"id": "std",   "label_en": "New creators · pledges over $3 (10% platform + 2.9% + $0.30)", "label_es": "Creadores nuevos · aportes de más de $3 (10% plataforma + 2,9% + $0,30)", "percent_fee": 12.9, "fixed_fee": 0.30, "currency": "USD"},
+            {"id": "small", "label_en": "Pledges of $3 or less (10% platform + 5% + $0.10)", "label_es": "Aportes de $3 o menos (10% plataforma + 5% + $0,10)", "percent_fee": 15.0, "fixed_fee": 0.10, "currency": "USD"},
+        ],
+        "note_en": "Creators who published their page after August 4, 2025 pay a 10% platform fee (Patreon's creator fees page), plus card processing of 2.9% + $0.30 on pledges over $3. Pledges of $3 or less use a higher processing rate (5% + $0.10 according to independent sources). The calculator combines both into 12.9% + $0.30. Currency conversion adds about 2.5%.",
+        "note_es": "Los creadores que publicaron su página después del 4 de agosto de 2025 pagan una comisión de plataforma del 10% (página de comisiones de Patreon), más el procesamiento de tarjeta de 2,9% + $0,30 en aportes de más de $3. Los aportes de $3 o menos usan una tarifa de procesamiento mayor (5% + $0,10 según fuentes independientes). La calculadora suma ambos en 12,9% + $0,30. La conversión de divisa añade cerca de 2,5%.",
+        "limits_en": [
+            "Creators who published before August 4, 2025 may be on a legacy plan with a different platform fee, and unpublishing the page moves you to the 10% plan.",
+            "Payout fees and taxes on creator fees are not included. The 2.5% currency-conversion figure and the rate for pledges of $3 or less come from independent sources, not from Patreon's page.",
+        ],
+        "limits_es": [
+            "Los creadores que publicaron antes del 4 de agosto de 2025 pueden tener un plan antiguo con otra comisión de plataforma, y despublicar la página te pasa al plan del 10%.",
+            "No se incluyen las comisiones de retiro ni los impuestos sobre las comisiones. La cifra de 2,5% por conversión de divisa y la tarifa de aportes de $3 o menos provienen de fuentes independientes, no de la página de Patreon.",
+        ],
+        "faqs_en": [
+            ("What does Patreon take from a new creator?",
+             "A 10% platform fee plus card processing. On a US card pledge over $3 that is 10% + 2.9% + $0.30 = 12.9% + $0.30, so on $10 Patreon and the processor keep $1.59 and you receive $8.41."),
+            ("Do I pay less if I joined Patreon before August 2025?",
+             "Possibly. Creators who published before August 4, 2025 may remain on a legacy plan with a different platform fee, but unpublishing your page moves you to the standard 10% plan. Check your own account settings."),
+        ],
+        "faqs_es": [
+            ("¿Cuánto retiene Patreon a un creador nuevo?",
+             "Una comisión de plataforma del 10% más el procesamiento de la tarjeta. En un aporte de más de $3 con tarjeta de EE. UU. son 10% + 2,9% + $0,30 = 12,9% + $0,30, así que sobre $10 se quedan $1,59 y recibes $8,41."),
+            ("¿Pago menos si me uní a Patreon antes de agosto de 2025?",
+             "Posiblemente. Los creadores que publicaron antes del 4 de agosto de 2025 pueden seguir en un plan antiguo con otra comisión de plataforma, pero despublicar tu página te pasa al plan estándar del 10%. Revisa los ajustes de tu propia cuenta."),
+        ],
+    },
+    "etsy": {
+        "level": "cross-checked",
+        "source_url": "https://www.etsy.com/legal/fees",
+        "fx_extra_percent": 2.5,
+        "rate_options": [
+            {"id": "us",         "label_en": "US sellers · transaction fee + payment processing", "label_es": "Vendedores de EE. UU. · comisión por transacción + procesamiento", "percent_fee": 9.5, "fixed_fee": 0.25, "currency": "USD"},
+            {"id": "us_listing", "label_en": "US sellers · including the $0.20 listing fee",       "label_es": "Vendedores de EE. UU. · incluida la tarifa de publicación de $0,20", "percent_fee": 9.5, "fixed_fee": 0.45, "currency": "USD"},
+            {"id": "uk",         "label_en": "UK sellers · transaction fee + payment processing", "label_es": "Vendedores del Reino Unido · comisión por transacción + procesamiento", "percent_fee": 10.5, "fixed_fee": 0.20, "currency": "GBP"},
+        ],
+        "note_en": "For US sellers Etsy charges a 6.5% transaction fee plus payment processing of 3% + $0.25, which is 9.5% + $0.25 per sale. Each listing also costs $0.20 when it is published or renewed (the second option adds it). UK sellers pay 4% + £0.20 processing, so 10.5% + £0.20 with the transaction fee. Currency conversion adds 2.5% when the listing currency differs from your payment account currency.",
+        "note_es": "Para vendedores de EE. UU., Etsy cobra una comisión por transacción del 6,5% más el procesamiento de pagos de 3% + $0,25, es decir 9,5% + $0,25 por venta. Cada publicación cuesta además $0,20 al publicarse o renovarse (la segunda opción la suma). Los vendedores del Reino Unido pagan 4% + £0,20 de procesamiento, así que 10,5% + £0,20 con la comisión por transacción. La conversión de divisa suma 2,5% cuando la moneda del anuncio difiere de la de tu cuenta de pagos.",
+        "limits_en": [
+            "The fees apply to the whole order total: item price plus shipping, gift wrapping and personalization. Enter the full amount the buyer pays.",
+            "Offsite Ads (15% for shops under $10,000 in yearly sales), subscriptions, shipping labels and the UK regulatory operating fee are not modelled.",
+        ],
+        "limits_es": [
+            "Las comisiones se aplican al total del pedido: precio del artículo más envío, envoltorio de regalo y personalización. Introduce el monto completo que paga el comprador.",
+            "No se modelan Offsite Ads (15% para tiendas con menos de $10.000 de ventas anuales), suscripciones, etiquetas de envío ni la tarifa regulatoria del Reino Unido.",
+        ],
+        "faqs_en": [
+            ("Why is Etsy's fee higher than the 6.5% transaction fee?",
+             "The 6.5% transaction fee is only one part. Etsy Payments adds 3% + $0.25 for US sellers, so a sale costs 9.5% + $0.25 before the $0.20 listing fee. On a $100 order that is $9.75, or $9.95 with the listing fee."),
+            ("Does the Etsy fee include shipping?",
+             "Yes. The transaction fee and the payment processing fee are calculated on the full order total, including shipping, gift wrapping and personalization, so enter what the buyer actually pays."),
+        ],
+        "faqs_es": [
+            ("¿Por qué la comisión de Etsy es mayor que el 6,5% de transacción?",
+             "El 6,5% de transacción es solo una parte. Etsy Payments suma 3% + $0,25 para vendedores de EE. UU., así que una venta cuesta 9,5% + $0,25 antes de la tarifa de publicación de $0,20. En un pedido de $100 son $9,75, o $9,95 con la tarifa de publicación."),
+            ("¿La comisión de Etsy incluye el envío?",
+             "Sí. La comisión por transacción y la de procesamiento se calculan sobre el total del pedido, con envío, envoltorio de regalo y personalización, así que introduce lo que paga realmente el comprador."),
+        ],
+    },
+    "gumroad": {
+        "level": "cross-checked",
+        "source_url": "https://gumroad.com/pricing",
+        "fx_extra_percent": 0.0,
+        "rate_options": [
+            {"id": "direct",   "label_en": "Direct sales · Gumroad's own fee",            "label_es": "Ventas directas · comisión propia de Gumroad", "percent_fee": 10.0, "fixed_fee": 0.50, "currency": "USD"},
+            {"id": "direct_cp", "label_en": "Direct sales · including card processing",  "label_es": "Ventas directas · incluido el procesamiento de tarjeta", "percent_fee": 12.9, "fixed_fee": 0.80, "currency": "USD"},
+            {"id": "discover", "label_en": "Gumroad Discover sales (processing included)", "label_es": "Ventas por Gumroad Discover (procesamiento incluido)", "percent_fee": 30.0, "fixed_fee": 0.0, "currency": "USD"},
+        ],
+        "note_en": "Direct sales (your own link or profile) cost 10% + $0.50 with no monthly fee. According to independent 2026 sources, card processing of about 2.9% + $0.30 is charged on top, which brings a card sale to roughly 12.9% + $0.80 (second option). Sales that come through Gumroad Discover cost a flat 30% with processing included.",
+        "note_es": "Las ventas directas (tu propio enlace o perfil) cuestan 10% + $0,50 sin cuota mensual. Según fuentes independientes de 2026, el procesamiento de tarjeta de aproximadamente 2,9% + $0,30 se cobra aparte, lo que lleva una venta con tarjeta a cerca de 12,9% + $0,80 (segunda opción). Las ventas que llegan por Gumroad Discover cuestan un 30% fijo con el procesamiento incluido.",
+        "limits_en": [
+            "Gumroad does not refund its fees when you refund a buyer.",
+            "The card-processing figure comes from independent sources, not from Gumroad's own page, so confirm it in your payout reports.",
+        ],
+        "limits_es": [
+            "Gumroad no devuelve sus comisiones cuando reembolsas a un comprador.",
+            "La cifra de procesamiento de tarjeta proviene de fuentes independientes y no de la página de Gumroad, así que confírmala en tus informes de pagos.",
+        ],
+        "faqs_en": [
+            ("Is Gumroad's 10% + $0.50 the total cost of a sale?",
+             "It is Gumroad's own cut on direct sales. Independent sources report card processing of about 2.9% + $0.30 on top, so a card sale costs roughly 12.9% + $0.80. Sales that come through Discover cost a flat 30% with processing included."),
+        ],
+        "faqs_es": [
+            ("¿El 10% + $0,50 de Gumroad es el costo total de una venta?",
+             "Es la parte propia de Gumroad en ventas directas. Fuentes independientes indican un procesamiento de tarjeta de cerca de 2,9% + $0,30 adicional, así que una venta con tarjeta cuesta aproximadamente 12,9% + $0,80. Las ventas por Discover cuestan un 30% fijo con el procesamiento incluido."),
+        ],
+    },
+    "ebay": {
+        "level": "estimate",
+        "source_url": "https://www.ebay.com/help/selling/fees-credits-invoices/selling-fees?id=4822",
+        "fx_extra_percent": 0.0,
+        "rate_options": [
+            {"id": "over10", "label_en": "Most categories · orders over $10",  "label_es": "La mayoría de categorías · pedidos de más de $10", "percent_fee": 13.25, "fixed_fee": 0.40, "currency": "USD"},
+            {"id": "upto10", "label_en": "Most categories · orders of $10 or less", "label_es": "La mayoría de categorías · pedidos de $10 o menos", "percent_fee": 13.25, "fixed_fee": 0.30, "currency": "USD"},
+        ],
+        "note_en": "eBay charges one final value fee as a percentage of the total sale (item price plus shipping and tax) plus a per-order fee: $0.40 on orders over $10 and $0.30 on orders of $10 or less. The percentage depends on the category and your store plan; 13.25% is the figure most sources give for most categories, but some 2026 sources quote 13.6%, so this stays an estimate.",
+        "note_es": "eBay cobra una sola comisión de valor final como porcentaje de la venta total (precio del artículo más envío e impuestos) más una tarifa por pedido: $0,40 en pedidos de más de $10 y $0,30 en pedidos de $10 o menos. El porcentaje depende de la categoría y de tu plan de tienda; 13,25% es la cifra que dan la mayoría de las fuentes para la mayoría de categorías, pero algunas fuentes de 2026 citan 13,6%, por eso sigue siendo una estimación.",
+        "limits_en": [
+            "The final value fee changes by category (typically 12.9%–15%) and by store subscription, and sellers below standard performance pay more.",
+            "Optional promoted-listing fees and insertion fees are not included. The international add-on is an estimate.",
+        ],
+        "limits_es": [
+            "La comisión de valor final cambia según la categoría (normalmente 12,9%–15%) y la suscripción de tienda, y los vendedores por debajo del estándar pagan más.",
+            "No se incluyen las tarifas opcionales de anuncios promocionados ni las de publicación. El recargo internacional es una estimación.",
+        ],
+        "faqs_en": [
+            ("Why does eBay show two different per-order fees?",
+             "eBay's per-order fee is $0.30 on orders of $10 or less and $0.40 on orders over $10 (increased from $0.30 in March 2024). The calculator defaults to the $0.40 case; pick the other option for small orders."),
+        ],
+        "faqs_es": [
+            ("¿Por qué eBay muestra dos tarifas por pedido distintas?",
+             "La tarifa por pedido de eBay es de $0,30 en pedidos de $10 o menos y de $0,40 en pedidos de más de $10 (subió de $0,30 en marzo de 2024). La calculadora usa por defecto el caso de $0,40; elige la otra opción para pedidos pequeños."),
+        ],
+    },
+    # ───────── Segunda tanda de revisión: Paddle, Lemon Squeezy y Fiverr (contrastadas con fuentes independientes) ─────────
+    "paddle": {
+        "level": "cross-checked",
+        "source_url": "https://www.paddle.com/pricing",
+        "fx_extra_percent": 0.0,
+        "note_en": "Paddle is a merchant of record: it sells on your behalf and handles tax collection and remittance. It charges 5% + $0.50 per checkout transaction, all-inclusive, with no monthly platform fee and no separate international surcharge. Larger businesses can negotiate custom pricing.",
+        "note_es": "Paddle es un merchant of record: vende en tu nombre y se encarga de cobrar y remitir los impuestos. Cobra 5% + $0,50 por transacción de checkout, todo incluido, sin cuota mensual de plataforma y sin recargo internacional aparte. Las empresas más grandes pueden negociar precios personalizados.",
+        "limits_en": ["Payout and chargeback fees are not modelled, and custom enterprise pricing can differ from the standard rate."],
+        "limits_es": ["No se modelan las comisiones de retiro ni de contracargos, y el precio personalizado para empresas grandes puede diferir de la tarifa estándar."],
+        "faqs_en": [("Does Paddle charge extra for international customers?",
+                     "Not as a separate surcharge: 5% + $0.50 applies whatever the customer's country, because Paddle handles the tax compliance inside that fee. Lemon Squeezy, by contrast, adds 1.5% on international transactions.")],
+        "faqs_es": [("¿Paddle cobra más por clientes internacionales?",
+                     "No como recargo aparte: 5% + $0,50 se aplica sea cual sea el país del cliente, porque Paddle incluye el cumplimiento fiscal dentro de esa comisión. Lemon Squeezy, en cambio, suma 1,5% en transacciones internacionales.")],
+    },
+    "lemonsqueezy": {
+        "level": "cross-checked",
+        "source_url": "https://www.lemonsqueezy.com/pricing",
+        "fx_extra_percent": 0.0,
+        "note_en": "Lemon Squeezy is a merchant of record (owned by Stripe since July 2024). It charges 5% + $0.50 per transaction, plus 1.5% on international transactions, 1.5% on PayPal payments and 0.5% on subscription payments. Payout fees apply separately.",
+        "note_es": "Lemon Squeezy es un merchant of record (propiedad de Stripe desde julio de 2024). Cobra 5% + $0,50 por transacción, más 1,5% en transacciones internacionales, 1,5% en pagos con PayPal y 0,5% en pagos de suscripciones. Las comisiones de retiro se aplican aparte.",
+        "limits_en": ["The PayPal (+1.5%) and subscription (+0.5%) surcharges are not modelled: add them with the custom-rate option. Payout fees, for example 1% to a non-US bank account, are not included."],
+        "limits_es": ["Los recargos de PayPal (+1,5%) y de suscripciones (+0,5%) no se modelan: añádelos con la opción de tarifa personalizada. No se incluyen las comisiones de retiro, por ejemplo 1% a una cuenta bancaria fuera de EE. UU."],
+        "faqs_en": [("Why does Lemon Squeezy cost more than 5% + $0.50?",
+                     "The base rate is 5% + $0.50, but international transactions add 1.5%, PayPal payments add 1.5% and subscription payments add 0.5%. A US customer buying a one-off product by card pays only the base rate.")],
+        "faqs_es": [("¿Por qué Lemon Squeezy cuesta más que 5% + $0,50?",
+                     "La tarifa base es 5% + $0,50, pero las transacciones internacionales suman 1,5%, los pagos con PayPal 1,5% y los pagos de suscripciones 0,5%. Un cliente de EE. UU. que compra un producto único con tarjeta paga solo la tarifa base.")],
+    },
+    "fiverr": {
+        "level": "cross-checked",
+        "source_url": "https://www.fiverr.com",
+        "fx_extra_percent": 0.0,
+        "note_en": "Fiverr keeps a flat 20% of every order, including extras and tips, at every seller level. Buyers pay their own separate service fee on top of the gig price, which does not reduce what you earn.",
+        "note_es": "Fiverr se queda un 20% fijo de cada pedido, incluidos extras y propinas, en todos los niveles de vendedor. Los compradores pagan aparte su propia comisión de servicio sobre el precio del gig, que no reduce lo que ganas.",
+        "limits_en": ["Withdrawal fees depend on the method (PayPal, Payoneer or bank transfer) and currency conversion can add more; neither is included."],
+        "limits_es": ["Las comisiones de retiro dependen del método (PayPal, Payoneer o transferencia bancaria) y la conversión de divisa puede sumar más; ninguna está incluida."],
+        "faqs_en": [("Does the buyer's service fee reduce what I earn on Fiverr?",
+                     "No. Buyers pay a separate service fee on top of the gig price (independent sources report 5.5% plus a small-order fee), and your 20% is calculated on the gig price. Withdrawal and currency-conversion costs are what take a further share.")],
+        "faqs_es": [("¿La comisión de servicio del comprador reduce lo que gano en Fiverr?",
+                     "No. Los compradores pagan una comisión de servicio aparte sobre el precio del gig (fuentes independientes indican 5,5% más una tarifa por pedidos pequeños), y tu 20% se calcula sobre el precio del gig. Lo que resta una parte adicional son los costos de retiro y de conversión de divisa.")],
+    },
+    # ───────── Tercera tanda: Venmo, Cash App, Substack, Ko-fi y Amazon ─────────
+    "venmo": {
+        "level": "verified",
+        "source_url": "https://help.venmo.com/hc/en-us/articles/1500003204302-Business-Profile-Fees-",
+        "fx_extra_percent": 0.0,
+        "rate_options": [
+            {"id": "direct", "label_en": "Payments from another Venmo account", "label_es": "Pagos desde otra cuenta de Venmo", "percent_fee": 1.9, "fixed_fee": 0.10, "currency": "USD"},
+            {"id": "tap",    "label_en": "Tap to Pay (contactless)",            "label_es": "Tap to Pay (sin contacto)",         "percent_fee": 2.29, "fixed_fee": 0.10, "currency": "USD"},
+        ],
+        "note_en": "Venmo's help center says business profiles pay 1.9% + $0.10 on direct payments from another Venmo account, and 2.29% + $0.10 on contactless payments taken with Tap to Pay. The fee applies to payments of $1.00 or more, comes out of the amount your customer sends and is not refunded.",
+        "note_es": "El centro de ayuda de Venmo indica que los perfiles de negocio pagan 1,9% + $0,10 en pagos directos desde otra cuenta de Venmo y 2,29% + $0,10 en pagos sin contacto con Tap to Pay. La comisión se aplica a pagos de $1,00 o más, se descuenta del monto que envía tu cliente y no se reembolsa.",
+        "limits_en": ["Instant transfers to a bank or debit card cost extra (about 1.75% according to an independent source) and are not included.", "Checkout payments made inside an app or website through PayPal's Venmo button follow different rates."],
+        "limits_es": ["Las transferencias instantáneas a un banco o tarjeta de débito cuestan aparte (cerca de 1,75% según una fuente independiente) y no están incluidas.", "Los pagos de checkout dentro de una app o sitio web con el botón de Venmo de PayPal siguen otras tarifas."],
+        "faqs_en": [("Who pays Venmo's business fee, the customer or me?",
+                     "You do. The fee is deducted from the payment your customer sends, so on a $100 payment you receive $98.00 after 1.9% + $0.10. Customers who pay with a credit card do not pay a separate Venmo fee when paying a business profile.")],
+        "faqs_es": [("¿Quién paga la comisión de negocio de Venmo, el cliente o yo?",
+                     "La pagas tú. La comisión se descuenta del pago que envía tu cliente, así que en un pago de $100 recibes $98,00 tras 1,9% + $0,10. Los clientes que pagan con tarjeta de crédito no pagan una comisión aparte de Venmo al pagar a un perfil de negocio.")],
+    },
+    "cashapp": {
+        "level": "cross-checked",
+        "source_url": "https://cash.app/help",
+        "fx_extra_percent": 0.0,
+        "rate_options": [
+            {"id": "credit", "label_en": "Credit card payments", "label_es": "Pagos con tarjeta de crédito", "percent_fee": 2.75, "fixed_fee": 0.0, "currency": "USD"},
+            {"id": "debit",  "label_en": "Debit card and Cash App balance payments", "label_es": "Pagos con tarjeta de débito y saldo de Cash App", "percent_fee": 2.5, "fixed_fee": 0.0, "currency": "USD"},
+        ],
+        "note_en": "Cash App for Business charges a flat percentage with no per-transaction fixed fee: 2.75% on credit card payments and 2.5% on payments made with a debit card or the customer's Cash App balance, according to independent 2026 sources. Instant deposits are reported as free.",
+        "note_es": "Cash App for Business cobra un porcentaje plano sin cargo fijo por transacción: 2,75% en pagos con tarjeta de crédito y 2,5% en pagos con tarjeta de débito o saldo de Cash App del cliente, según fuentes independientes de 2026. Los depósitos instantáneos se indican como gratuitos.",
+        "limits_en": ["Cash App limits which kinds of businesses can use Cash for Business, and chargeback terms are set in its business terms, which are not modelled."],
+        "limits_es": ["Cash App limita qué tipos de negocio pueden usar Cash for Business, y las condiciones de contracargos están en sus términos de negocio, que no se modelan."],
+        "faqs_en": [("Which Cash App rate should I use, 2.75% or 2.5%?",
+                     "Use 2.75% when customers pay by credit card and 2.5% when they pay with a debit card or their Cash App balance. On a $100 payment you receive $97.25 or $97.50.")],
+        "faqs_es": [("¿Qué tarifa de Cash App debo usar, 2,75% o 2,5%?",
+                     "Usa 2,75% cuando el cliente paga con tarjeta de crédito y 2,5% cuando paga con tarjeta de débito o con su saldo de Cash App. En un pago de $100 recibes $97,25 o $97,50.")],
+    },
+    "substack": {
+        "level": "verified",
+        "source_url": "https://faq.substack.com/p/how-do-paid-subscriptions-on-substack",
+        "fx_extra_percent": 0.0,
+        "rate_options": [
+            {"id": "paid",      "label_en": "Paid subscription · Substack 10% + Stripe 2.9% + $0.30", "label_es": "Suscripción de pago · Substack 10% + Stripe 2,9% + $0,30", "percent_fee": 12.9, "fixed_fee": 0.30, "currency": "USD"},
+            {"id": "recurring", "label_en": "Recurring billing · adds Stripe Billing (about 0.7%)", "label_es": "Cobro recurrente · suma Stripe Billing (cerca de 0,7%)", "percent_fee": 13.6, "fixed_fee": 0.30, "currency": "USD"},
+        ],
+        "note_en": "Substack's own help page says its platform fee is 10% on paid subscriptions, and that Stripe charges 2.9% + $0.30 per card transaction plus a billing fee on recurring subscriptions. Substack's page names 0.5% for that billing fee, while recent independent sources report about 0.7%, so the second option uses 0.7%. The calculator combines platform and card fees into 12.9% + $0.30.",
+        "note_es": "La propia página de ayuda de Substack indica que su comisión de plataforma es del 10% en suscripciones de pago, y que Stripe cobra 2,9% + $0,30 por transacción con tarjeta más una comisión de facturación en las suscripciones recurrentes. La página de Substack menciona 0,5% para esa comisión de facturación, mientras que fuentes independientes recientes indican cerca de 0,7%, por eso la segunda opción usa 0,7%. La calculadora combina la comisión de plataforma y la de tarjeta en 12,9% + $0,30.",
+        "limits_en": ["The 10% platform fee applies to paid subscriptions only; free newsletters cost nothing.", "Stripe's international card and currency-conversion surcharges may also apply and are not modelled."],
+        "limits_es": ["La comisión de plataforma del 10% se aplica solo a suscripciones de pago; los boletines gratuitos no cuestan nada.", "También pueden aplicarse los recargos de Stripe por tarjeta internacional y conversión de divisa, que no se modelan."],
+        "faqs_en": [("How much of a $10 Substack subscription do I keep?",
+                     "Substack takes 10% ($1.00) and Stripe takes 2.9% + $0.30 ($0.59), so you receive $8.41 on a $10 payment before any recurring-billing fee.")],
+        "faqs_es": [("¿Cuánto me queda de una suscripción de $10 en Substack?",
+                     "Substack se queda el 10% ($1,00) y Stripe 2,9% + $0,30 ($0,59), así que recibes $8,41 en un pago de $10 antes de cualquier comisión de cobro recurrente.")],
+    },
+    "kofi": {
+        "level": "cross-checked",
+        "source_url": "https://ko-fi.com",
+        "fx_extra_percent": 0.0,
+        "rate_options": [
+            {"id": "shop",  "label_en": "Free plan · shop, membership and commission sales (5% + processing)", "label_es": "Plan gratuito · ventas de tienda, membresías y comisiones (5% + procesamiento)", "percent_fee": 7.9, "fixed_fee": 0.30, "currency": "USD"},
+            {"id": "tips",  "label_en": "Tips and donations (0% platform fee + processing)", "label_es": "Propinas y donaciones (0% de plataforma + procesamiento)", "percent_fee": 2.9, "fixed_fee": 0.30, "currency": "USD"},
+        ],
+        "note_en": "Ko-fi charges 0% on one-time tips and donations, and 5% on shop sales, memberships and commissions on the free plan. Ko-fi Gold removes the platform fee. Stripe or PayPal processing of 2.9% + $0.30 applies on every plan, so a free-plan shop sale costs 7.9% + $0.30 in total. Independent sources disagree on the Gold price ($6 or $12 per month).",
+        "note_es": "Ko-fi cobra 0% en propinas y donaciones únicas, y 5% en ventas de tienda, membresías y comisiones en el plan gratuito. Ko-fi Gold elimina la comisión de plataforma. El procesamiento de Stripe o PayPal de 2,9% + $0,30 se aplica en todos los planes, así que una venta de tienda en el plan gratuito cuesta 7,9% + $0,30 en total. Las fuentes independientes no coinciden en el precio de Gold ($6 o $12 al mes).",
+        "limits_en": ["With Ko-fi Gold the platform fee is 0%, so use the tips option (2.9% + $0.30) to estimate it. The monthly Gold price is not included."],
+        "limits_es": ["Con Ko-fi Gold la comisión de plataforma es 0%, así que usa la opción de propinas (2,9% + $0,30) para estimarla. No se incluye el precio mensual de Gold."],
+        "faqs_en": [("Does Ko-fi really charge 0%?",
+                     "Only on one-time tips and donations. Shop sales, memberships and commissions pay 5% on the free plan, and Stripe or PayPal processing of 2.9% + $0.30 applies to everything. A $10 shop sale leaves you $8.91 on the free plan.")],
+        "faqs_es": [("¿Ko-fi cobra realmente 0%?",
+                     "Solo en propinas y donaciones únicas. Las ventas de tienda, membresías y comisiones pagan 5% en el plan gratuito, y el procesamiento de Stripe o PayPal de 2,9% + $0,30 se aplica a todo. Una venta de tienda de $10 te deja $8,91 en el plan gratuito.")],
+    },
+    "amazon": {
+        "level": "cross-checked",
+        "source_url": "https://sell.amazon.com/pricing",
+        "fx_extra_percent": 0.0,
+        "note_en": "Amazon's referral fee is a percentage of the total sale price (item plus shipping and gift wrap) that depends on the category. Most categories pay 15%, with a minimum of $0.30 per item. The calculator uses 15% and no fixed fee.",
+        "note_es": "La comisión por referencia de Amazon es un porcentaje del precio total de la venta (artículo más envío y envoltorio de regalo) que depende de la categoría. La mayoría de las categorías pagan 15%, con un mínimo de $0,30 por artículo. La calculadora usa 15% y ningún cargo fijo.",
+        "limits_en": ["Rates range from about 5% to 45% by category, and some categories (for example clothing and grocery) change with the item price. Media items add a $1.80 closing fee.", "FBA fulfillment, storage, advertising and the monthly Professional plan fee are not included."],
+        "limits_es": ["Las tarifas van de cerca de 5% a 45% según la categoría, y algunas categorías (por ejemplo ropa y alimentos) cambian con el precio del artículo. Los artículos de medios añaden una tarifa de cierre de $1,80.", "No se incluyen la logística de FBA, el almacenamiento, la publicidad ni la cuota mensual del plan Profesional."],
+        "faqs_en": [("Why is my Amazon referral fee different from 15%?",
+                     "The percentage depends on the category (about 5% to 45%) and some categories change with the item price. There is also a $0.30 minimum per item, so a $1.50 item pays $0.30 (20%) instead of $0.225. Check your category in Seller Central and use the custom rate for an exact result.")],
+        "faqs_es": [("¿Por qué mi comisión por referencia de Amazon es distinta del 15%?",
+                     "El porcentaje depende de la categoría (de cerca de 5% a 45%) y algunas categorías cambian con el precio del artículo. Además hay un mínimo de $0,30 por artículo, así que uno de $1,50 paga $0,30 (20%) en lugar de $0,225. Revisa tu categoría en Seller Central y usa la tarifa personalizada para un resultado exacto.")],
+    },
+    # ───────── Cuarta tanda: Payoneer y TikTok Shop (las fuentes no coinciden: se quedan como estimación, con la explicación) ─────────
+    "payoneer": {
+        "level": "estimate",
+        "source_url": "https://www.payoneer.com/about/pricing/",
+        "fx_extra_percent": 0.0,
+        "rate_options": [
+            {"id": "convert", "label_en": "Marketplace payout + withdrawal in another currency (about 1% + 2%)", "label_es": "Pago de marketplace + retiro en otra moneda (cerca de 1% + 2%)", "percent_fee": 3.0, "fixed_fee": 0.0, "currency": "USD"},
+            {"id": "local",   "label_en": "Marketplace payout + same-currency local bank withdrawal (about 1% + $1.50)", "label_es": "Pago de marketplace + retiro bancario local en la misma moneda (cerca de 1% + $1,50)", "percent_fee": 1.0, "fixed_fee": 1.50, "currency": "USD"},
+        ],
+        "note_en": "Payoneer has no single percentage-plus-fixed rate: the cost depends on how money arrives and how it leaves. Payoneer's pricing pages and independent sources agree on roughly 1% for some incoming payments, a flat $1.50 for a local bank withdrawal in the same currency, and up to about 3% for withdrawals that need currency conversion. The 3% default models a payout that needs conversion; the second option models a same-currency withdrawal. Treat both as estimates.",
+        "note_es": "Payoneer no tiene una tarifa única de porcentaje más cargo fijo: el costo depende de cómo llega y cómo sale el dinero. Las páginas de precios de Payoneer y las fuentes independientes coinciden en cerca de 1% en algunos cobros entrantes, $1,50 fijos por un retiro bancario local en la misma moneda y hasta cerca de 3% en retiros que requieren conversión de divisa. El 3% por defecto modela un pago que requiere conversión; la segunda opción modela un retiro en la misma moneda. Considera ambas como estimaciones.",
+        "limits_en": ["Some regions add an annual account fee of about $29.95, and sources disagree on the volume that waives it. It is not included.", "Fees differ by country, currency and payment source, so use the custom-rate option with the numbers Payoneer shows for your own transfer."],
+        "limits_es": ["Algunas regiones añaden una cuota anual de cerca de $29,95 y las fuentes no coinciden en el volumen que la exime. No está incluida.", "Las comisiones cambian según el país, la moneda y el origen del pago, así que usa la tarifa personalizada con las cifras que Payoneer muestra para tu transferencia."],
+        "faqs_en": [("Why is Payoneer not a single percentage?",
+                     "Because each step is priced separately: receiving a payment, converting currency and withdrawing to a bank. A same-currency local withdrawal can cost a flat $1.50, while a conversion can cost up to about 3%. Pick the option that matches your transfer or enter your own rate.")],
+        "faqs_es": [("¿Por qué Payoneer no tiene un porcentaje único?",
+                     "Porque cada paso tiene su propio precio: recibir un pago, convertir divisa y retirar a un banco. Un retiro local en la misma moneda puede costar $1,50 fijos, mientras que una conversión puede costar hasta cerca de 3%. Elige la opción que coincide con tu transferencia o introduce tu propia tarifa.")],
+    },
+    "tiktokshop": {
+        "level": "estimate",
+        "source_url": "https://seller.tiktok.com",
+        "fx_extra_percent": 0.0,
+        "rate_options": [
+            {"id": "std",       "label_en": "Referral fee 6% (rate listed in TikTok's fee pages)", "label_es": "Comisión por referencia 6% (tarifa de las páginas de TikTok)", "percent_fee": 6.0, "fixed_fee": 0.0, "currency": "USD"},
+            {"id": "reported8", "label_en": "Referral fee 8% (reported since August 2026)",        "label_es": "Comisión por referencia 8% (según informes desde agosto de 2026)", "percent_fee": 8.0, "fixed_fee": 0.0, "currency": "USD"},
+            {"id": "proc",      "label_en": "6% + processing charged separately (3.5% + $0.30 in some sources)", "label_es": "6% + procesamiento cobrado aparte (3,5% + $0,30 en algunas fuentes)", "percent_fee": 9.5, "fixed_fee": 0.30, "currency": "USD"},
+        ],
+        "note_en": "TikTok Shop charges a referral fee on each completed order: 6% for most US categories according to its fee pages (some categories pay 5%). Independent trade reports say it rose to 8% for most non-food categories in August 2026, although the published table still lists 6%. Sources also disagree on whether payment processing is included in the referral fee or charged separately, so the three options cover each case. Check your settlement statements in Seller Center.",
+        "note_es": "TikTok Shop cobra una comisión por referencia en cada pedido completado: 6% en la mayoría de las categorías de EE. UU. según sus páginas de tarifas (algunas categorías pagan 5%). Informes independientes del sector indican que subió a 8% en la mayoría de las categorías no alimentarias en agosto de 2026, aunque la tabla publicada sigue mostrando 6%. Las fuentes tampoco coinciden en si el procesamiento de pagos está incluido en la comisión por referencia o se cobra aparte, por eso las tres opciones cubren cada caso. Revisa tus extractos de liquidación en Seller Center.",
+        "limits_en": ["Refunds cost an administration fee of 20% of the original referral fee, capped at $5 per SKU, and fulfillment, advertising and creator affiliate commissions (often 10%–20%) are not included.", "New US sellers may get a reduced referral rate for their first 30 days."],
+        "limits_es": ["Los reembolsos tienen una tarifa administrativa del 20% de la comisión por referencia original, con tope de $5 por SKU, y no se incluyen la logística, la publicidad ni las comisiones de afiliados creadores (a menudo 10%–20%).", "Los vendedores nuevos de EE. UU. pueden tener una tarifa de referencia reducida durante sus primeros 30 días."],
+        "faqs_en": [("Is TikTok Shop's referral fee 6% or 8%?",
+                     "TikTok's published fee pages list 6% for most US categories, while trade reports from August 2026 say the rate for most non-food categories rose to 8%. Look at the rate on your own settlement statements and pick the matching option, or enter it as a custom rate.")],
+        "faqs_es": [("¿La comisión por referencia de TikTok Shop es 6% o 8%?",
+                     "Las páginas de tarifas publicadas por TikTok indican 6% para la mayoría de las categorías de EE. UU., mientras que informes del sector de agosto de 2026 dicen que la tarifa de la mayoría de las categorías no alimentarias subió a 8%. Mira la tarifa de tus propios extractos de liquidación y elige la opción correspondiente, o introdúcela como tarifa personalizada.")],
+    },
 }
 
 # ── Estimaciones con matices conocidos (tarifa base sin cambios, pero con explicación honesta) ──
-ESTIMATE_NOTES = {
+_ESTIMATE_DETAILS = {
     "wise": {
         "note_en": "Wise does not publish a single percentage-plus-fixed rate for receiving money. Receiving USD by ACH is free, a USD wire costs a fixed $6.11, and currency conversion is a variable percentage that depends on the currency pair (typically under 1%). 0.65% + $0.45 is an illustrative blended estimate, not an official Wise price.",
         "note_es": "Wise no publica una tarifa única de porcentaje más cargo fijo para recibir dinero. Recibir USD por ACH es gratis, un giro (wire) en USD cuesta $6,11 fijos y la conversión de divisa es un porcentaje variable según el par de monedas (normalmente menos de 1%). 0,65% + $0,45 es una estimación combinada ilustrativa, no un precio oficial de Wise.",
@@ -195,6 +472,10 @@ ESTIMATE_NOTES = {
                      "No. Upwork aplica ahora una comisión variable de entre 0% y 15% por contrato. Usa la tarifa personalizada con el porcentaje que Upwork muestra en tu contrato para un resultado exacto.")],
     },
 }
+
+for _k, _v in _ESTIMATE_DETAILS.items():
+    _v.setdefault('level', 'estimate')
+    DETAILS.setdefault(_k, _v)
 
 GENERIC_NOTE_EN = "Estimated rate: not independently re-checked in the {month} review. Platforms change fees often and many depend on plan, category or country. Confirm on the official pricing page before relying on it."
 GENERIC_NOTE_ES = "Tarifa estimada: no se volvió a comprobar de forma independiente en la revisión de {month}. Las plataformas cambian sus tarifas con frecuencia y muchas dependen del plan, la categoría o el país. Confírmala en la página oficial de precios antes de usarla."
@@ -238,23 +519,16 @@ def build_catalog():
     platforms = {}
     counts = {"verified": 0, "cross-checked": 0, "estimate": 0}
     for key, name, cat, pct, fix, intl, url in RAW_PLATFORMS:
-        c = CHECKED.get(key)
-        e = ESTIMATE_NOTES.get(key, {})
-        if c:
-            confidence, checked = c["level"], REVIEW_DATE[:7]
-            source_url, fx = c["source_url"], c["fx_extra_percent"]
-            options = c["rate_options"]
-            note_en, note_es = c["note_en"], c["note_es"]
-            limits_en, limits_es = c["limits_en"], c["limits_es"]
-            extra_en, extra_es = c["faqs_en"], c["faqs_es"]
-        else:
-            confidence, checked = "estimate", None
-            fx, options = 0.0, []
-            note_en = e.get("note_en", GENERIC_NOTE_EN.format(month=REVIEW_MONTH))
-            note_es = e.get("note_es", GENERIC_NOTE_ES.format(month=REVIEW_MONTH))
-            source_url = e.get("source_url", url)
-            limits_en, limits_es = e.get("limits_en", []), e.get("limits_es", [])
-            extra_en, extra_es = e.get("faqs_en", []), e.get("faqs_es", [])
+        c = DETAILS.get(key, {})
+        confidence = c.get("level", "estimate")
+        checked = REVIEW_DATE[:7] if confidence != "estimate" else None
+        source_url = c.get("source_url", url)
+        fx = c.get("fx_extra_percent", 0.0)
+        options = c.get("rate_options", [])
+        note_en = c.get("note_en", GENERIC_NOTE_EN.format(month=REVIEW_MONTH))
+        note_es = c.get("note_es", GENERIC_NOTE_ES.format(month=REVIEW_MONTH))
+        limits_en, limits_es = c.get("limits_en", []), c.get("limits_es", [])
+        extra_en, extra_es = c.get("faqs_en", []), c.get("faqs_es", [])
         counts[confidence] += 1
 
         fee1000, net1000, rev1000 = worked(1000, pct, fix)

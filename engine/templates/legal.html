@@ -168,6 +168,16 @@
   </style>
 
   <!-- Google Analytics 4 (GA4) -->
+  <!-- Consent Mode v2: en la UE/EEE, Reino Unido y Suiza el almacenamiento de analítica y publicidad queda denegado por defecto hasta que el visitante lo acepte (lo actualiza el mensaje de consentimiento de Google). En el resto del mundo no cambia nada. -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('consent', 'default', {
+      ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied', analytics_storage: 'denied',
+      region: ['AT','BE','BG','HR','CY','CZ','DK','EE','FI','FR','DE','GR','HU','IS','IE','IT','LV','LI','LT','LU','MT','NL','NO','PL','PT','RO','SK','SI','ES','SE','GB','CH'],
+      wait_for_update: 500
+    });
+  </script>
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-WLVCBX62CJ"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -269,9 +279,9 @@
             <span class="doc-num">{% if lang == 'es' %}SECCIÓN 03{% else %}SECTION 03{% endif %}</span>
             <h2>{% if lang == 'es' %}Analítica y experiencia de uso{% else %}Analytics & User Experience Telemetry{% endif %}</h2>
             {% if lang == 'es' %}
-            <p>Para mejorar nuestras calculadoras y la precisión de las tarifas, usamos analítica de <strong>Google Analytics 4 (GA4)</strong> y <strong>Microsoft Clarity</strong>. Estas herramientas usan cookies o identificadores similares para medir el tráfico, el rendimiento de las páginas, la compatibilidad de los dispositivos y los patrones generales de interacción. Microsoft Clarity puede registrar interacciones anonimizadas con la página (clics, desplazamiento) para ayudarnos a detectar problemas de uso; el campo del monto está enmascarado. Si te encuentras en el Espacio Económico Europeo, el Reino Unido u otra región que exija consentimiento para las cookies de analítica y publicidad, debería pedírtelo antes de instalarlas.</p>
+            <p>Para mejorar nuestras calculadoras y la precisión de las tarifas, usamos analítica de <strong>Google Analytics 4 (GA4)</strong> y <strong>Microsoft Clarity</strong>. Estas herramientas usan cookies o identificadores similares para medir el tráfico, el rendimiento de las páginas, la compatibilidad de los dispositivos y los patrones generales de interacción. Microsoft Clarity puede registrar interacciones anonimizadas con la página (clics, desplazamiento) para ayudarnos a detectar problemas de uso; el campo del monto está enmascarado. Para los visitantes del Espacio Económico Europeo, el Reino Unido y Suiza, el almacenamiento de analítica y publicidad está desactivado por defecto y solo se activa si das tu consentimiento.</p>
             {% else %}
-            <p>To continuously improve our calculators and regional fee accuracy, we use analytics through <strong>Google Analytics 4 (GA4)</strong> and <strong>Microsoft Clarity</strong>. These tools use cookies or similar identifiers to measure traffic, page performance, device compatibility, and general interaction patterns. Microsoft Clarity may record anonymised page interactions (clicks, scrolling) to help us find usability problems; the amount field is masked. If you are in the European Economic Area, the United Kingdom or another region that requires consent for analytics and advertising cookies, you should be asked for it before they are set.</p>
+            <p>To continuously improve our calculators and regional fee accuracy, we use analytics through <strong>Google Analytics 4 (GA4)</strong> and <strong>Microsoft Clarity</strong>. These tools use cookies or similar identifiers to measure traffic, page performance, device compatibility, and general interaction patterns. Microsoft Clarity may record anonymised page interactions (clicks, scrolling) to help us find usability problems; the amount field is masked. For visitors in the European Economic Area, the United Kingdom and Switzerland, analytics and advertising storage is disabled by default and is only enabled if you give consent.</p>
             {% endif %}
           </article>
 

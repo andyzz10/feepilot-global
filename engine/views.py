@@ -154,7 +154,11 @@ def calculator_view(request, lang='en', slug='stripe'):
         'noindex': is_comparison and not INDEX_COMPARISONS,
         'info_platforms': [build_info(primary, lang)] + ([build_info(secondary, lang)] if is_comparison else []),
     }
-    return render(request, 'calculator.html', context)
+    response = render(request, 'calculator.html', context)
+    if context['noindex']:
+        # Refuerzo del <meta robots>: aunque se borre la etiqueta de la plantilla, la cabecera sigue indicando noindex
+        response['X-Robots-Tag'] = 'noindex, follow'
+    return response
 
 LEGAL_PAGES = {
     'privacy': {

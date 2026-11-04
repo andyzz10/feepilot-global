@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{{ title }}</title>
   <meta name="description" content="{{ desc }}">
-  <link rel="canonical" href="{{ request.scheme }}://{{ request.get_host }}{{ request.path }}">
+  <link rel="canonical" href="{{ request.build_absolute_uri }}">
   {% if is_comparison %}
   <link rel="alternate" hreflang="en" href="{{ request.scheme }}://{{ request.get_host }}/en/{{ slug }}-fees/">
   <link rel="alternate" hreflang="es" href="{{ request.scheme }}://{{ request.get_host }}/es/{{ slug }}-fees/">
@@ -448,6 +448,16 @@
   </style>
 
   <!-- Google Analytics 4 (GA4) -->
+  <!-- Consent Mode v2: en la UE/EEE, Reino Unido y Suiza el almacenamiento de analítica y publicidad queda denegado por defecto hasta que el visitante lo acepte (lo actualiza el mensaje de consentimiento de Google). En el resto del mundo no cambia nada. -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('consent', 'default', {
+      ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied', analytics_storage: 'denied',
+      region: ['AT','BE','BG','HR','CY','CZ','DK','EE','FI','FR','DE','GR','HU','IS','IE','IT','LV','LI','LT','LU','MT','NL','NO','PL','PT','RO','SK','SI','ES','SE','GB','CH'],
+      wait_for_update: 500
+    });
+  </script>
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-WLVCBX62CJ"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -813,7 +823,7 @@
               <ul class="acc-list-plain">
                 {% for ip in info_platforms %}
                 <li><strong>{{ ip.name }}:</strong>
-                  <a href="{{ ip.source_url }}" {% if forloop.first %}id="formulaSourceLink"{% endif %} target="_blank" rel="nofollow noopener" class="source-link">{% if ip.confidence == 'verified' %}{% if lang == 'en' %}Official pricing page ↗{% else %}Página oficial de precios ↗{% endif %}{% elif ip.confidence == 'cross-checked' %}{% if lang == 'en' %}Provider's pricing page ↗ (not opened directly){% else %}Página de precios del proveedor ↗ (no se abrió directamente){% endif %}{% else %}{% if lang == 'en' %}Provider's site ↗ (rate not verified){% else %}Sitio del proveedor ↗ (tarifa sin verificar){% endif %}{% endif %}</a>
+                  <a href="{{ ip.source_url }}" {% if forloop.first %}id="formulaSourceLink"{% endif %} target="_blank" rel="nofollow noopener" class="source-link">{% if ip.confidence == 'verified' %}{% if lang == 'en' %}Official pricing page ↗{% else %}Página oficial de precios ↗{% endif %}{% elif ip.confidence == 'cross-checked' %}{% if lang == 'en' %}Provider's page ↗ (not opened directly){% else %}Página del proveedor ↗ (no se abrió directamente){% endif %}{% else %}{% if lang == 'en' %}Provider's site ↗ (rate not verified){% else %}Sitio del proveedor ↗ (tarifa sin verificar){% endif %}{% endif %}</a>
                 </li>
                 {% endfor %}
               </ul>
@@ -1196,7 +1206,7 @@
         fSrc.textContent = lvl === 'verified'
           ? (LANG === 'en' ? 'Official pricing page ↗' : 'Página oficial de precios ↗')
           : lvl === 'cross-checked'
-            ? (LANG === 'en' ? "Provider's pricing page ↗ (not opened directly)" : 'Página de precios del proveedor ↗ (no se abrió directamente)')
+            ? (LANG === 'en' ? "Provider's page ↗ (not opened directly)" : 'Página del proveedor ↗ (no se abrió directamente)')
             : (LANG === 'en' ? "Provider's site ↗ (rate not verified)" : 'Sitio del proveedor ↗ (tarifa sin verificar)');
       }
       if (fNote && p1.rate_note) fNote.textContent = LANG === 'en' ? p1.rate_note.en : p1.rate_note.es;
