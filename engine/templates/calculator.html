@@ -1167,15 +1167,19 @@
       const top3Heading = document.getElementById('top3Heading');
       const top3Container = document.getElementById('top3Container');
       if (top3Heading && top3Container) {
-        top3Heading.textContent = LANG === 'en'
-          ? `⚡ Lowest-Fee ${ONLY_VERIFIED_TOP3 ? 'Checked ' : ''}Platforms for $${amount.toLocaleString('en-US')}:`
-          : `⚡ Plataformas ${ONLY_VERIFIED_TOP3 ? 'verificadas ' : ''}más económicas para $${amount.toLocaleString('en-US')}:`;
-
-        const ranked = Object.keys(PLATFORMS)
+        // Compara solo plataformas de la misma categoría (un procesador de pagos con otro, un marketplace con otro).
+        // Si en la categoría hay menos de 2 con tarifa comprobada, se usa la lista general.
+        const checked = Object.keys(PLATFORMS)
           .map(k => calcPlatform(amount, k, isIntl, isFx, 'default'))
-          .filter(r => !ONLY_VERIFIED_TOP3 || r.confidence !== 'estimate')
-          .sort((a, b) => a.fee - b.fee)
-          .slice(0, 3);
+          .filter(r => !ONLY_VERIFIED_TOP3 || r.confidence !== 'estimate');
+        const sameCat = checked.filter(r => r.category === r1.category);
+        const pool = sameCat.length >= 2 ? sameCat : checked;
+        const scopedToCategory = pool === sameCat;
+        const ranked = pool.sort((a, b) => a.fee - b.fee).slice(0, 3);
+
+        top3Heading.textContent = LANG === 'en'
+          ? `⚡ Lowest-Fee ${ONLY_VERIFIED_TOP3 ? 'Checked ' : ''}Platforms${scopedToCategory ? ' in This Category' : ''} for $${amount.toLocaleString('en-US')}:`
+          : `⚡ Plataformas ${ONLY_VERIFIED_TOP3 ? 'verificadas ' : ''}más económicas${scopedToCategory ? ' de esta categoría' : ''} para $${amount.toLocaleString('en-US')}:`;
 
         top3Container.innerHTML = ranked.map((item, idx) => {
           const medal = idx === 0 ? '🥇' : idx === 1 ? '🥈' : '🥉';
