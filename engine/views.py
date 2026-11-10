@@ -11,7 +11,7 @@ TIER_AMOUNTS = [10, 25, 50, 100, 250, 500, 1000, 2500, 5000, 10000]
 # Indexación: False = solo se indexan las 25 páginas principales (x2 idiomas = 50 URLs).
 # Las páginas "A vs B" siguen funcionando para los visitantes, pero llevan noindex y salen del sitemap.
 # Para volver a indexarlas todas, cambia esto a True.
-INDEX_COMPARISONS = False
+INDEX_COMPARISONS = True
 
 def load_data():
     with open(DATA_PATH, 'r', encoding='utf-8') as f:
